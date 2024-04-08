@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 arr = [9, 8, 2, 3, 9, 4, 1, 0, 3]
-arr1 = [9 8]  # your code here
+arr1 = [9, 8]  # your code here
 arr2 = [9, 4, 1, 0, 3] # your code here
 arr3 = [8, 2, 3, 9, 4] # your code here
 print("The first two numbers of the array are: {}".format(arr1))
