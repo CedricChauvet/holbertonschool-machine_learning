@@ -7,4 +7,4 @@ def matrix_shape(matrix):
     while type(matrix) == list:
         dims.append(len(matrix))
         matrix = matrix[0]
-    return list(dims)
+    return dims
