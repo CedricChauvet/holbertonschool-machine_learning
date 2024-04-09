@@ -17,4 +17,4 @@ def matrix_transpose(matrix):
             row.append(matrix[j][i])
         mat.append(row)
         row = []
-    return 0
+    return mat
