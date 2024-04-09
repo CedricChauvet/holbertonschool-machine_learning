@@ -7,6 +7,10 @@ d'adition de vecteurs de numpy
 
 
 def add_arrays(arr1, arr2):
+    """
+    fonction de la task 4
+    """
+    
     sum = []
     if len(arr1) != len(arr2):
         return None
