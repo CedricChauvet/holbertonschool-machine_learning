@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-import numpy as np
 
 
 def matrix_shape(matrix):
-    cmat = np.array(matrix)
-    return list(cmat.shape)
+    cmat = (len(matrix), len(matrix[0]))
+    return list(cmat)
