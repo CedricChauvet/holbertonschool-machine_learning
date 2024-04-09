@@ -6,9 +6,12 @@ Fonction contournant la methode shape de numpy
 
 
 def matrix_shape(matrix):
-    dims = []
+    """
+    prend une matrice en parametre et retourne sa forme
+    """
 
-    while type(matrix) == list:
+    dims = []
+    while type(matrix) is list:
         dims.append(len(matrix))
         matrix = matrix[0]
     return dims
