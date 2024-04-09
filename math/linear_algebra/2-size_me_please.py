@@ -2,5 +2,9 @@
 
 
 def matrix_shape(matrix):
-    cmat = (len(matrix), len(matrix[0]))
-    return list(cmat)
+    dims = []
+    print("matrix ", matrix)
+    while type(matrix) == list:
+        dims.append(len(matrix))
+        matrix = matrix[0]
+    return list(dims)
