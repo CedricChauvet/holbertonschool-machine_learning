@@ -29,6 +29,10 @@ def mat_mul(mat1, mat2):
     product_matrix_elmt = []
     product_matrix = []
     mat_result =[]
+    
+    if len(mat1[0]) != len(mat2):
+        return None
+    
     for i in range(len(mat1)):
         for j in range(len(mat2[0])):
            a1 = select_array(mat1,i,1) 
