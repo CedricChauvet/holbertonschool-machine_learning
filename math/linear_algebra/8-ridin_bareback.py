@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-
 """
 Task 8, algebra project : Ridin’ Bareback
 """
 
+
 def select_array(matrice, n, axis):
-    array=[]
+    array = []
     if axis == 0:  #vecteur vertical
         for i in matrice:
             array.append(i[n])
@@ -15,9 +15,7 @@ def select_array(matrice, n, axis):
 
 def product_array(array1, array2):
     sum=0
-    print( "array1", array1), print("array2", array2)
     if len(array1) != len(array2):
-        print("petite erreur")
         return None
     
     for i in range(len(array1)):
