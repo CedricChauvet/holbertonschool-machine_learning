@@ -4,8 +4,6 @@ Task 11, linear algebre project: The Western Exchange
 """
 
 
-import numpy as np
-
 def np_transpose(matrix):
-    """ transpo a matrix using np"""
-    return np.transpose(matrix)*
+    """ transpo a matrix without using np"""
+    return matrix.T
