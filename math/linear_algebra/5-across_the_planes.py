@@ -15,7 +15,7 @@ def add_matrices2D(mat1, mat2):
     sum = []
     if len(mat1) == 0:
         return None
-    for i in len(mat1):
+    for i in range(len(mat1)):
         if len(mat1[i]) != len(mat2[i]):
             return None
     else:
