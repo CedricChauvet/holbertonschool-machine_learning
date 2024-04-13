@@ -17,6 +17,6 @@ def frequency():
     plt.title("Project A")
     plt.hist(student_grades.astype("int32"),bins = [10,20,30,40,50,60,70,80,90,100], edgecolor="black")
     plt.xlim(0,100)
-    plt.xticks(np.arange(0,100,10))
+    plt.xticks(np.arange(0,101,10))
     plt.yticks(np.arange(0,31,5))
     plt.show()
