@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
+"""
+Task 2. project plotting: change scale
+"""
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 
 
 def change_scale():
+    """ This is a documentation """
     x = np.arange(0, 28651, 5730)
     r = np.log(0.5)
     t = 5730
