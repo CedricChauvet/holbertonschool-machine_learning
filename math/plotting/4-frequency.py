@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
+"""
+task 4, project plotting: Frequency
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
-def frequency():
 
+def frequency():
+    """ This is a documentation"""
     np.random.seed(5)
     student_grades = np.random.normal(68, 15, 50)
     plt.figure(figsize=(6.4, 4.8))
@@ -14,5 +19,4 @@ def frequency():
     plt.xlim(0,100)
     plt.xticks(np.arange(0,100,10))
     plt.yticks(np.arange(0,31,5))
-    
     plt.show()
