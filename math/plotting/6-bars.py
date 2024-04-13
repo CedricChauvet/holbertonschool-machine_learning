@@ -8,7 +8,6 @@ def bars():
     plt.figure(figsize=(6.4, 4.8))
     colors = ["red", "yellow", "orange", "#ffe5b4"]
     
-    fruit=np.array([[1,2,3,4],[2,3,4,5],[3,4,5,6]])
     apples = (fruit[0,0],fruit[1,0],fruit[2,0])
     bananas = (fruit[0,1],fruit[1,1],fruit[2,1])
     oranges = (fruit[0,2],fruit[1,2],fruit[2,2])
