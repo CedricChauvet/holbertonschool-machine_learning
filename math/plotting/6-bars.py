@@ -15,7 +15,7 @@ def bars():
     persons = ("Farrah", "Fred", "Felicia")
 
     weight_counts = {
-        "apples": np.array([fruit[0, 0] fruit[0, 1], fruit[0, 2]]),
+        "apples": np.array([fruit[0, 0], fruit[0, 1], fruit[0, 2]]),
         "bananas": np.array([fruit[1, 0], fruit[1, 1], fruit[1, 2]]),
         "oranges": np.array([fruit[2, 0], fruit[2, 1], fruit[2, 2]]),
         "peaches": np.array([fruit[3, 0], fruit[3, 1], fruit[3, 2]])
@@ -33,4 +33,5 @@ def bars():
     plt.legend(loc="upper right")
     plt.ylabel("Quantity of Fruit")
     plt.ylim(0, 80)
+    plt.yticks(np.arange(0, 81, 10))
     plt.show()
