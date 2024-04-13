@@ -6,7 +6,7 @@ def bars():
     np.random.seed(5)
     fruit = np.random.randint(0, 20, (4,3))
     plt.figure(figsize=(6.4, 4.8))
-
+    colors = ["red", "yellow", "orange", "#ffe5b4"]
     
     fruit=np.array([[1,2,3,4],[2,3,4,5],[3,4,5,6]])
     apples = (fruit[0,0],fruit[1,0],fruit[2,0])
@@ -22,14 +22,13 @@ def bars():
     "peaches": np.array([fruit[0,3],fruit[1,3],fruit[2,3]]),
     }
     bottom = np.zeros(3)
+    i=0
     for boolean, weight_count in weight_counts.items():
-        p = plt.bar(persons, weight_count, width= 0.5, label=boolean, bottom=bottom)
+        col=colors[i]
+        i= i+1
+        p = plt.bar(persons, weight_count, width= 0.5, color =col, label=boolean, bottom=bottom)
         bottom += weight_count
-    
+    plt.title("Number of Fruit per Person")
     plt.legend(loc="upper right")
-
-    
-    
-    #plt.bar( ("Farrah","Fred","Felicia"), height =bananas,color="yellow", width = 0.5)
-    #plt.bar( ("Farrah","Fred","Felicia"), height =oranges,color="orange" , width = 0.5)
+    plt.ylabel("Quantity of Fruit")
     plt.show()
