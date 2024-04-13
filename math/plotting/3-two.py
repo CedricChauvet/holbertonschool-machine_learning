@@ -16,7 +16,10 @@ def two():
     plt.figure(figsize=(6.4, 4.8))
     plt.plot(x, y1, color="red", linestyle='dashed')
     plt.plot(x, y2, color="green")
-    
+    plt.legend(['C-14', 'Ra-226'])
+    plt.title("Exponential Decay of Radioactive Elements")
     plt.xlabel("Time (years)")
     plt.ylabel("Fraction Remaining")
     plt.show()
+
+two()
