@@ -15,13 +15,14 @@ def poly_integral(poly, C=0):
     
     poly_int = [C]
     for i in range(len(poly)):
+        if isinstance(i,int) or isinstance(i,float):
+            if poly[i]/(i + 1) % 1 <= 0.0:
+                poly_int.append(int(poly[i]/(i + 1)))
         
-        if poly[i]/(i + 1) % 1 <= 0.0:
-            poly_int.append(int(poly[i]/(i + 1)))
-        
-        elif isinstance( poly[i]/(i + 1), float):
-            poly_int.append(float(poly[i]/(i + 1)))
-
+            elif isinstance( poly[i]/(i + 1), float):
+                poly_int.append(float(poly[i]/(i + 1)))
+        else:
+            return False
     while poly_int[-1] == 0 and len(poly_int)>1:
         poly_int.pop(-1)
 
