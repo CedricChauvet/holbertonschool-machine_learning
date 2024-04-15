@@ -8,6 +8,9 @@ and those decisions are determined by our priorities
 
 def summation_i_squared(n):
     """this is a documentation"""
+    
+    if type(n) is not int:
+        return None
     if n == 1:
         return 1
     else:
