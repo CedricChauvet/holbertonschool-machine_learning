@@ -7,7 +7,8 @@ task 10, project calculus: Derive happiness in oneself from a good day's work
 def poly_derivative(poly):
     """ This is a documentation """
     list2 = []
-   
+    if type(poly) is not list:
+        return None
     for i in poly:
         if type(i) is not int:
             return None
