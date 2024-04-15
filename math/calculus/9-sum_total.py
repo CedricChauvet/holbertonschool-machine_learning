@@ -8,8 +8,7 @@ and those decisions are determined by our priorities
 
 def summation_i_squared(n):
     """this is a documentation"""
-    total = 0
-
-    for i in range(n+1):
-        total = total + i * i
-    return total
+    if n == 1:
+        return 1
+    else:
+        return n**2 + summation_i_squared(n-1)
