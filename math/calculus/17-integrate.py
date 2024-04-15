@@ -10,7 +10,7 @@ def poly_integral(poly, C=0):
     poly_int=[C]
     
     
-    if poly= None:
+    if poly == None:
         return poly_int
     for i in poly:
         if type(i) not in (float, int):
