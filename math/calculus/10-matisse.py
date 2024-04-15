@@ -12,9 +12,10 @@ def poly_derivative(poly):
     for i in poly:
         if type(i) is not int:
             return None
-    if len(poly) <= 1:
+    if len(poly) == 1:
         return [0]
-    
+    if len(poly) == 0:
+        return None
     
     for i in range(0, len(poly) - 1):
 
