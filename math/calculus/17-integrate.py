@@ -10,7 +10,7 @@ def poly_integral(poly, C=0):
     if type(poly) is not list or poly == []:
         return None 
     for i in poly:
-        if type(i) not in (int, float):
+        if type(i) not in (int, float) or i is None:
             return None
     
     poly_int=[C]
