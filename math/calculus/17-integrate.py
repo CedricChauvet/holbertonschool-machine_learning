@@ -6,6 +6,9 @@ Task 17 project calculus: Integrate
 
 def poly_integral(poly, C=0):
     """ This is a documentation"""
+    
+    if type(poly) is not list:
+        return None 
     for i in poly:
         if type(i) not in (int, float):
             return None
