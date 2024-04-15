@@ -6,10 +6,11 @@ Task 17 project calculus: Integrate
 
 def poly_integral(poly, C=0):
     """ This is a documentation"""
-    flag = False
-    poly_reduct = []
+    if all( type(i) is (int, float) for i in poly ):
+        return None
     
     poly_int=[C]
+    
     poly_reduct = poly[::-1]
     if poly_reduct[0]== 0:
         poly_reduct.pop(0)
