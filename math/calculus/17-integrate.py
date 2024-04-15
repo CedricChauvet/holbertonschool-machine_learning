@@ -10,10 +10,10 @@ def poly_integral(poly, C=0):
     if type(poly) is not list or poly == []:
         return None 
     for i in poly:
-        if type(i) not in (int, float) or i is None:
+        if type(i) not in (int, float) :
             return None
     
-    poly_int=[C]
+    
     
     poly_reduct = poly[::-1]
     if poly_reduct[0] == 0:
@@ -26,7 +26,8 @@ def poly_integral(poly, C=0):
     for i in poly:
         if type(i) not in (float, int):
             return None
- 
+    
+    poly_int=[C]
     for i in range(len(poly)):
         
         if poly[i]/(i + 1) % 1 <= 0.0:
@@ -34,4 +35,5 @@ def poly_integral(poly, C=0):
         
         elif isinstance( poly[i]/(i + 1), float):
             poly_int.append(float(poly[i]/(i + 1)))
+
     return poly_int
