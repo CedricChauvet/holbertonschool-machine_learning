@@ -22,7 +22,7 @@ def poly_integral(poly, C=0):
         elif isinstance( poly[i]/(i + 1), float):
             poly_int.append(float(poly[i]/(i + 1)))
 
-    while poly_int[-1] == 0:
+    while poly_int[-1] == 0 and len(poly_int)>1:
         poly_int.pop(-1)
 
 
