@@ -8,13 +8,11 @@ and those decisions are determined by our priorities
 
 def summation_i_squared(n):
     """this is a documentation"""
-    
-    if n == None:
+
+    if n is None:
         return None
     if type(n) is not int:
         return None
     if n <= 0:
         return None
     return int(n * (n + 1) * (2 * n + 1) / 6)
-
-
