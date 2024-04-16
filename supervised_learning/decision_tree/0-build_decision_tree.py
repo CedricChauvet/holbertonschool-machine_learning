@@ -36,6 +36,7 @@ class Leaf(Node):
         self.depth = depth
 
     def max_depth_below(self):
+        """Define the position of a leaf in a tree"""
         return self.depth
 
 
@@ -55,4 +56,5 @@ class Decision_Tree():
         self.predict = None
 
     def depth(self):
+        """linking to the depth max node"""
         return self.root.max_depth_below()
