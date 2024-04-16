@@ -1,1 +1,1 @@
-repository recensant les exercices de ma spé
+exercices sur les arbres de decisions
