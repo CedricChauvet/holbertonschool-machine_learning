@@ -27,33 +27,34 @@ class Node:
             self.right_child.max_depth_below()
         return max(self.left_child.max_depth_below(),
                    self.right_child.max_depth_below())
-    
+
     def count_nodes_below(self, only_leaves=False):
+        """ function computes a: nombuer of node and b: number of leaf"""
         if self.is_root:
-            global a 
+            global a
             global b
             a = 1
             b = 0
-        
+
         if not self.left_child.is_leaf:
             self.left_child.count_nodes_below()
-            if only_leaves == False:
+            if not only_leaves:
                 a = a + 1
         else:
             b = b + 1
-        
+
         if not self.right_child.is_leaf:
             self.right_child.count_nodes_below()
-            if only_leaves == False:
-                a = a + 1            
+            if not only_leaves:
+                a = a + 1
         else:
             b = b + 1
-        if only_leaves == False:
+        if not only_leaves:
             return b + a
-        elif only_leaves == True:
+        elif only_leaves:
             return b
-    
-    
+
+
 class Leaf(Node):
     """define a leaf"""
     def __init__(self, value, depth=None):
@@ -65,8 +66,10 @@ class Leaf(Node):
     def max_depth_below(self):
         """Define the position of a leaf in a tree"""
         return self.depth
-    def count_nodes_below(self, only_leaves=False) :
+
+    def count_nodes_below(self, only_leaves=False):
         return 1
+
 
 class Decision_Tree():
     """define the classifier"""
@@ -87,5 +90,6 @@ class Decision_Tree():
     def depth(self):
         """linking to the depth max node"""
         return self.root.max_depth_below()
-    def count_nodes(self, only_leaves=False) :
+
+    def count_nodes(self, only_leaves=False):
         return self.root.count_nodes_below(only_leaves=only_leaves)
