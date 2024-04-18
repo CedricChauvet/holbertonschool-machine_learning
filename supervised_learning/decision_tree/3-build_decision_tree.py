@@ -25,7 +25,7 @@ class Node:
 
         if not self.right_child.is_leaf:
             self.right_child.max_depth_below()
-        
+
         return max(self.left_child.max_depth_below(),
                    self.right_child.max_depth_below())
 
@@ -54,54 +54,51 @@ class Node:
             return b + a
         elif only_leaves:
             return b
-        
-    def __str__(self) :
+
+    def __str__(self):
         """ display the shape of the binary tree"""
         if self.is_root:
             t = "root"
         else:
-            t="->node" 
-           
-        return f"{t} : [feature {self.feature}, threshold {self.threshold}]\n"+\
-            self.left_child_add_prefix(self.left_child.__str__()) +\
-            self.right_child_add_prefix(self.right_child.__str__()) 
+            t = "->node"
 
-        
-    def right_child_add_prefix(self,text):
-        lines=text.split("\n")
-        new_text="    +--"+lines[0]+"\n"
-        for x in lines[1:] :
-            new_text+=("      "+x)+"\n"
-        return (new_text)        
-                
-        
-    def left_child_add_prefix(self,text):
-        lines=text.split("\n")
-        new_text="    +--"+lines[0]+"\n"
-        for x in lines[1:] :
-            new_text+=("    |  "+x)+"\n"
-        return (new_text)        
-    
-    def get_leaves_below(self) :
+        return f"{t} : [feature {self.feature}, threshold {self.threshold}] +\
+            \n" + self.left_child_add_prefix(self.left_child.__str__()) +\
+            self.right_child_add_prefix(self.right_child.__str__())
+
+    def right_child_add_prefix(self, text):
+        """graphical interface"""
+        lines = text.split("\n")
+        new_text = "    +--"+lines[0] + "\n"
+        for x in lines[1:]:
+            new_text += ("      "+x) + "\n"
+        return (new_text)
+
+    def left_child_add_prefix(self, text):
+        """graphical interface"""
+        lines = text.split("\n")
+        new_text = "    +--"+lines[0] + "\n"
+        for x in lines[1:]:
+            new_text += ("    |  "+x) + "\n"
+        return (new_text)
+
+    def get_leaves_below(self):
+        """ get leaves of all the tree"""
         if self.is_root:
             global b
-            b=[]
-        
-        
+            b = []
         if self.left_child.is_leaf:
             b.append(f"-> leaf [value={self.left_child.value}]")
         if self.right_child.is_leaf:
             b.append(f"-> leaf [value={self.right_child.value}]")
-        
-        
         self.left_child.get_leaves_below()
         self.right_child.get_leaves_below()
-            
-                 
         return b
-                
+
+
 class Leaf(Node):
     """define a leaf"""
+
     def __init__(self, value, depth=None):
         super().__init__()
         self.value = value
@@ -115,16 +112,19 @@ class Leaf(Node):
     def count_nodes_below(self, only_leaves=False):
         """ end of tree number"""
         return 1
+
     def __str__(self):
         """print leaf caracteristics"""
         return (f"-> leaf [value={self.value}]")
-    
-    def get_leaves_below(self) :
+
+    def get_leaves_below(self):
+        """ return a leaf"""
         return [self]
 
 
 class Decision_Tree():
     """define the classifier"""
+
     def __init__(self, max_depth=10, min_pop=1, seed=0,
                  split_criterion="random", root=None):
         self.rng = np.random.default_rng(seed)
@@ -146,9 +146,11 @@ class Decision_Tree():
     def count_nodes(self, only_leaves=False):
         """ coount nodes, point to node class"""
         return self.root.count_nodes_below(only_leaves=only_leaves)
+
     def __str__(self):
         """print the tree"""
         return self.root.__str__()
-    def get_leaves(self) :
+
+    def get_leaves(self):
         """ indicates all leaves"""
         return self.root.get_leaves_below()
