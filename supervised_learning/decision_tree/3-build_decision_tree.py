@@ -88,9 +88,9 @@ class Node:
             global b
             b = []
         if self.left_child.is_leaf:
-            b.append(f"-> leaf [value={self.left_child.value}]")
+            b.append(self.left_child)
         if self.right_child.is_leaf:
-            b.append(f"-> leaf [value={self.right_child.value}]")
+            b.append(self.right_child)
         self.left_child.get_leaves_below()
         self.right_child.get_leaves_below()
         return b
@@ -115,7 +115,7 @@ class Leaf(Node):
 
     def __str__(self):
         """print leaf caracteristics"""
-        return (f"-> leaf [value={self.value}]")
+        return (f"-> leaf [value={self.value}] ")
 
     def get_leaves_below(self):
         """ return a leaf"""
