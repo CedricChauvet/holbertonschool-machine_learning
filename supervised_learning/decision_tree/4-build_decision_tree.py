@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-task 0
+task 4 project decision tree: Towards the predict function (2) : the update_bounds method
 """
 import numpy as np
 
@@ -21,35 +21,29 @@ class Node:
         self.lower = dict()
         self.rec_node = dict()
 
-    def update_bounds_below(self) :
-        if self.is_root : 
-            self.upper = { 0:np.inf }
-            self.lower = {0 : -1*np.inf }
-        
-        for child in [self.left_child, self.right_child] :
-            
+    def update_bounds_below(self):
+        """This method should recursively compute, for each node, two dictionaries"""
+        if self.is_root:
+            self.upper = {0: np.inf}
+            self.lower = {0: -1*np.inf}
+
+        for child in [self.left_child, self.right_child]:
             # get the parent node of left_child and right_child
-            nodeprec= self
+            nodeprec = self
             child.upper = self.upper.copy()
             child.lower = self.lower.copy()
+            
             # get the left_child
-            
-            if child == self.left_child:   
-                  
-                    #Here I tried ..upper[0], wrong but DK what to do
-                    #child.upper.update({nodeprec.feature:   }) 
-                    child.lower.update({nodeprec.feature:  nodeprec.threshold})
-            
-            #get the right_child
+            if child == self.left_child:
+                child.lower.update({nodeprec.feature:  nodeprec.threshold})
+
+            # get the right_child
             elif child == self.right_child:
-            
-                    child.upper.update({nodeprec.feature:  nodeprec.threshold})
-                    # same thing ..lower[0] is wrong
-                    #child.lower.update({nodeprec.feature:  } )          
-        
-        for child in [self.left_child, self.right_child] :
+                child.upper.update({nodeprec.feature:  nodeprec.threshold})
+
+        for child in [self.left_child, self.right_child]:
             child.update_bounds_below()
-        
+
     def get_leaves_below(self):
         """ get leaves of all the tree"""
         if self.is_root:
@@ -64,7 +58,6 @@ class Node:
         return b
 
 
-
 class Leaf(Node):
     """define a leaf"""
 
@@ -75,18 +68,18 @@ class Leaf(Node):
         self.depth = depth
         self.upper = dict()
         self.lower = dict()
-        
+
     def __str__(self):
         """print leaf caracteristics"""
         return (f"-> leaf [value={self.value}]")
-    
+
     def update_bounds_below(self):
         """ pass when arrive at a leaf"""
         pass
+
     def get_leaves_below(self):
         """ return a leaf"""
         return [self]
-
 
 
 class Decision_Tree():
@@ -108,8 +101,8 @@ class Decision_Tree():
 
     def update_bounds(self):
         """ get every bounds"""
-        self.root.update_bounds_below() 
-        
+        self.root.update_bounds_below()
+
     def get_leaves(self):
         """ indicates all leaves"""
         return self.root.get_leaves_below()
