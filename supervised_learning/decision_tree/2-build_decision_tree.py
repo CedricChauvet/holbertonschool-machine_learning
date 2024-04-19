@@ -62,7 +62,7 @@ class Node:
         else:
             t="-> node" 
            
-        return f"{t} [feature {self.feature}, threshold {self.threshold}]\n"+\
+        return f"{t} [feature {self.feature}, threshold {self.threshold}] \n"+\
             self.left_child_add_prefix(self.left_child.__str__()) +\
             self.right_child_add_prefix(self.right_child.__str__()) 
         
