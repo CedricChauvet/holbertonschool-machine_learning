@@ -70,7 +70,7 @@ class Node:
                     if indiv[i] < list_low[i]:  
                         bool_lower = False
                 is_larger.append(bool_lower)  
-            return np.array(is_larger)      
+            return np.array(is_larger, dtype=bool)      
        
         def is_small_enough(x):
             list_high = list(self.upper.values())
@@ -82,7 +82,7 @@ class Node:
                     if indiv[i] > list_high[i]:  
                         bool_upper = False
                 is_smaller.append(bool_upper)  
-            return  np.array( is_smaller)
+            return  np.array( is_smaller, dtype=bool)
        
         self.indicator = lambda x : np.all(np.array([is_large_enough(x),is_small_enough(x)]),axis=0)
 
