@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-task 4 project decision tree: Towards the predict function (2) : the update_bounds method
+task 4 project decision tree:
+Towards the predict function (2) : the update_bounds method
 """
 import numpy as np
 
@@ -22,7 +23,8 @@ class Node:
         self.rec_node = dict()
 
     def update_bounds_below(self):
-        """This method should recursively compute, for each node, two dictionaries"""
+        """This method should recursively compute,
+        for each node, two dictionaries"""
         if self.is_root:
             self.upper = {0: np.inf}
             self.lower = {0: -1*np.inf}
@@ -32,14 +34,14 @@ class Node:
             nodeprec = self
             child.upper = self.upper.copy()
             child.lower = self.lower.copy()
-            
+
             # get the left_child
             if child == self.left_child:
-                child.lower.update({nodeprec.feature:  nodeprec.threshold})
+                child.lower.update({nodeprec.feature: nodeprec.threshold})
 
             # get the right_child
             elif child == self.right_child:
-                child.upper.update({nodeprec.feature:  nodeprec.threshold})
+                child.upper.update({nodeprec.feature: nodeprec.threshold})
 
         for child in [self.left_child, self.right_child]:
             child.update_bounds_below()
