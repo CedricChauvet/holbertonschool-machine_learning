@@ -107,7 +107,7 @@ class Leaf(Node):
         """ end of tree number"""
         return 1
     def __str__(self):
-        return (f"-> leaf [value={self.value}]")
+        return (f"-> leaf [value={self.value}] ")
 
 
 class Decision_Tree():
