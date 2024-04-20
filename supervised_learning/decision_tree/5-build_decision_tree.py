@@ -61,32 +61,26 @@ class Node:
         return b
 
     def update_indicator(self):
-        def is_large_enough(x):
-            list_low = list(self.lower.values())
-            is_larger = []
-            for indiv in x:
-                bool_lower = True
-                for i in range(len(list_low)):
-                    if indiv[i] < list_low[i]:  
-                        bool_lower = False
-                is_larger.append(bool_lower)  
-            return np.array(is_larger, dtype=bool)      
-       
-        def is_small_enough(x):
-            list_high = list(self.upper.values())
-            is_smaller = []
+
+        def is_large_enough(A):
+            arrA = [A[:,key] for key  in range(len(self.lower))]
+            arrB = [key for key in list(self.lower.values())]
+
             
-            for indiv in x:
-                bool_upper = True
-                for i in range(len(list_high)):
-                    if indiv[i] > list_high[i]:  
-                        bool_upper = False
-                is_smaller.append(bool_upper)  
-            return  np.array( is_smaller, dtype=bool)
-       
+            arrSup =[np.greater(A[:,key],self.lower[key]) for key in list(self.lower.keys())]
+            arrSup_flatten = np.all(arrSup,axis=0)
+            return  arrSup_flatten
+        
+        def is_small_enough(A):          
+            arrInf= [np.greater_equal(self.upper[key],A[:,key]) for key in list(self.upper.keys())]
+            arrInf_flatten = np.all(arrInf,axis=0)
+            return arrInf_flatten 
+            #return True # [np.greater(A[:,key],self.lower[key]) for key in list(self.lower.keys())]   
+                #<- fill the gap : this function returns a 1D numpy array of size 
+                #`n_individuals` so that the `i`-th element of the later is `True` 
+                # if the `i`-th individual has all its features <= the lower bounds
+
         self.indicator = lambda x : np.all(np.array([is_large_enough(x),is_small_enough(x)]),axis=0)
-
-
 class Leaf(Node):
     """define a leaf"""
 
