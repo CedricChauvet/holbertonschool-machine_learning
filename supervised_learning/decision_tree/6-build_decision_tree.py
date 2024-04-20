@@ -175,13 +175,10 @@ class Decision_Tree():
         for leaf in leaves:
             leaf.update_indicator()
         
-        #def truc(self):
-        #    lambda A: np.array( [leaf.indicator(A)  for leaf in leaves])
-        #self.predict = truc
         self.predict = lambda A: np.array([leaves[j].value for j in [ np.array([leaf.indicator(A)  for leaf in leaves])[:, i].nonzero()[0][0] for i in range(len(A))]])
         
 
     def pred(self,x) :
             return self.root.pred(x)
     
-    #leaves[j].value for j in
+    
