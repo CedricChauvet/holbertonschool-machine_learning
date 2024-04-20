@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-task 4 project decision tree:
-Towards the predict function (2) : the update_bounds method
+task 6 project decision tree:
+finnaly the  tree is operationnal
 """
 import numpy as np
 
@@ -28,7 +28,6 @@ class Node:
             t = "root"
         else:
             t = "->node"
-
         return f"{t} : [feature {self.feature}, threshold {self.threshold}] +\
             \n" + self.left_child_add_prefix(self.left_child.__str__()) +\
             self.right_child_add_prefix(self.right_child.__str__())
@@ -48,7 +47,6 @@ class Node:
         for x in lines[1:]:
             new_text += ("    |  "+x) + "\n"
         return (new_text)
-
 
     def update_bounds_below(self):
         """This method should recursively compute,
@@ -106,17 +104,15 @@ class Node:
         self.indicator = lambda x: np.all(np.array(
             [is_large_enough(x), is_small_enough(x)]), axis=0)
 
-
-    
-    def pred(self,x) :
-        if x[self.feature]>self.threshold :
+    def pred(self, x):
+        if x[self.feature] > self.threshold:
             return self.left_child.pred(x)
-        else :
+        else:
             return self.right_child.pred(x)
+
 
 class Leaf(Node):
     """define a leaf"""
-
     def __init__(self, value, depth=None):
         super().__init__()
         self.value = value
@@ -137,8 +133,9 @@ class Leaf(Node):
         """ return a leaf"""
         return [self]
 
-    def pred(self,x):
+    def pred(self, x):
         return self.value
+
 
 class Decision_Tree():
     """define the classifier"""
@@ -160,7 +157,7 @@ class Decision_Tree():
     def update_bounds(self):
         """ get every bounds"""
         self.root.update_bounds_below()
-    
+
     def __str__(self):
         """print the tree"""
         return self.root.__str__()
@@ -170,15 +167,18 @@ class Decision_Tree():
         return self.root.get_leaves_below()
 
     def update_predict(self):
+        """ fonction de prediction"""
         self.update_bounds()
         leaves = self.get_leaves()
         for leaf in leaves:
             leaf.update_indicator()
-        
-        self.predict = lambda A: np.array([leaves[j].value for j in [ np.array([leaf.indicator(A)  for leaf in leaves])[:, i].nonzero()[0][0] for i in range(len(A))]])
-        
 
-    def pred(self,x) :
-            return self.root.pred(x)
-    
-    
+        # donne la valeur de n=100 individual tirages a partir de A
+        self.predict = lambda A: np.array
+        ([leaves[j].value for j in
+          [np.array([leaf.indicator(A)
+                     for leaf in leaves])[:, i].nonzero()[0][0] for
+            i in range(len(A))]])
+
+    def pred(self, x):
+        return self.root.pred(x)
