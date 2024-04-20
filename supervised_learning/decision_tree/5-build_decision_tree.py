@@ -61,26 +61,25 @@ class Node:
         return b
 
     def update_indicator(self):
-
+        """Find in wich leaf where A(individual values) actually goes"""
         def is_large_enough(A):
-            arrA = [A[:,key] for key  in range(len(self.lower))]
-            arrB = [key for key in list(self.lower.values())]
+            """A is in the upper bracket"""
+            arrSup = [np.greater(A[:, key], self.lower[key]) for
+                      key in list(self.lower.keys())]
+            arrSup_flatten = np.all(arrSup, axis=0)
+            return arrSup_flatten
 
-            
-            arrSup =[np.greater(A[:,key],self.lower[key]) for key in list(self.lower.keys())]
-            arrSup_flatten = np.all(arrSup,axis=0)
-            return  arrSup_flatten
-        
-        def is_small_enough(A):          
-            arrInf= [np.greater_equal(self.upper[key],A[:,key]) for key in list(self.upper.keys())]
-            arrInf_flatten = np.all(arrInf,axis=0)
-            return arrInf_flatten 
-            #return True # [np.greater(A[:,key],self.lower[key]) for key in list(self.lower.keys())]   
-                #<- fill the gap : this function returns a 1D numpy array of size 
-                #`n_individuals` so that the `i`-th element of the later is `True` 
-                # if the `i`-th individual has all its features <= the lower bounds
+        def is_small_enough(A):
+            """ A is in the lower bracket"""
+            arrInf = [np.greater_equal(self.upper[key], A[:, key]) for
+                      key in list(self.upper.keys())]
+            arrInf_flatten = np.all(arrInf, axis=0)
+            return arrInf_flatten
 
-        self.indicator = lambda x : np.all(np.array([is_large_enough(x),is_small_enough(x)]),axis=0)
+        self.indicator = lambda x: np.all(np.array(
+            [is_large_enough(x), is_small_enough(x)]), axis=0)
+
+
 class Leaf(Node):
     """define a leaf"""
 
