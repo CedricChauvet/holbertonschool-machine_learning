@@ -134,6 +134,7 @@ class Leaf(Node):
         return [self]
 
     def pred(self, x):
+        """ Alternative prediction"""
         return self.value
 
 
@@ -174,11 +175,8 @@ class Decision_Tree():
             leaf.update_indicator()
 
         # donne la valeur de n=100 individual tirages a partir de A
-        self.predict = lambda A: np.array
-        ([leaves[j].value for j in
-          [np.array([leaf.indicator(A)
-                     for leaf in leaves])[:, i].nonzero()[0][0] for
-            i in range(len(A))]])
+        self.predict = lambda A: np.array ([leaves[j].value for j in [np.array([leaf.indicator(A) for leaf in leaves])[:, i].nonzero()[0][0] for i in range(len(A))]])
 
     def pred(self, x):
+        """ alternative prediction (given)"""
         return self.root.pred(x)
