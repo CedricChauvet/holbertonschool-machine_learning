@@ -33,7 +33,7 @@ class Neuron:
 
     @A.setter
     def A(self, p):
-        self.__A = p
+        self.__A = __p
 
     def forward_prop(self, X):
         """ take the Xnx imnut of a neuron
