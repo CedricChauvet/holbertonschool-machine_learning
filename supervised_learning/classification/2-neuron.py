@@ -7,7 +7,7 @@ import numpy as np
 
 class Neuron:
     """putting private instance where
-      @perperties are getter and setter added """
+      @perperties are getter and et set_A method added """
     def __init__(self, nx):
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
@@ -32,6 +32,7 @@ class Neuron:
         return self.__A
 
     def set_A(self, p):
+        """creation of a setter for A"""
         self.__A = p
 
     def forward_prop(self, X):
@@ -42,4 +43,3 @@ class Neuron:
         activation = np.array(1 / (1 + np.exp(-forward_var))).T
         self.set_A(activation)
         return self.__A
-    
