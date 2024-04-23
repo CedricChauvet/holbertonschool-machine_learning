@@ -42,4 +42,4 @@ class Neuron:
         forward_var = np.array(np.dot(X.T, self.__W.T) + self.__b)
         activation = np.array(1 / (1 + np.exp(-forward_var))).T
         self.__A = activation
-        return self.__A
+        return self.A
