@@ -29,11 +29,11 @@ class Neuron:
 
     @property
     def A(self):
-        return self.__A
+        return self._A
 
     @A.setter
     def A(self, p):
-        self.__A = p
+        self._A = p
 
     def forward_prop(self, X):
         """ take the Xnx imnut of a neuron
@@ -41,5 +41,5 @@ class Neuron:
          forward propagation """
         forward_var = np.array(np.dot(X.T, self.__W.T) + self.__b)
         activation = np.array(1 / (1 + np.exp(-forward_var))).T
-        self.__A = activation
+        self._A = activation
         return self.A
