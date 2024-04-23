@@ -40,5 +40,5 @@ class Neuron:
         the dot X with the weight and biases for
          forward propagation """
         forward_var = np.array(np.dot(X.T, self.__W.T) + self.__b)
-        activation = np.array(1 / (1 + np.exp(-forward_var)))
+        activation = np.array(1 / (1 + np.exp(-forward_var))).T
         return activation
