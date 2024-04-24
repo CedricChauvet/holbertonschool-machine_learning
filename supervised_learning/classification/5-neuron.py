@@ -105,15 +105,15 @@ class Neuron:
        #print("a", a.shape)
        dZee = a - Y
        # np.where(dZee > 0,-dZee,dZee)
-       #print("dZee" , dZee.shape) 
-       #print("X", X.T.shape)
+       print("dZee" , dZee.T.shape) 
+       print("X", X.shape)
        #print("W", self.__W.shape)
        
        
        
        # calcul des nouvelles valeur de Wi et b
-       dw = self.__W - alpha*np.dot(dZee, X.T) / m
-       #print("dw", dw,"shape", dw.shape)
+       dw = self.__W - alpha*np.dot(X, dZee.T) / m
+       print("dw shape", dw.shape)
        # self.set_W(np.sum(self.__W - alpha*(X.T*dZee) / m,))
        self.set_W(dw[0])
        # print("shape W",np.sum( self.__W - alpha*(X.T*dZee), axis =0).shape)
