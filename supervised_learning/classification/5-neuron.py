@@ -107,7 +107,7 @@ class Neuron:
        # calcul des nouvelles valeur de Wi et b
        
 
-       dw = self.__W - alpha*(X.T*dZee)
+       dw = self.__W - alpha*(np.dot(X, dZee))
        # self.set_W(np.sum(self.__W - alpha*(X.T*dZee) / m,))
        self.set_W(dw[0])
        # print("shape W",np.sum( self.__W - alpha*(X.T*dZee), axis =0).shape)
