@@ -39,6 +39,14 @@ class Neuron:
         """Creation of a setter for A,  ***no setter decorator*** """
         self.__A = p
 
+    def set_W(self, p):
+        """Creation of a setter for W,  ***no setter decorator*** """
+        self.__W = p
+
+    def set_b(self, p):
+        """Creation of a setter for b,  ***no setter decorator*** """
+        self.__b = p
+
     def forward_prop(self, X):
         """ Take the Xnx imnut of a neuron
         the dot X with the weight and biases for
@@ -76,3 +84,33 @@ class Neuron:
         Btest = np.where(Atest >= 0.5, 1, 0)
 
         return Btest, cost
+
+    def gradient_descent(self, X, Y, A, alpha=0.05):
+       """ on a Zee= w.T *x +b
+            on a besoin de caluler le gradient de Zee
+            on sait que le gradient (grad = a -Y)
+            la formule de a est la sigmoide de z
+       """ 
+       ni = X.shape[0]
+       m = X.shape[1]
+       print ( " shapes", ni, m)
+       # method gradient descent
+       Zee = np.dot(self.__W, X) + self.__b 
+       print("Zee", Zee.shape)
+       a =  np.array(1 / (1 + np.exp(-Zee))).T
+       dZee = a - Y.T
+       np.where(dZee > 0,-dZee,dZee)
+       # print("dZee" , dZee.shape) 
+       # print("X", X.T.shape)
+       # print("W", self.__W.shape)
+       # print("nouveaux poids",self.__W - alpha*(X.T*dZee))
+       # calcul des nouvelles valeur de Wi et b
+       
+
+       dw = self.__W - alpha*(X.T*dZee)
+       # self.set_W(np.sum(self.__W - alpha*(X.T*dZee) / m,))
+       self.set_W(dw[0])
+       # print("shape W",np.sum( self.__W - alpha*(X.T*dZee), axis =0).shape)
+       #print("truc", (dw[0]) )
+       self.set_b(self.__b - np.sum(alpha*dZee) / m)
+       #print("shape b",self.__b.shape)
