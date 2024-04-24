@@ -100,8 +100,9 @@ class Neuron:
        
        # method gradient descent
        Zee = np.dot(self.__W, X) + self.__b 
-       # print("Zee", Zee.shape)
+       #print("Zee", Zee.shape)
        a =  np.array(1 / (1 + np.exp(-Zee)))
+       #print("a", a.shape)
        dZee = a - Y
        # np.where(dZee > 0,-dZee,dZee)
        #print("dZee" , dZee.shape) 
@@ -111,9 +112,10 @@ class Neuron:
        
        
        # calcul des nouvelles valeur de Wi et b
-       dw = self.__W - alpha*(np.dot(X, dZee.T)) / m
+       dw = self.__W - alpha*np.dot(dZee, X.T) / m
+       #print("dw", dw,"shape", dw.shape)
        # self.set_W(np.sum(self.__W - alpha*(X.T*dZee) / m,))
-       self.set_W(dw[0])
+       self.set_W(dw)
        # print("shape W",np.sum( self.__W - alpha*(X.T*dZee), axis =0).shape)
        #print("truc", (dw[0]) )
        self.set_b(self.__b - np.sum(alpha*dZee) / m)
