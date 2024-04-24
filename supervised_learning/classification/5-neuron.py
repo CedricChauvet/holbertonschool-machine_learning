@@ -96,27 +96,22 @@ class Neuron:
        # taille des exemples
        m = X.shape[1]
        
-       # print ( " shapes", ni, m)
-       
+             
        # method gradient descent
        Zee = np.dot(self.__W, X) + self.__b 
-       #print("Zee", Zee.shape)
+       
        a =  np.array(1 / (1 + np.exp(-Zee)))
-       #print("a", a.shape)
+      
        dZee = a - Y
-       # np.where(dZee > 0,-dZee,dZee)
-       print("dZee" , dZee.T.shape) 
-       print("X", X.shape)
+       #print("dZee" , dZee.shape) 
+       #print("X", X.shape)
+       #print("a", a.shape) 
        #print("W", self.__W.shape)
+       #print("Zee", Zee.shape)
+       #print("shapedot", (self.__W.T - alpha * np.dot(X, dZee.T)).shape)
        
-       
-       
-       # calcul des nouvelles valeur de Wi et b
-       dw = self.__W - alpha*np.dot(X, dZee.T) / m
-       print("dw shape",dw[0:1, :].shape)
-       # self.set_W(np.sum(self.__W - alpha*(X.T*dZee) / m,))
-       self.set_W(dw[0])
-       # print("shape W",np.sum( self.__W - alpha*(X.T*dZee), axis =0).shape)
-       #print("truc", (dw[0]) )
+       # calcul des nouvelles valeurs de Wi et b
+       dw = self.__W.T - alpha*np.dot(X, dZee.T) / m
+       # print("dw shape",dw.shape)
+       self.set_W(dw.T)
        self.set_b(self.__b - np.sum(alpha*dZee) / m)
-       #print("shape b",self.__b.shape)
