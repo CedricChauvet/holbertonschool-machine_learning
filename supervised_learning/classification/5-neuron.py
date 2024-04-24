@@ -86,33 +86,22 @@ class Neuron:
         return Btest, cost
 
     def gradient_descent(self, X, Y, A, alpha=0.05):
-       """ on a Zee= w.T *x +b
+        """ on a Zee= w.T *x +b
             on a besoin de caluler le gradient de Zee
             on sait que le gradient (grad = a -Y)
             la formule de a est la sigmoide de z
-       """ 
-       #nombre de parametres d'entrée
-       ni = X.shape[0]
-       # taille des exemples
-       m = X.shape[1]
-       
-             
-       # method gradient descent
-       #Zee = np.dot(self.__W, X) + self.__b 
-       
-       # a =  np.array(1 / (1 + np.exp(-Zee)))
-       dZee = A - Y
-       #print("dZee" , dZee.shape) 
-       #print("X", X.shape)
-       #print("a", a.shape) 
-       #print("W", self.__W.shape)
-       #print("Zee", Zee.shape)
-       #print("shapedot", (self.__W.T - alpha * np.dot(X, dZee.T)).shape)
-       
-       # calcul des nouvelles valeurs de Wi et w par gradient descent
-       dw = 1/ m * np.dot(X, dZee.T)
-       w = self.__W.T - alpha * dw
-       self.set_W(w.T)
+        """
 
-       #calcul de b par gradient descent
-       self.set_b(self.__b - alpha * (np.sum(dZee))/m)
+        # nombre de parametres d'entrée
+        ni = X.shape[0]
+        # taille des exemples
+        m = X.shape[1]
+        dZee = A - Y
+
+        # calcul des nouvelles valeurs de Wi et w par gradient descent
+        dw = 1 / m * np.dot(X, dZee.T)
+        w = self.__W.T - alpha * dw
+        self.set_W(w.T)
+
+        # calcul de b par gradient descent attention a sortir alpha de la somme
+        self.set_b(self.__b - alpha * (np.sum(dZee))/m)
