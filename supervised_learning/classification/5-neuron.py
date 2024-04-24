@@ -115,4 +115,4 @@ class Neuron:
        self.set_W(w.T)
 
        #calcul de b par gradient descent
-       self.set_b(self.__b - np.sum(alpha*dZee) / m)
+       self.set_b(self.__b - alpha * (np.sum(dZee))/m)
