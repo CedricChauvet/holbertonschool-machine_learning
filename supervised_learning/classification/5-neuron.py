@@ -91,23 +91,27 @@ class Neuron:
             on sait que le gradient (grad = a -Y)
             la formule de a est la sigmoide de z
        """ 
+       #nombre de parametres d'entrée
        ni = X.shape[0]
+       # taille des exemples
        m = X.shape[1]
-       print ( " shapes", ni, m)
+       
+       # print ( " shapes", ni, m)
+       
        # method gradient descent
        Zee = np.dot(self.__W, X) + self.__b 
-       print("Zee", Zee.shape)
-       a =  np.array(1 / (1 + np.exp(-Zee))).T
-       dZee = a - Y.T
-       np.where(dZee > 0,-dZee,dZee)
-       # print("dZee" , dZee.shape) 
-       # print("X", X.T.shape)
-       # print("W", self.__W.shape)
-       # print("nouveaux poids",self.__W - alpha*(X.T*dZee))
-       # calcul des nouvelles valeur de Wi et b
+       # print("Zee", Zee.shape)
+       a =  np.array(1 / (1 + np.exp(-Zee)))
+       dZee = a - Y
+       # np.where(dZee > 0,-dZee,dZee)
+       #print("dZee" , dZee.shape) 
+       #print("X", X.T.shape)
+       #print("W", self.__W.shape)
        
-
-       dw = self.__W - alpha*(np.dot(X, dZee))
+       
+       
+       # calcul des nouvelles valeur de Wi et b
+       dw = self.__W - alpha*(np.dot(X, dZee.T)) / m
        # self.set_W(np.sum(self.__W - alpha*(X.T*dZee) / m,))
        self.set_W(dw[0])
        # print("shape W",np.sum( self.__W - alpha*(X.T*dZee), axis =0).shape)
