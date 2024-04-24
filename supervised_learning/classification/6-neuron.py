@@ -119,8 +119,9 @@ class Neuron:
             raise ValueError("alpha must be positive")
 
         for i in range(iterations):
-            print("A", self.A)
             A, cost = self.evaluate(X, Y)
             self.gradient_descent(X, Y, self.__A, alpha=alpha)
+        
         A, cost = self.evaluate(X, Y)
+        
         return A, cost
