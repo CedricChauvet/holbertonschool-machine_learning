@@ -121,7 +121,7 @@ class Neuron:
         for i in range(iterations):
             A, cost = self.evaluate(X, Y)
             self.gradient_descent(X, Y, self.__A, alpha=alpha)
-        
+
         A, cost = self.evaluate(X, Y)
-        
+
         return A, cost
