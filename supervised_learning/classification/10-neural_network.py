@@ -64,4 +64,6 @@ class NeuralNetwork:
         self.__A2 = np.array(np.dot(self.__A1, self.__W2.T) + self.__b2)
         self.__A2 = np.array(1 / (1 + np.exp(-self.__A2))).T
         self.__A1 = self.__A1.T
+        
+        # Carreful on shapes self.__A1 and A2 are transposed
         return self.__A1, self.__A2
