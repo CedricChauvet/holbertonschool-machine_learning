@@ -25,7 +25,7 @@ class NeuralNetwork:
         self.nodes = nodes
 
         self.W1 = np.random.normal(size=(1, nx))
-        self.b1 = 0
+        self.b1 = np.zeros(nodes)
         self.A1 = 0
         self.W2 = np.random.normal(size=(1, nodes))
         self.b2 = 0
