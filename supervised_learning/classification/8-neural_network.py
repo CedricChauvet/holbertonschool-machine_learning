@@ -9,7 +9,9 @@ import numpy as np
 
 
 class NeuralNetwork:
-
+    """
+    class Neural network
+    """
     def __init__(self, nx, nodes):
 
         if type(nx) is not int:
@@ -25,7 +27,7 @@ class NeuralNetwork:
         self.nodes = nodes
 
         self.W1 = np.random.normal(size=(nodes, nx))
-        self.b1 = np.zeros((nodes,1))
+        self.b1 = np.zeros((nodes, 1))
         self.A1 = 0
         self.W2 = np.random.normal(size=(1, nodes))
         self.b2 = 0
