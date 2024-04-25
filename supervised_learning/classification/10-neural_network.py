@@ -60,8 +60,8 @@ class NeuralNetwork:
     def forward_prop(self, X):
         """Calculates the forward propagation of the neural network"""
         self.__A1 = np.array(np.dot(X.T, self.__W1.T) + self.__b1.T)
+        self.__A1 = np.array(1 / (1 + np.exp(-self.__A1)))
         self.__A2 = np.array(np.dot(self.__A1, self.__W2.T) + self.__b2)
-
-        self.__A1 = np.array(1 / (1 + np.exp(-self.__A1))).T
         self.__A2 = np.array(1 / (1 + np.exp(-self.__A2))).T
+        self.__A1 = self.__A1.T
         return self.__A1, self.__A2
