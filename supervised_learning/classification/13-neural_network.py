@@ -97,7 +97,7 @@ class NeuralNetwork:
         ni = X.shape[0]
         # taille des exemples
         m = X.shape[1]
-        Zee1 = np.dot(self.__W1, X) + self.__b1
+        
         dZee2 = A2 - Y
 
         # calcul des nouvelles valeurs de W2 et b2 par gradient descent
@@ -115,9 +115,12 @@ class NeuralNetwork:
             return sigmoid(x) * (1 - sigmoid(x))
 
         # besoin aussi de Zee1, calculer avec la meme methode forward
-        dZee1 = np.multiply(self.__W2.T * dZee2, dsigmoid(Zee1))
+        # dZee1 = np.multiply(self.__W2.T * dZee2, dsigmoid(Zee1))
+        Zee1 = np.dot(self.__W1, X) + self.__b1
+        #print("Zee1",Zee1.shape)
+        dZee1 = np.dot(self.__W2.T, dZee2) * (A1 * (1 - A1))
         dW1 = 1 / m * np.dot(dZee1, X.T)
-        dB1 = 1 / m * np.sum(dZee1, axis=1, keepdims=True)
+        dB1 =  np.sum(dZee1,axis=1,  keepdims=True) / m
 
         self.__W1 = self.__W1 - alpha * dW1
         self.__b1 = self.__b1 - alpha * dB1
