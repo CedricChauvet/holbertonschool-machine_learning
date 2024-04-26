@@ -26,10 +26,10 @@ class NeuralNetwork:
             raise ValueError("nodes must be a positive integer")
         self.nodes = nodes
 
-        self.__W1 = np.random.normal(size=(nodes, nx))
+        self.__W1 = np.random.randn(nodes, nx)
         self.__b1 = np.zeros((nodes, 1))
         self.__A1 = 0
-        self.__W2 = np.random.normal(size=(1, nodes))
+        self.__W2 = np.random.randn(1, nodes)
         self.__b2 = 0
         self.__A2 = 0
 
@@ -93,8 +93,6 @@ class NeuralNetwork:
 
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
         """Calculates one pass of gradient descent on the neural network"""
-        # nombre de parametres d'entrée
-        ni = X.shape[0]
         # taille des exemples
         m = X.shape[1]
         
@@ -103,24 +101,22 @@ class NeuralNetwork:
         # calcul des nouvelles valeurs de W2 et b2 par gradient descent
         dW2 = (1 / m) * np.dot(dZee2, A1.T)
         db2 = (1 / m) * np.sum(dZee2, axis=1, keepdims=True)
+
+        # besoin aussi de Zee1, calculer avec la meme methode forward
+        # dZee1 = np.multiply(self.__W2.T * dZee2, dsigmoid(Zee1))
+        #print("Zee1",Zee1.shape)
+        
+        dZee1 = np.dot(self.__W2.T, dZee2) * A1 * (1. - A1)
+        dW1 = 1 / m * np.dot(dZee1, X.T)
+        dB1 = 1 / m * np.sum(dZee1,axis= 1,  keepdims=True) 
+
+
+
+        self.__W1 -= alpha * dW1
+        self.__b1 -= alpha * dB1
+        
         self.__W2 = self.__W2 - alpha * dW2
         self.__b2 = self.__b2 - alpha / m * np.sum(dZee2, axis=1,
                                                    keepdims=True)
 
-        # Déclaration des fonctions sigmoid et derivee dsigmoid
-        def sigmoid(x):
-            return 1 / (1 + np.exp(-x))
 
-        def dsigmoid(x):
-            return sigmoid(x) * (1 - sigmoid(x))
-
-        # besoin aussi de Zee1, calculer avec la meme methode forward
-        # dZee1 = np.multiply(self.__W2.T * dZee2, dsigmoid(Zee1))
-        Zee1 = np.dot(self.__W1, X) + self.__b1
-        #print("Zee1",Zee1.shape)
-        dZee1 = np.dot(self.__W2.T, dZee2) * (A1 * (1 - A1))
-        dW1 = 1 / m * np.dot(dZee1, X.T)
-        dB1 =  np.sum(dZee1,axis=1,  keepdims=True) / m
-
-        self.__W1 = self.__W1 - alpha * dW1
-        self.__b1 = self.__b1 - alpha * dB1
