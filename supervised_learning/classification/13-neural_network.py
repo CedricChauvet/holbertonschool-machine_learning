@@ -95,28 +95,18 @@ class NeuralNetwork:
         """Calculates one pass of gradient descent on the neural network"""
         # taille des exemples
         m = X.shape[1]
-        
-        dZee2 = A2 - Y
 
+        dZee2 = A2 - Y
         # calcul des nouvelles valeurs de W2 et b2 par gradient descent
         dW2 = (1 / m) * np.dot(dZee2, A1.T)
         db2 = (1 / m) * np.sum(dZee2, axis=1, keepdims=True)
 
-        # besoin aussi de Zee1, calculer avec la meme methode forward
-        # dZee1 = np.multiply(self.__W2.T * dZee2, dsigmoid(Zee1))
-        #print("Zee1",Zee1.shape)
-        
         dZee1 = np.dot(self.__W2.T, dZee2) * A1 * (1. - A1)
         dW1 = 1 / m * np.dot(dZee1, X.T)
-        dB1 = 1 / m * np.sum(dZee1,axis= 1,  keepdims=True) 
-
-
+        dB1 = 1 / m * np.sum(dZee1, axis=1, keepdims=True)
 
         self.__W1 -= alpha * dW1
         self.__b1 -= alpha * dB1
-        
         self.__W2 = self.__W2 - alpha * dW2
         self.__b2 = self.__b2 - alpha / m * np.sum(dZee2, axis=1,
                                                    keepdims=True)
-
-
