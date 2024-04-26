@@ -92,7 +92,7 @@ class NeuralNetwork:
         return Btest, cost
 
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
-
+        """Calculates one pass of gradient descent on the neural network"""
         # nombre de parametres d'entrée
         ni = X.shape[0]
         # taille des exemples
