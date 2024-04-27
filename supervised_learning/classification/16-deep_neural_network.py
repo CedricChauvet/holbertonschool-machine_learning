@@ -2,11 +2,10 @@
 """
 new class: DeepNeuralNetwork, task  16:  DeepNeuralNetwork
 """
-import numpy as np
-import matplotlib.pyplot as plt
 
 
 class DeepNeuralNetwork:
+    """ define a new class"""
     def __init__(self, nx, layers):
         if type(nx) is not int:
             raise TypeError("nx must be an integer")
