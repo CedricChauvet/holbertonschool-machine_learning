@@ -4,6 +4,7 @@ new class: DeepNeuralNetwork, task  16:  DeepNeuralNetwork
 """
 import numpy as np
 
+
 class DeepNeuralNetwork:
     """ define a new class"""
     def __init__(self, nx, layers):
