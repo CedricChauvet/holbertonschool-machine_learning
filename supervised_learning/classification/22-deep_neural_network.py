@@ -116,7 +116,7 @@ class DeepNeuralNetwork:
             self.__weights[f"W{i}"] = self.__weights[
                 f"W{i}"] - alpha * dW[f"W{i}"]
 
-    def train(self, X, Y, iterations=5000, alpha2=0.05):
+    def train(self, X, Y, iterations=5000, alpha=0.05):
         """ fontion d'entrainement
         Trains the DNN
         """
@@ -126,14 +126,14 @@ class DeepNeuralNetwork:
         elif iterations < 0:
             raise ValueError("iterations must be a positive integer")
 
-        if type(alpha2) is not float:
+        if type(alpha) is not float:
             raise TypeError("alpha must be a float")
-        elif alpha2 < 0:
+        elif alpha < 0:
             raise ValueError("alpha must be positive")
 
         for i in range(iterations):
             Aact, cost = self.evaluate(X, Y)
-            self.gradient_descent(Y, self.__cache,alpha2)
+            self.gradient_descent(Y, self.__cache,alpha)
         # last evaluation to MAJ wieughts and biaises
         Aact, cost = self.evaluate(X, Y)
 
