@@ -133,7 +133,7 @@ class DeepNeuralNetwork:
 
         for i in range(iterations):
             Aact, cost = self.evaluate(X, Y)
-            self.gradient_descent(Y, self.__cache)
+            self.gradient_descent(Y, self.__cache,alpha2)
         # last evaluation to MAJ wieughts and biaises
         Aact, cost = self.evaluate(X, Y)
 
