@@ -4,7 +4,6 @@ new class: DeepNeuralNetwork, task  18:  DeepNeuralNetwork
 task 22:. Train DeepNeuralNetwork
 """
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 class DeepNeuralNetwork:
