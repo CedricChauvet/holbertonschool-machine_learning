@@ -12,6 +12,9 @@ def one_hot_encode(Y, classes):
      an np array of (cl,m), cl is the maximum number of classes found in Y,
     m the number of inputs"""
     Ho = np.zeros((classes, Y.shape[0]))
+    if type(Y) is not np.ndarray:
+        return None
+    
 
     for i, j in enumerate(Y):
         Ho[j, i] = 1
