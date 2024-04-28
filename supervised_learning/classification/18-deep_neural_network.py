@@ -56,7 +56,6 @@ class DeepNeuralNetwork:
             if i == 0:
                 self.__cache['A0'] = X
             else:
-                print("weights", self.__weights['W1'].shape)
                 z = np.dot(self.__weights['W{}'.format(
                     i)], self.__cache['A{}'.format(i - 1)]
                     ) + self.__weights['b{}'.format(i)]
