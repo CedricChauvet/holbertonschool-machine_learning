@@ -21,11 +21,10 @@ def one_hot_encode(Y, classes):
     return Ho
 
 
-def one_hot_decode(one_hot=np.ndarray([])):
+def one_hot_decode(one_hot):
     """converts a one-hot matrix into a vector of labels"""
 
     if one_hot is None:
-        print("None type")
         return None
     if type(one_hot) is not np.ndarray:
         return None
