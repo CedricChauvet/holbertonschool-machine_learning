@@ -24,7 +24,9 @@ def one_hot_encode(Y, classes):
 def one_hot_decode(one_hot=np.ndarray([])):
     """converts a one-hot matrix into a vector of labels"""
 
-    if one_hot is None or type(one_hot) is not np.ndarray:
+    if one_hot is None:
+        return None
+    if type(one_hot) is not np.ndarray:
         return None
     m = one_hot.shape[1]
     classes = one_hot.shape[0]
