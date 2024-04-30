@@ -174,7 +174,7 @@ class DeepNeuralNetwork:
         file.close()
 
     @staticmethod
-    def load(filename=None):
+    def load(filename=""):
         """load the instance"""
         if filename is None or filename == "":
             return None
