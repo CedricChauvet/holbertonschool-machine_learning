@@ -28,7 +28,7 @@ def one_hot_decode(one_hot):
         return None
     if type(one_hot) is not np.ndarray:
         return None
-    
+
     try:
         m = one_hot.shape[1]
         classes = one_hot.shape[0]
@@ -38,5 +38,5 @@ def one_hot_decode(one_hot):
 
         return Ho_De[0]
 
-    except:
+    except Exception as ex:
         return None
