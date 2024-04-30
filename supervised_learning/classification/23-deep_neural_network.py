@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 new class: DeepNeuralNetwork, task  18:  DeepNeuralNetwork
-task 22:. Train DeepNeuralNetwork
+task 23:. Train DeepNeuralNetwork
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -117,7 +117,8 @@ class DeepNeuralNetwork:
             self.__weights[f"W{i}"] = self.__weights[
                 f"W{i}"] - alpha * dW[f"W{i}"]
 
-    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
+    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True,
+              graph=True, step=100):
         """ fontion d'entrainement
         Trains the DNN
         """
@@ -136,30 +137,27 @@ class DeepNeuralNetwork:
 
         for i in range(iterations):
             Aact, cost = self.evaluate(X, Y)
-            
-            plot_cost = np.append(plot_cost, cost)            
-            # verbose mode    
-            if verbose == True:
+
+            plot_cost = np.append(plot_cost, cost)
+            # verbose mode
+            if verbose:
                 print(f"Cost after {i} iterations: {cost}")
 
             self.gradient_descent(Y, self.__cache, alpha)
         # last evaluation to MAJ weights and biaises
         Aact, cost = self.evaluate(X, Y)
-        
+
         # Visual Mode
-        if graph == True:
+        if graph:
             if type(step) is not int:
                 raise TypeError("step must be an integer")
             elif step < 1 or step > iterations:
                 raise ValueError("step must be positive and <= iterations")
-        
-                
+
             x = np.arange(0, iterations, step)
             plt.plot(x, plot_cost[x])
             plt.xlabel("iteration")
             plt.ylabel("cost")
             plt.title("Training Cost")
             plt.show()
-
-
         return Aact, cost
