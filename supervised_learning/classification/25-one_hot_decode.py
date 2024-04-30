@@ -25,7 +25,7 @@ def one_hot_decode(one_hot=np.ndarray([])):
     """converts a one-hot matrix into a vector of labels"""
 
     if one_hot is None:
-        prtin("None type")
+        print("None type")
         return None
     if type(one_hot) is not np.ndarray:
         return None
