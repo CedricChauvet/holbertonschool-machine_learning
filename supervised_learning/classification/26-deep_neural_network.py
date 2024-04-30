@@ -165,7 +165,7 @@ class DeepNeuralNetwork:
 
     def save(self, filename):
         """ save the instance"""
-        if filename is None:
+        if filename == ""
             return None
         if not filename.lower().endswith(".pkl"):
             filename += ".pkl"
