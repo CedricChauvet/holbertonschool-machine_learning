@@ -163,7 +163,7 @@ class DeepNeuralNetwork:
             plt.show()
         return Aact, cost
 
-    def save(self, filename = None):
+    def save(self, filename=None):
         """ save the instance"""
         if filename is None:
             return None
@@ -174,9 +174,9 @@ class DeepNeuralNetwork:
         file.close()
 
     @staticmethod
-    def load(filename = None):
+    def load(filename=None):
         """load the instance"""
-        if filename is None:
+        if filename is None or filename == "":
             return None
         file = open(filename, 'rb')
         return pickle.load(file)
