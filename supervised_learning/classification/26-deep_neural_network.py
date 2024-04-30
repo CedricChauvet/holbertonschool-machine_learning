@@ -176,7 +176,8 @@ class DeepNeuralNetwork:
     @staticmethod
     def load(filename=""):
         """load the instance"""
-        if filename is None or filename == "":
-            return None
-        file = open(filename, 'rb')
-        return pickle.load(file)
+        try:
+            file = open(filename, 'rb')
+            return pickle.load(file)
+        except:
+            return None 
