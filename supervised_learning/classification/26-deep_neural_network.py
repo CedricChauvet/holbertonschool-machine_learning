@@ -163,7 +163,7 @@ class DeepNeuralNetwork:
             plt.show()
         return Aact, cost
 
-    def save(self, filename):
+    def save(self, filename = None):
         """ save the instance"""
         if filename == None:
             return None
