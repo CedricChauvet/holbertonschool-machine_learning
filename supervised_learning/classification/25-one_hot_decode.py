@@ -28,10 +28,15 @@ def one_hot_decode(one_hot):
         return None
     if type(one_hot) is not np.ndarray:
         return None
-    m = one_hot.shape[1]
-    classes = one_hot.shape[0]
-    Ho_De = np.ones((1, m), dtype=int)
-    for index, i in enumerate(one_hot.T):
-        Ho_De[0, index] = (np.where(i == 1)[0][0])
+    
+    try:
+        m = one_hot.shape[1]
+        classes = one_hot.shape[0]
+        Ho_De = np.ones((1, m), dtype=int)
+        for index, i in enumerate(one_hot.T):
+            Ho_De[0, index] = (np.where(i == 1)[0][0])
 
-    return Ho_De[0]
+        return Ho_De[0]
+
+    except:
+        return None
