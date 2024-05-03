@@ -75,7 +75,7 @@ class DeepNeuralNetwork:
                 'A{}'.format(i - 1)]) + self.__weights['b{}'.format(i)]
             A = 1 / (1 + np.exp(-Z))  # Fonction d'activation (sigmoid)
             self.__cache['Z{}'.format(i)] = Z
-            self.__cache['A{}'.format(i)] = A  # Arrondi à 4 décimales
+            self.__cache['A{}'.format(i)] = A  
 
         # Calcul de la sortie de la dernière couche (softmax)
         Z_last = np.dot(self.__weights['W{}'.format(self.__L)],
@@ -83,7 +83,7 @@ class DeepNeuralNetwork:
                         ) + self.__weights['b{}'.format(self.__L)]
         A_last = np.exp(Z_last) / np.sum(np.exp(Z_last), axis=0)  # Softmax
         self.__cache['Z{}'.format(self.__L)] = Z_last
-        self.__cache['A{}'.format(self.__L)] = A_last  # Arrondi à 4 décimales
+        self.__cache['A{}'.format(self.__L)] = A_last
         return A_last, self.__cache
 
     def cost(self, Y, A):
@@ -91,17 +91,8 @@ class DeepNeuralNetwork:
 
         m = Y.shape[1]
         classes = Y[:, 0].shape[0]
-        """ Need an intermediary part,
-          calcul of the loss function"""
-
-        # this print the shape of Y, 10, 50000
-        # print("shape A", A.shape )
-        # first calcul loss function
-        # loss = -(Y * np.log(A) + (1-Y) * np.log(1.0000001 - A))
-
+        """ cross entropy method"""
         cost = -np.sum(Y * np.log(A)) / m
-        # the cost
-        # cost = (1 / ( m * classes)) * np.sum(loss)
 
         return cost
 
@@ -110,25 +101,21 @@ class DeepNeuralNetwork:
 
         classes = Y[:, 0].shape[0]
         m = Y[0]
-
         hot_code = np.array(m, dtype=int)
 
         # forward propagation on data X
         A, self.__cache = self.forward_prop(X)
-        # print("A", A[:, 0:20])
-
         # my cost calcul
         cost = self.cost(Y, A)
 
         # nympy using argmax in order to find the max of an 10 array
-
         for index, i_A in enumerate(A.T):
             imax = np.argmax(i_A)
             hot_code[index] = imax
 
         # then hot encode to get a matrix of 0 and 1
         hot_code = one_hot_encode(hot_code, classes)
-        # print("hot code",hot_code[:,0:15])
+
         return hot_code, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):
@@ -177,8 +164,8 @@ class DeepNeuralNetwork:
 
         for i in range(iterations):
             Aact, cost = self.evaluate(X, Y)
-
             plot_cost = np.append(plot_cost, cost)
+            
             # verbose mode
             if verbose:
                 if i % step == 0:
