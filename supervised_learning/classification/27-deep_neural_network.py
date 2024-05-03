@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write a function def one_hot_encode(Y, classes): that converts
  a numeric label vector into a one-hot matrix and reverse
- Task 26: . Persistence is Key
+ Task 28: .  Update DeepNeuralNetwork
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -32,6 +32,7 @@ class DeepNeuralNetwork:
             if type(layers[i]) is not int or layers[i] < 0:
                 raise TypeError("layers must be a list of positive integers")
 
+        # He et al. method:
             if i == 0:
                 self.__weights['W1'] = np.random.randn(
                         layers[i], nx) * np.sqrt(2 / nx)
@@ -39,9 +40,6 @@ class DeepNeuralNetwork:
                 self.__weights['W{}'.format(i + 1)] = np.random.randn(
                     layers[i], layers[i - 1]) * np.sqrt(2 / layers[i - 1])
             self.__weights['b{}'.format(i + 1)] = np.zeros((layers[i], 1))
-
-        # He et al. method:
-        # w=np.random.randn(layer_size[l],layer_size[l-1])*np.sqrt(2/layer_size[l-1])
 
     @property
     def L(self):
@@ -58,8 +56,6 @@ class DeepNeuralNetwork:
     def forward_prop(self, X):
         """ forward propagation in a DNN, be careful of Matrix dimensions"""
         """
-        Effectue la propagation avant (forward propagation)
-        à travers les couches cachées.
 
         Arguments :
         X -- données d'entrée (matrice de taille (nx, m))
@@ -67,6 +63,8 @@ class DeepNeuralNetwork:
         Returns :
         A -- sortie de la dernière couche (probabilités prédites)
         """
+
+        # inputs putted in A0
         self.__cache['A0'] = X
 
         # Propagation à travers les couches cachées
@@ -75,7 +73,7 @@ class DeepNeuralNetwork:
                 'A{}'.format(i - 1)]) + self.__weights['b{}'.format(i)]
             A = 1 / (1 + np.exp(-Z))  # Fonction d'activation (sigmoid)
             self.__cache['Z{}'.format(i)] = Z
-            self.__cache['A{}'.format(i)] = A  
+            self.__cache['A{}'.format(i)] = A
 
         # Calcul de la sortie de la dernière couche (softmax)
         Z_last = np.dot(self.__weights['W{}'.format(self.__L)],
@@ -84,23 +82,27 @@ class DeepNeuralNetwork:
         A_last = np.exp(Z_last) / np.sum(np.exp(Z_last), axis=0)  # Softmax
         self.__cache['Z{}'.format(self.__L)] = Z_last
         self.__cache['A{}'.format(self.__L)] = A_last
+
         return A_last, self.__cache
 
     def cost(self, Y, A):
-        """ Calcul of the cost function in a DNN"""
+        """ Calcul of the cost function in a DNN
+        using cross entropy"""
 
         m = Y.shape[1]
-        classes = Y[:, 0].shape[0]
         """ cross entropy method"""
         cost = -np.sum(Y * np.log(A)) / m
 
         return cost
 
     def evaluate(self, X, Y):
-        """Evaluates the deep neuron's network predictions"""
-
+        """Evaluates the deep neuron's network predictions
+        using hot one encoding
+        """
+        # number of classes and number of input
         classes = Y[:, 0].shape[0]
         m = Y[0]
+        # matrix, contain the classes of each element
         hot_code = np.array(m, dtype=int)
 
         # forward propagation on data X
@@ -121,11 +123,12 @@ class DeepNeuralNetwork:
     def gradient_descent(self, Y, cache, alpha=0.05):
         """Calculates one pass of gradient descent on a DNN"""
         # taille des exemples
-        m = Y.shape[1]
-        dZee = dict()
+        m = Y.shape[0]
+        dZee = dict()  # calcul of differentials
         dB = dict()
         dW = dict()
 
+        # dZ = A - Y,
         dZee['Z{}'.format(self.__L)] = self.cache['A{}'.format(self.__L)] - Y
 
         for i in range(self.__L, 0, -1):
@@ -165,10 +168,10 @@ class DeepNeuralNetwork:
         for i in range(iterations):
             Aact, cost = self.evaluate(X, Y)
             plot_cost = np.append(plot_cost, cost)
-            
+
             # verbose mode
             if verbose:
-                if i % step == 0:
+                if i % step == 0 or i == iterations:
                     print(f"Cost after {i} iterations: {cost}")
 
             self.gradient_descent(Y, self.__cache, alpha)
@@ -207,6 +210,5 @@ class DeepNeuralNetwork:
         try:
             file = open(filename, 'rb')
             return pickle.load(file)
-
         except Exception as ex:
             return None
