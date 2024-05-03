@@ -7,6 +7,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 
+one_hot_encode = __import__('24-one_hot_encode').one_hot_encode
+one_hot_decode = __import__('25-one_hot_decode').one_hot_decode
+
 
 class DeepNeuralNetwork:
     """ define a new class with private attributes"""
@@ -54,61 +57,78 @@ class DeepNeuralNetwork:
 
     def forward_prop(self, X):
         """ forward propagation in a DNN, be careful of Matrix dimensions"""
-        for i in range(self.__L + 1):
-            if i == 0:
-                self.__cache['A0'] = X
-            else:
-                z = np.dot(self.__weights['W{}'.format(
-                    i)], self.__cache['A{}'.format(i - 1)]
-                    ) + self.__weights['b{}'.format(i)]
-                sigmoid_z = 1 / (1 + np.exp(-z))
-                self.__cache['A{}'.format(i)] = sigmoid_z
-        # retourne le dernier Layer, puis l'ensemble des
-        # données dans cache, toutes les activations
+        """
+        Effectue la propagation avant (forward propagation) à travers les couches cachées.
 
-        # ceci retourne la shape du dernier layer, les dimensions correspondent
-        print("forward", f"A{self.__L}", self.cache[f"A{self.__L}"].shape)
+        Arguments :
+        X -- données d'entrée (matrice de taille (nx, m))
 
-        return self.__cache['A{}'.format(self.__L)], self.__cache
+        Returns :
+        A -- sortie de la dernière couche (probabilités prédites)
+        """
+        self.__cache['A0'] = X
+
+        # Propagation à travers les couches cachées
+        for i in range(1, self.__L):
+            Z = np.dot(self.__weights['W{}'.format(i)], self.__cache['A{}'.format(i - 1)]) + self.__weights['b{}'.format(i)]
+            A = 1 / (1 + np.exp(-Z))  # Fonction d'activation (sigmoid)
+            self.__cache['Z{}'.format(i)] = Z
+            self.__cache['A{}'.format(i)] = A  # Arrondi à 4 décimales
+
+        # Calcul de la sortie de la dernière couche (softmax)
+        Z_last = np.dot(self.__weights['W{}'.format(self.__L)], self.__cache['A{}'.format(self.__L - 1)]) + self.__weights['b{}'.format(self.__L)]
+        A_last = np.exp(Z_last) / np.sum(np.exp(Z_last), axis=0)  # Softmax
+        self.__cache['Z{}'.format(self.__L)] = Z_last
+        self.__cache['A{}'.format(self.__L)] = A_last  # Arrondi à 4 décimales
+
+        return A_last, self.__cache
 
     def cost(self, Y, A):
         """ Calcul of the cost function in a DNN"""
 
         m = Y.shape[1]
-        classes = Y[:, 0].shape
+        classes = Y[:, 0].shape[0]
         """ Need an intermediary part,
           calcul of the loss function"""
         
         # this print the shape of Y, 10, 50000
-        print("shape Y", Y.shape)
+        #print("shape A", A.shape )
         # first calcul loss function
-        loss = -(Y * np.log(A) + (1-Y) * np.log(1.0000001 - A))
+        # loss = -(Y * np.log(A) + (1-Y) * np.log(1.0000001 - A))
         
+        
+        cost = -np.sum(Y * np.log(A)) / m
         # the cost
-        cost = (1 / m) * np.sum(loss)
+        # cost = (1 / ( m * classes)) * np.sum(loss)
+        
         return cost
 
     def evaluate(self, X, Y):
         """Evaluates the deep neuron's network predictions"""
         
-        classes = Y[:, 0].shape
+        classes = Y[:, 0].shape[0]
         m = Y[0]
-        hot_code=np.array(m)
+        
+        hot_code=np.array(m, dtype=int)
+        
         # forward propagation on data X
         A, self.__cache = self.forward_prop(X)
-        print("A shape", A[:,0].shape, "hot A", A[:, 0])
+        np.set_printoptions(precision=4)
+        #print("A", A[:, 0:20])
+
         # my cost calcul
         cost = self.cost(Y, A)
 
-        # nympy where, put 0 if forward(X) < 0.5, 1 else
-        Btest = np.where(A >= 0.5, 1, 0)
-        for i in A.T:
-            imax = np.argmax(i)
-            np.append(hot_code,imax)
-        print("hot code i",hot_code.shape)
-        
-        print("Btest" , Btest[0].shape)
-        return Btest, cost
+        # nympy using argmax in order to find the max of an 10 array
+
+        for index, i_A in enumerate(A.T):
+            imax = np.argmax(i_A)
+            hot_code[index] = imax              
+         
+        # then hot encode to get a matrix of 0 and 1
+        hot_code = one_hot_encode(hot_code, classes)  
+        #print("hot code",hot_code[:,0:15])
+        return hot_code, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):
         """Calculates one pass of gradient descent on a DNN"""
@@ -160,7 +180,8 @@ class DeepNeuralNetwork:
             plot_cost = np.append(plot_cost, cost)
             # verbose mode
             if verbose:
-                print(f"Cost after {i} iterations: {cost}")
+                if i % step == 0:
+                    print(f"Cost after {i} iterations: {cost}")
 
             self.gradient_descent(Y, self.__cache, alpha)
         # last evaluation to MAJ weights and biaises
