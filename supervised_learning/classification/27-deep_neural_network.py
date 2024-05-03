@@ -58,7 +58,8 @@ class DeepNeuralNetwork:
     def forward_prop(self, X):
         """ forward propagation in a DNN, be careful of Matrix dimensions"""
         """
-        Effectue la propagation avant (forward propagation) à travers les couches cachées.
+        Effectue la propagation avant (forward propagation)
+        à travers les couches cachées.
 
         Arguments :
         X -- données d'entrée (matrice de taille (nx, m))
@@ -70,13 +71,16 @@ class DeepNeuralNetwork:
 
         # Propagation à travers les couches cachées
         for i in range(1, self.__L):
-            Z = np.dot(self.__weights['W{}'.format(i)], self.__cache['A{}'.format(i - 1)]) + self.__weights['b{}'.format(i)]
+            Z = np.dot(self.__weights['W{}'.format(i)], self.__cache[
+                'A{}'.format(i - 1)]) + self.__weights['b{}'.format(i)]
             A = 1 / (1 + np.exp(-Z))  # Fonction d'activation (sigmoid)
             self.__cache['Z{}'.format(i)] = Z
             self.__cache['A{}'.format(i)] = A  # Arrondi à 4 décimales
 
         # Calcul de la sortie de la dernière couche (softmax)
-        Z_last = np.dot(self.__weights['W{}'.format(self.__L)], self.__cache['A{}'.format(self.__L - 1)]) + self.__weights['b{}'.format(self.__L)]
+        Z_last = np.dot(self.__weights['W{}'.format(self.__L)],
+                        self.__cache['A{}'.format(self.__L - 1)]
+                        ) + self.__weights['b{}'.format(self.__L)]
         A_last = np.exp(Z_last) / np.sum(np.exp(Z_last), axis=0)  # Softmax
         self.__cache['Z{}'.format(self.__L)] = Z_last
         self.__cache['A{}'.format(self.__L)] = A_last  # Arrondi à 4 décimales
@@ -89,30 +93,29 @@ class DeepNeuralNetwork:
         classes = Y[:, 0].shape[0]
         """ Need an intermediary part,
           calcul of the loss function"""
-        
+
         # this print the shape of Y, 10, 50000
-        #print("shape A", A.shape )
+        # print("shape A", A.shape )
         # first calcul loss function
         # loss = -(Y * np.log(A) + (1-Y) * np.log(1.0000001 - A))
-        
-        
+
         cost = -np.sum(Y * np.log(A)) / m
         # the cost
         # cost = (1 / ( m * classes)) * np.sum(loss)
-        
+
         return cost
 
     def evaluate(self, X, Y):
         """Evaluates the deep neuron's network predictions"""
-        
+
         classes = Y[:, 0].shape[0]
         m = Y[0]
-        
-        hot_code=np.array(m, dtype=int)
-        
+
+        hot_code = np.array(m, dtype=int)
+
         # forward propagation on data X
         A, self.__cache = self.forward_prop(X)
-        #print("A", A[:, 0:20])
+        # print("A", A[:, 0:20])
 
         # my cost calcul
         cost = self.cost(Y, A)
@@ -121,11 +124,11 @@ class DeepNeuralNetwork:
 
         for index, i_A in enumerate(A.T):
             imax = np.argmax(i_A)
-            hot_code[index] = imax              
-         
+            hot_code[index] = imax
+
         # then hot encode to get a matrix of 0 and 1
-        hot_code = one_hot_encode(hot_code, classes)  
-        #print("hot code",hot_code[:,0:15])
+        hot_code = one_hot_encode(hot_code, classes)
+        # print("hot code",hot_code[:,0:15])
         return hot_code, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):
