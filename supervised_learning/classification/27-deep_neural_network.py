@@ -80,7 +80,6 @@ class DeepNeuralNetwork:
         A_last = np.exp(Z_last) / np.sum(np.exp(Z_last), axis=0)  # Softmax
         self.__cache['Z{}'.format(self.__L)] = Z_last
         self.__cache['A{}'.format(self.__L)] = A_last  # Arrondi à 4 décimales
-
         return A_last, self.__cache
 
     def cost(self, Y, A):
@@ -113,7 +112,6 @@ class DeepNeuralNetwork:
         
         # forward propagation on data X
         A, self.__cache = self.forward_prop(X)
-        np.set_printoptions(precision=4)
         #print("A", A[:, 0:20])
 
         # my cost calcul
