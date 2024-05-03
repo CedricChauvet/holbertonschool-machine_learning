@@ -127,7 +127,8 @@ class Neuron:
             plot_cost = np.append(plot_cost, cost)            
             # verbose mode    
             if verbose == True:
-                print(f"Cost after {i} iterations: {cost}")
+                if i % step == 0:
+                    print(f"Cost after {i} iterations: {cost}")
             
             self.gradient_descent(X, Y, self.__A, alpha=alpha)
             
@@ -138,7 +139,7 @@ class Neuron:
         # Verbose Mode    
         # if verbose == True:
         #    print(f"Cost after {iterations} iterations: {cost}")
-        print(plot_cost[:50])
+        
         # Visual Mode
         if graph == True:
             if type(step) is not int:

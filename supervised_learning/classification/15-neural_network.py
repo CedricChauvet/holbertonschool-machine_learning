@@ -135,7 +135,8 @@ class NeuralNetwork:
             plot_cost = np.append(plot_cost, cost)
             # verbose mode
             if verbose:
-                print(f"Cost after {i} iterations: {cost}")
+                if i % step == 0:
+                    print(f"Cost after {i} iterations: {cost}")
 
             self.gradient_descent(X, Y, self.__A1, self.__A2, alpha=alpha)
 
