@@ -69,10 +69,11 @@ class DeepNeuralNetwork:
 
         # Propagation à travers les couches cachées
         for i in range(1, self.__L):
-                 z = np.dot(self.__weights['W{}'.format(
+            z = np.dot(self.__weights['W{}'.format(
                     i)], self.__cache['A{}'.format(i - 1)]
                     ) + self.__weights['b{}'.format(i)]
-                sigmoid_z = 1 / (1 + np.exp(-z))
+            sigmoid_z = 1 / (1 + np.exp(-z))
+                
             self.__cache['Z{}'.format(i)] = z
             self.__cache['A{}'.format(i)] = sigmoid_z
 
