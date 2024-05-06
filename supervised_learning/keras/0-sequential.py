@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import tensorflow.keras as K
 """ first program of Keras, to be continued"""
+import tensorflow.keras as K
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
