@@ -29,7 +29,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
 def optimize_model(network, alpha, beta1, beta2):
     """ make an optimizer the compile
     """
-    
+
     optim = K.optimizers.Adam(learning_rate=alpha, beta_1=beta1, beta_2=beta2)
     network.compile(optimizer=optim,
                     loss='categorical_crossentropy',
