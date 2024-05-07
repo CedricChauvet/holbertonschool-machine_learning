@@ -5,7 +5,7 @@ import tensorflow.keras as K
 
 
 def train_model(network, data, labels, batch_size, epochs,
-                verbose=True, shuffle=False):
+                verbose=False, shuffle=False):
     """
     this is the task 4, train a model
     """
@@ -13,5 +13,8 @@ def train_model(network, data, labels, batch_size, epochs,
     history = network.fit(data, labels, epochs=epochs,
                 batch_size=batch_size, verbose=verbose, shuffle=shuffle)
     if verbose is False:
-        print(history.history.items())
+        valuesloss = [float("{:.5f}".format(x)) for x in history.history["loss"]]
+        valueaccurate = [float("{:.5f}".format(x)) for x in history.history["accuracy"]]
+        print("accuracy", valueaccurate, "loss", valuesloss )  
+    
     return history

@@ -39,5 +39,5 @@ if __name__ == '__main__':
     beta2 = 0.999
     optimize_model(network, alpha, beta1, beta2)
     batch_size = 64
-    epochs = 5   
+    epochs = 3   
     train_model(network, X_train, Y_train_oh, batch_size, epochs)
