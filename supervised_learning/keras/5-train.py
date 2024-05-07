@@ -10,20 +10,13 @@ def train_model(network, data, labels, batch_size, epochs, validation_data=None,
     """
 
     if validation_data is None:
-        history = network.fit(
-    x=data
-    , y=labels
-    , batch_size=batch_size
-    , epochs=epochs
-    ,verbose=False
-        )    
+        history = network.fit(data, labels, epochs=epochs, batch_size=batch_size,
+                          verbose=False, shuffle=shuffle, validation_data =validation_data)
+        
 
     else:
-        history = network.fit(
-        x=data
-        , y=labels
-        , validation_data= validation_data
-        , batch_size=batch_size
-        , epochs=epochs
-        )
+        
+        history = network.fit(data, labels, epochs=epochs, batch_size=batch_size,
+                          verbose=verbose, shuffle=shuffle, validation_data =validation_data)
+    return history
         
