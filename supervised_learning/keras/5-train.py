@@ -10,16 +10,22 @@ def train_model(network, data, labels, batch_size, epochs, validation_data=None,
     """
 
     if validation_data is None:
-        verbose = False
-
-    history = network.fit(
+        history = network.fit(
     x=data
     , y=labels
-    , validation_data= validation_data
     , batch_size=batch_size
     , epochs=epochs
-    
-)
+    ,verbose=False
+        )    
+
+    else:
+        history = network.fit(
+        x=data
+        , y=labels
+        , validation_data= validation_data
+        , batch_size=batch_size
+        , epochs=epochs
+        )
 
         
     if verbose is False:
