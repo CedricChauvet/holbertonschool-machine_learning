@@ -12,5 +12,6 @@ def train_model(network, data, labels, batch_size, epochs,
 
     history = network.fit(data, labels, epochs=epochs,
                 batch_size=batch_size, verbose=verbose, shuffle=shuffle)
-    # print(history.history.items())
-    return history.history.items()
+    if verbose is False:
+        print(history.history.items())
+    return history
