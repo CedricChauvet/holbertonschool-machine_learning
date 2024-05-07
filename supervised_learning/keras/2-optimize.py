@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """ first program of Keras, to be continued"""
 import tensorflow.keras as K
-from keras.optimizers import Adam
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
