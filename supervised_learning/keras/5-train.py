@@ -26,12 +26,5 @@ def train_model(network, data, labels, batch_size, epochs, validation_data=None,
         , batch_size=batch_size
         , epochs=epochs
         )
-
         
-    if verbose is False:
-        valuesloss = [float("{:.5f}".format(x))
-                      for x in history.history["loss"]]
-        valueaccurate = [float("{:.5f}".format(x))
-                         for x in history.history["accuracy"]]
-    
     return history
