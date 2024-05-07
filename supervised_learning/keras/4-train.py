@@ -10,13 +10,13 @@ def train_model(network, data, labels, batch_size, epochs,
     this is the task 4, train a model
     """
 
-    history = network.fit(data, labels, epochs=epochs,
-                batch_size=batch_size, verbose=verbose, shuffle=shuffle)
-    
+    history = network.fit(data, labels, epochs=epochs, batch_size=batch_size,
+                          verbose=verbose, shuffle=shuffle)
+
     if verbose is False:
-        valuesloss = [float("{:.5f}".format(x)) for x in history.history["loss"]]
-        valueaccurate = [float("{:.5f}".format(x)) for x in history.history["accuracy"]]
-        #print("accuracy", valueaccurate)
-        # print( "loss", valuesloss)  
-    
+        valuesloss = [float("{:.5f}".format(x))
+                      for x in history.history["loss"]]
+        valueaccurate = [float("{:.5f}".format(x))
+                         for x in history.history["accuracy"]]
+
     return history
