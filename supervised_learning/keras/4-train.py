@@ -4,7 +4,7 @@
 import tensorflow.keras as K
 
 
-def train_model(network, data, labels, batch_size, epochs, verbose= False, shuffle=False):
+def train_model(network, data, labels, batch_size, epochs, verbose= True, shuffle=False):
     """
     this is the task 4, train a model
     """
