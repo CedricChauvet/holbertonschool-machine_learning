@@ -3,16 +3,12 @@
  a numeric label vector into a one-hot matrix:
 """
 import tensorflow.keras as K
-import numpy as np
 
 
 def one_hot(Y, classes=None):
     """transfom a numeric label vector into a one-hot matrix Ho is
-     an np array of (cl,m), cl is the maximum number of classes found in Y,
-    m the number of inputs"""
-    
-    classes = len(Y)
-    Ho = [[0] * len(Y) for _ in range(classes)]
-    for j, i in enumerate(Y):
-        Ho[j][i] = 1
-    return Ho
+     an np array an array of shape (Y, classes) with keras.utils.to_categorical
+    """
+
+    one_hot_matrix = K.utils.to_categorical(Y, num_classes=classes)
+    return one_hot_matrix
