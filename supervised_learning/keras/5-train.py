@@ -15,7 +15,7 @@ def train_model(network, data, labels, batch_size, epochs, validation_data=None,
     , validation_data= validation_data
     , batch_size=batch_size
     , epochs=epochs
-    , verbose=True
+    
 )
 
     if verbose is False:
