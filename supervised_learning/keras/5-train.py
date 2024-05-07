@@ -18,6 +18,13 @@ def train_model(network, data, labels, batch_size, epochs, validation_data=None,
     
 )
 
+    if validation_data is None:
+        valuesloss = [float("{:.5f}".format(x))
+                      for x in history.history["loss"]]
+        valueaccurate = [float("{:.5f}".format(x))
+                         for x in history.history["accuracy"]]
+    
+        print("accuracy",valueaccurate)
     if verbose is False:
         valuesloss = [float("{:.5f}".format(x))
                       for x in history.history["loss"]]
