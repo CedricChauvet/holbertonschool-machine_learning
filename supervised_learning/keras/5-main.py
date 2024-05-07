@@ -43,4 +43,4 @@ if __name__ == '__main__':
     optimize_model(network, alpha, beta1, beta2)
     batch_size = 64
     epochs = 5
-    train_model(network, X_train, Y_train_oh, batch_size, epochs)
+    train_model(network, X_train, Y_train_oh, batch_size, epochs, validation_data=(X_valid, Y_valid_oh))
