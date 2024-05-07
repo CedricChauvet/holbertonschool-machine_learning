@@ -3,6 +3,7 @@
  a numeric label vector into a one-hot matrix:
 """
 import tensorflow.keras as K
+import numpy as np
 
 
 def one_hot(Y, classes=None):
