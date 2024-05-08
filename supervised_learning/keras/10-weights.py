@@ -7,10 +7,14 @@ import tensorflow.keras as K
 
 
 def save_weights(network, filename, save_format='keras'):
+    """
+    save the weights, using keras format
+    """
     network.save_weights(filename)
 
+
 def load_weights(network, filename):
+    """
+    load the weight
+    """
     network.load_weights(filename)
-
-
-# layer_2.set_weights(layer_1.get_weights())
