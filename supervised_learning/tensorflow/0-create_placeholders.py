@@ -9,7 +9,7 @@ def create_placeholders(nx, classes):
     """
     Zero task: 0. Placeholders 
     """
-    x = tf.placeholder(tf.float32, shape=(nx), name="x")
-    y = tf.placeholder(tf.float32, shape=(classes), name="y")
+    x = tf.placeholder(tf.float32, shape=(None,nx), name="x")
+    y = tf.placeholder(tf.float32, shape=(None,classes), name="y")
 
     return x, y
