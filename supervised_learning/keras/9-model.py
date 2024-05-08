@@ -1,17 +1,23 @@
 #!/usr/bin/env python3
-""" this projet is about keras
+"""
+this projet is about keras, learning with exercices
 """
 import tensorflow.keras as K
 
 
-
 def save_model(network, filename):
-        network.save(filename)
-        return None
+    """
+    ok, this save a model
+    """
+    network.save(filename)
+    return None
+
 
 def load_model(filename):
-        return K.models.load_model(filename)
-
+    """
+    this load a model
+    """
+    return K.models.load_model(filename)
 
 
 def train_model(network, data, labels, batch_size, epochs,
@@ -23,7 +29,6 @@ def train_model(network, data, labels, batch_size, epochs,
     this is the task 8, select the best model"
     """
 
-
     if save_best:
 
         callback_check = K.callbacks.ModelCheckpoint(
@@ -34,10 +39,8 @@ def train_model(network, data, labels, batch_size, epochs,
                          save_weights_only=False,
                          mode='auto',
                          save_freq='epoch',
-                         initial_value_threshold=None
-                         )
+                         initial_value_threshold=None)
 
-        
         history = network.fit(data, labels,
                               epochs=epochs, batch_size=batch_size,
                               verbose=verbose, shuffle=shuffle,
@@ -45,9 +48,6 @@ def train_model(network, data, labels, batch_size, epochs,
                               callbacks=[callback_early,
                                          callback_invertime_decay,
                                          callback_check])
-
-
-
 
     if validation_data is None:
         history = network.fit(data, labels, epochs=epochs,
@@ -78,7 +78,7 @@ def train_model(network, data, labels, batch_size, epochs,
                               verbose=verbose, shuffle=shuffle,
                               validation_data=validation_data,
                               callbacks=[callback_early,
-                                         callback_invertime_decay,callback_check])
+                                         callback_invertime_decay,
+                                         callback_check])
 
-    
     return history
