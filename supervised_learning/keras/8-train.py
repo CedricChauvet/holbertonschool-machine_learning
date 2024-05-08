@@ -47,7 +47,7 @@ def train_model(network, data, labels, batch_size, epochs,
         callback_early = K.callbacks.EarlyStopping(patience=patience)
         # callback decay inverse time
         callback_invertime_decay = K.callbacks.\
-            LearningRateScheduler(lr_schedule, verbose=True)
+            LearningRateScheduler(lr_schedule, verbose=False)
 
         history = network.fit(data, labels,
                               epochs=epochs, batch_size=batch_size,
