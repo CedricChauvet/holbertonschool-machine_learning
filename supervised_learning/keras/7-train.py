@@ -9,7 +9,8 @@ def train_model(network, data, labels, batch_size, epochs,
                 patience=0, learning_rate_decay=False,
                 alpha=0.1, decay_rate=1, verbose=True, shuffle=False):
     """
-    this is the task 5, train a model adding a validation data
+    this is the task 7, train a model and add
+    inverse time decay, using "K.callbacks.LearningRateScheduler"
     """
 
     if validation_data is None:
@@ -29,14 +30,17 @@ def train_model(network, data, labels, batch_size, epochs,
 
             return learning_rate
 
-        callback = K.callbacks.EarlyStopping(patience=patience)
+        # callback early Stopping when back propgation is null
+        callback_early = K.callbacks.EarlyStopping(patience=patience)
+        # callback decay inverse time
+        callback_invertime_decay = K.callbacks.\
+            LearningRateScheduler(lr_schedule, verbose=True)
 
         history = network.fit(data, labels,
                               epochs=epochs, batch_size=batch_size,
                               verbose=verbose, shuffle=shuffle,
                               validation_data=validation_data,
-                              callbacks=[callback, K.callbacks.
-                                         LearningRateScheduler
-                                         (lr_schedule, verbose=True)])
+                              callbacks=[callback_early,
+                                         callback_invertime_decay])
 
     return history
