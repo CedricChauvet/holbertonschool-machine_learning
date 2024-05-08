@@ -9,7 +9,9 @@ def create_layer(prev, n, activation):
     """
     Task 1: Layers, using dense layers
     """
-    initializer = tf.keras.initializers.VarianceScaling(mode='fan_avg')
 
-    l = tf.layers.dense(inputs=prev, units=n, activation=activation,kernel_initializer=initializer)
-    return l
+    initializer = tf.keras.initializers.VarianceScaling(mode='fan_avg')
+    layer = tf.layers.dense(inputs=prev, units=n,
+                        activation=activation,
+                        kernel_initializer=initializer, name="layer")
+    return layer
