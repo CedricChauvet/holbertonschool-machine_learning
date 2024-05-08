@@ -8,5 +8,5 @@ import tensorflow.keras as K
 def test_model(network, data, labels, verbose=True):
     # evaluate the keras model
 
-    loss, accuracy = network.evaluate(data, labels)
-    return loss, accuracy
+    loss, accuracy = network.evaluate(data, labels,verbose)
+    return [loss, accuracy]
