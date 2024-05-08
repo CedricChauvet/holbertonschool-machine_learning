@@ -5,7 +5,6 @@
 import tensorflow.compat.v1 as tf
 
 
-create_placeholders = __import__('0-create_placeholders').create_placeholders
 create_layer = __import__('1-create_layer').create_layer
 
 
