@@ -16,7 +16,7 @@ def train_model(network, data, labels, batch_size, epochs,
         callback_check = K.callbacks.ModelCheckpoint(
         filepath = filepath,
         monitor='val_loss',
-        verbose=True,
+        verbose=0,
         save_best_only=True,
         save_weights_only=False,
         mode='auto',
