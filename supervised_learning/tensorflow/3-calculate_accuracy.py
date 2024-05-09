@@ -11,7 +11,8 @@ def calculate_accuracy(Y, y_pred):
     a placeholder Y (input of data) and prediction y_pred
     """
     # Créer un tenseur de booléens pour les prédictions correctes
-    correct_predictions = tf.equal(Y, y_pred)
+    correct_predictions = tf.equal(tf.argmax(Y, axis=1),
+                                   tf.argmax(y_pred, axis=1))
 
     # Convertir les booléens en floats (0.0 pour False, 1.0 pour True)
     accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32))
