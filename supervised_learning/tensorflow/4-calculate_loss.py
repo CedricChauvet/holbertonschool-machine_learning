@@ -8,7 +8,8 @@ tf.disable_eager_execution()
 
 def calculate_loss(y, y_pred):
     """
-    Write the function def calculate_loss(y, y_pred): that calculates the softmax cross-entropy loss of a prediction:
+    Write the function def calculate_loss(y, y_pred):
+    that calculates the softmax cross-entropy loss of a prediction:
 
     y is a placeholder for the labels of the input data
     y_pred is a tensor containing the network’s predictions
