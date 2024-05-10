@@ -37,12 +37,14 @@ def train(X_train, Y_train, X_valid, Y_valid,layer_sizes, activations, alpha, it
     sess.run(init)
     
     for i in range(iterations):
-        
+        # training data
         train_data = {X_pl: X_train, Y_pl: Y_train}
         sess.run(train_step, feed_dict= train_data)
         a,c = sess.run([accuracy,loss], feed_dict=train_data)
-    
+
+          
         test_data = {X_pl: X_valid, Y_pl: Y_valid}
+        sess.run(train_step, feed_dict= test_data)
         test_a,test_c = sess.run([accuracy,loss], feed_dict=test_data)
         
         
