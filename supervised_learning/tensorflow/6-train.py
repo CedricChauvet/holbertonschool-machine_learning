@@ -60,5 +60,5 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     saver = tf.train.Saver()
 
     # Save the variables to disk
-    savepath = saver.save(sess, save_path)
-    return savepath
+    saver.save(sess, save_path)
+    return save_path
