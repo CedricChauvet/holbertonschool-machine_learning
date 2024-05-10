@@ -40,6 +40,9 @@ def train(X_train, Y_train, X_valid, Y_valid,layer_sizes, activations, alpha, it
         # training data
         train_data = {X_pl: X_train, Y_pl: Y_train}
         sess.run(train_step, feed_dict= train_data)
+        Y_pred = forward_prop(X_pl,layer_sizes, activations)
+        loss = calculate_loss(Y_pl, Y_pred)
+        accuracy = calculate_accuracy(Y_pl, Y_pred)
         a,c = sess.run([accuracy,loss], feed_dict=train_data)
 
           
