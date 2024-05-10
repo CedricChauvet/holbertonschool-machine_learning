@@ -41,9 +41,17 @@ def train(X_train, Y_train, X_valid, Y_valid,layer_sizes, activations, alpha, it
         train_data = {X_pl: X_train, Y_pl: Y_train}
         sess.run(train_step, feed_dict= train_data)
         a,c = sess.run([accuracy,loss], feed_dict=train_data)
+    
+        test_data = {X_pl: X_valid, Y_pl: Y_valid}
+        test_a,test_c = sess.run([accuracy,loss], feed_dict=test_data)
+        
+        
         if i == 0 or i == iterations or i%100 == 0:
             print(f"After {i} iterations: \n\tTraining Cost:{c}\n\tTraining Accuracy {a}")
+            print(f"\tValidation Cost: {test_c}\n\tValidation Accuracy: {test_a}")
+
     
+
     # Create a saver object
     saver = tf.train.Saver()
 
