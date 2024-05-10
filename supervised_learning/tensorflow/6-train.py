@@ -54,9 +54,11 @@ def train(X_train, Y_train, X_valid, Y_valid,layer_sizes, activations, alpha, it
         
     
         if i == 0 or i == iterations or i%100 == 0:
-            
-            print(f"After {i} iterations: \n\tTraining Cost:{c}\n\tTraining Accuracy {a}")
-            print(f"\tValidation Cost: {test_c}\n\tValidation Accuracy: {test_a}")
+                print("After {} iterations:".format(i))
+                print("\tTraining Cost: {}".format(train_loss))
+                print("\tTraining Accuracy: {}".format(train_accuracy))
+                print("\tValidation Cost: {}".format(valid_loss))
+                print("\tValidation Accuracy: {}".format(valid_accuracy))
 
     # Create a saver object
     saver = tf.train.Saver()
