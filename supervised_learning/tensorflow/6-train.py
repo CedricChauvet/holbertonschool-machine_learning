@@ -29,9 +29,7 @@ def train(X_train, Y_train, X_valid, Y_valid,layer_sizes, activations, alpha, it
     loss = calculate_loss(Y_pl, Y_pred)
     accuracy = calculate_accuracy(Y_pl, Y_pred)
     train_step = create_train_op(loss, alpha)
-    Y_pred = forward_prop(X_pl,layer_sizes, activations)
-    loss = calculate_loss(Y_pl, Y_pred)
-    accuracy = calculate_accuracy(Y_pl, Y_pred)
+    
     # Initialize variables
     init = tf.initialize_all_variables()
     
