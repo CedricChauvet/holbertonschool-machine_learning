@@ -17,7 +17,6 @@ def normalization_constants(X):
     # using list to compute
     m = []
     s = []
-    print("n", n)
     for elmt in X.T:  # beware of transpose
 
         # this is the mean
