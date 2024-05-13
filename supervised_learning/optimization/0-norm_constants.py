@@ -24,4 +24,5 @@ def normalization_constants(X):
         # The standard deviation,
         # usually called "Population Standard Deviation"
         s.append(np.sqrt(np.sum(1 / n * np.sum((elmt - m[-1]) ** 2))))
-    return np.around(m, decimals=8),np.around(s, decimals=8)
+
+    return np.around(m, decimals=8), np.around(s, decimals=8)
