@@ -14,8 +14,10 @@ def shuffle_data(X, Y):
     m = X.shape[0]
     nx = X.shape[1]
     ny = Y.shape[1]
-    # print("m , nx , ny", m ,nx ,ny)
-    X_sh = np.random.permutation(X).reshape((m, nx))
-    Y_sh = np.random.permutation(Y).reshape((m, ny))
+    matX_Y = np.concatenate((X, Y), axis=1)
+
+    mat_sh = np.random.permutation(matX_Y)
+    X_sh = mat_sh[:, 0:nx]
+    Y_sh = mat_sh[:, nx:]
 
     return X_sh, Y_sh
