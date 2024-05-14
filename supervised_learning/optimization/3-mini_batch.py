@@ -28,6 +28,6 @@ def create_mini_batches(X, Y, batch_size):
         b += batch_size
 
     batch.append((X[b:], Y[b:]))
-        # print("dernier batch",len(batch[-2][0]))
+    # print("dernier batch",len(batch[-2][0]))
 
     return batch
