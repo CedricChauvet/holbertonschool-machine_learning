@@ -3,7 +3,6 @@
 Optimization project
 by Ced
 """
-import matplotlib.pyplot as plt
 
 
 def moving_average(data, beta):
