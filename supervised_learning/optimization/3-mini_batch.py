@@ -27,8 +27,7 @@ def create_mini_batches(X, Y, batch_size):
         batch.append((X[b:b+batch_size], Y[b:b+batch_size]))
         b += batch_size
 
-    if b < X.shape[0]:
-        batch.append((X[b:], Y[b:]))
+    batch.append((X[b:], Y[b:]))
         # print("dernier batch",len(batch[-2][0]))
 
     return batch
