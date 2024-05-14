@@ -17,17 +17,15 @@ def create_mini_batches(X, Y, batch_size):
     a neural network using mini-batch gradient descent:
     """
 
-    # init
+    # init and shuffle the data
     X, Y = shuffle_data(X, Y)
     b = 0
     batch = []
 
-    # use of while is a good option
-    while b < X.shape[0] - batch_size:
-        batch.append((X[b:b+batch_size], Y[b:b+batch_size]))
-        b += batch_size
-
-    batch.append((X[b:], Y[b:]))
-        # print("dernier batch",len(batch[-2][0]))
+    # Create mini-batches
+    for i in range(0, len(X), batch_size):
+        X_batch = X[i:i + batch_size]
+        Y_batch = Y[i:i + batch_size]
+        batch.append((X_batch, Y_batch))
 
     return batch
