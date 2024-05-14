@@ -3,6 +3,7 @@
 Optimization project
 by Ced
 """
+import numpy as np
 
 
 def moving_average(data, beta):
