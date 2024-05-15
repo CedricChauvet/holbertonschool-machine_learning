@@ -18,16 +18,15 @@ def create_mini_batches(X, Y, batch_size):
     """
 
     # init and shuffle the
-    X, Y = shuffle_data(X, Y)
-    b = 0
+    X_sh, Y_sh = shuffle_data(X, Y)
     batch = []
 
     # use of while is a good option
     while b < X.shape[0] - batch_size:
-        batch.append((X[b:b+batch_size], Y[b:b+batch_size]))
+        batch.append((X_sh[b:b+batch_size], Y_sh[b:b+batch_size]))
         b += batch_size
 
-    batch.append((X[b:], Y[b:]))
+    batch.append((X_sh[b:], Y_sh[b:]))
     # print("dernier batch",len(batch[-1][0]))
 
     return batch
