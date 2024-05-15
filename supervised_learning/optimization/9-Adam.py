@@ -8,7 +8,9 @@ import numpy as np
 
 def update_variables_Adam(alpha, beta1, beta2, epsilon, var, grad, v, s, t):
     """
-    Write the function def update_variables_Adam(alpha, beta1, beta2, epsilon, var, grad, v, s, t): that updates a variable in place using the Adam optimization algorithm:
+    Write the function def update_variables_Adam(alpha, beta1,
+    beta2, epsilon, var, grad, v, s, t): that updates a variable in
+    place using the Adam optimization algorithm:
 
     alpha is the learning rate
     beta1 is the weight used for the first moment
@@ -20,9 +22,10 @@ def update_variables_Adam(alpha, beta1, beta2, epsilon, var, grad, v, s, t):
     s is the previous second moment of var
     t is the time step used for bias correction
 
-    Returns: the updated variable, the new first moment, and the new second moment, respectively
+    Returns: the updated variable, the new first moment, and the
+    new second moment, respectively
     """
-    
+
     # Vm is the new momentum
     Vm = beta1 * v + (1 - beta1) * grad
     # S is the name of the RMSprop variable
@@ -32,10 +35,9 @@ def update_variables_Adam(alpha, beta1, beta2, epsilon, var, grad, v, s, t):
     biasV = (1 - (beta1 ** t))
     biasS = (1 - (beta2 ** t))
 
-    Vmcorr = Vm /biasV
-    Smcorr = Sm /biasS# adding epsilon to avoid nan numbers
+    Vmcorr = Vm / biasV
+    Smcorr = Sm / biasS  # adding epsilon to avoid nan numbers
 
     var = var - alpha * Vmcorr / (np.sqrt(Smcorr) + epsilon)
 
-    return var, Vm,Sm
-
+    return var, Vm, Sm
