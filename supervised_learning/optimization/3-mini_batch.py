@@ -22,7 +22,7 @@ def create_mini_batches(X, Y, batch_size):
     batch = []
 
     # use of while is a good option
-    while b < X.shape[0] - batch_size:
+    while b < X_sh.shape[0] - batch_size:
         batch.append((X_sh[b:b+batch_size], Y_sh[b:b+batch_size]))
         b += batch_size
 
