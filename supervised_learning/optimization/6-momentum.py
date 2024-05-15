@@ -12,6 +12,6 @@ def create_momentum_op(alpha, beta1):
     algorithm in TensorFlow
     return the optimizer
     """
-    sgd = tf.keras.optimizers.SGD(lr=alpha, momentum=beta1)
+    sgd = tf.keras.optimizers.SGD(learning_rate=alpha, momentum=beta1)
 
     return sgd
