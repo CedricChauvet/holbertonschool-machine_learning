@@ -3,7 +3,6 @@
 Optimization project
 by Ced
 """
-import numpy as np
 import tensorflow as tf
 
 
