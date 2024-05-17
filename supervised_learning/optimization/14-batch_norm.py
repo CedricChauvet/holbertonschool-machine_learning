@@ -22,7 +22,7 @@ def create_batch_norm_layer(prev, n, activ):
     """
 
 
-    model = tf.keras.models.Sequential()
+
 
     # Calque d'entrée
     init = tf.keras.layers.Dense(n, 
