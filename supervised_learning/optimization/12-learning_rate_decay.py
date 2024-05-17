@@ -12,7 +12,7 @@ def learning_rate_decay(alpha, decay_rate1, decay_step1):
         initial_learning_rate=alpha,
         decay_steps=decay_step1,
         decay_rate=decay_rate1,
-        staircase=True,
+        staircase=False,
         name='ExponentialDecay'
 )
     return optim
