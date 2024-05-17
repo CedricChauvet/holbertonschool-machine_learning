@@ -8,11 +8,10 @@ import tensorflow as tf
 
 
 def learning_rate_decay(alpha, decay_rate1, decay_step1):
-    optim = tf.keras.optimizers.schedules.ExponentialDecay(
+    lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate=alpha,
         decay_steps=decay_step1,
-        decay_rate=decay_rate1,
-        staircase=False,
-        name='ExponentialDecay'
-)
-    return optim
+        decay_rate=decay_rate1)
+
+    optimizer = tf.keras.optimizers.SGD(learning_rate=lr_schedule)
+    return optimizer
