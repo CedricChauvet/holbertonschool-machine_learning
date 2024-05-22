@@ -3,6 +3,7 @@
 Regularization project
 by Ced
 """
+import tensorflow as tf
 
 
 def l2_reg_cost(cost, model):
