@@ -1,1 +1,1 @@
-this is the Regularization project
+this is the supervised learning repo
