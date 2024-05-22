@@ -3,7 +3,6 @@
 Regularization project
 by Ced
 """
-import numpy as np
 
 
 def l2_reg_cost(cost, model):
