@@ -6,25 +6,27 @@ by Ced
 import tensorflow as tf
 
 
-class CustomDropoutLayer(tf.keras.layers.Layer):
-    """
-    creating a class in order to call training
-    """
-    def __init__(self, rate, train):
-        super(CustomDropoutLayer, self).__init__()
-        self.rate = rate
-        self.dropout = tf.keras.layers.Dropout(rate)
-        self.train = train
-
-    def call(self, inputs, training):
-        return self.dropout(inputs, training=self.train)
-
 def dropout_create_layer(prev, n, activ, keep_prob, training=True):
     """
-    create a layer with dropout
-    """
-    x = tf.keras.layers.Dense(n, activation=activ)(prev)
+    Create a layer of a neural network using dropout.
 
-    # Custom Dropout layer with explicit training argument
-    x = CustomDropoutLayer(1 - keep_prob, training)(x)
-    return x
+    Args:
+        prev: A tensor containing the output of the previous layer.
+        n: The number of nodes the new layer should contain.
+        activation: The activation function for the new layer.
+        keep_prob: The probability that a node will be kept.
+        training: A boolean indicating whether the model is in training mode.
+
+    Returns:
+        The output of the new layer.
+    """
+    # Create a dense layer
+
+    # got initialyzer on task1 tensorflow projet
+    initializer = tf.keras.initializers.VarianceScaling(mode='fan_avg')
+    dense_layer = tf.keras.layers.Dense(units=n, activation=activ, kernel_initializer=initializer)(prev)
+    
+    # Apply dropout
+    dropout_layer = tf.keras.layers.Dropout(1 - keep_prob, seed=4)(dense_layer, training=training)
+    
+    return dropout_layer
