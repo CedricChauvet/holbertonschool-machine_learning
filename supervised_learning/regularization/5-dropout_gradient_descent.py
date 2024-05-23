@@ -24,10 +24,7 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
             A_prev.shape[0],
             A_prev.shape[1]) < keep_prob
         cache[f"D{i}"] = cache[f"D{i}"].astype(int)
-        #print("cache",cache[f"D{i}"])
 
-        A_prev *= cache[f"D{i}"]
-        A_prev /= keep_prob
 
         W = weights["W" + str(i)]
         b = weights["b" + str(i)]
@@ -38,7 +35,10 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
 
         if i > 1:
             # derivative of tanh activation in the second term
-            dZ = np.dot(W.T, dZ) * (1 - A_prev ** 2)
+            dA_prev = np.dot(W.T, dZ) 
+            dA_prev *= cache[f"D{i-1}"]
+            dA_prev /= keep_prob
+            dZ = (1 - A_prev ** 2) * dA_prev
 
         # Update weights and biases
         weights["W" + str(i)] = W - alpha * dW
