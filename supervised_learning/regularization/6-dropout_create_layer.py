@@ -19,7 +19,6 @@ class CustomDropoutLayer(tf.keras.layers.Layer):
     def call(self, inputs, training):
         return self.dropout(inputs, training=self.train)
 
-
 def dropout_create_layer(prev, n, activ, keep_prob, training=True):
     """
     create a layer with dropout
