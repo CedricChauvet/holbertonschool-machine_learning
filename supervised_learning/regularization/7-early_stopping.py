@@ -15,6 +15,7 @@ def early_stopping(cost, opt_cost, threshold, patience, count):
     patience is the patience count used for early stopping
     count is the count of how long the threshold has not been met
     """
+
     if(opt_cost - cost) > threshold:
         return (False, 0)
 
