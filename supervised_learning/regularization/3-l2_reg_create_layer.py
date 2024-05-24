@@ -20,8 +20,9 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
         Output tensor of the new layer.
     """
     # Create a dense layer with L2 regularization
-    
-    initilizer = tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg"))
+
+    initilizer = tf.keras.initializers.VarianceScaling(
+        scale=2.0, mode=("fan_avg"))
     layer = tf.keras.layers.Dense(
         units=n,
         activation=activation,
@@ -30,25 +31,3 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     )(prev)
 
     return layer
-
-
-
-
-
-
-
-
-"""
-def l2_reg_create_layer(prev, n, activ, lambtha):
-    
-
-
-    L2_layer = tf.keras.layers.Dense(units=n,activation=activ,
-           kernel_regularizer=tf.keras.regularizers.L2(
-    l2=lambtha))(prev)
-    
-    return L2_layer    
-
-
-#kernel_regularizer='l2', activity_regularizer='l2'
-"""
