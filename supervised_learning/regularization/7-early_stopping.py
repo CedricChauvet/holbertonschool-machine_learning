@@ -16,11 +16,11 @@ def early_stopping(cost, opt_cost, threshold, patience, count):
     count is the count of how long the threshold has not been met
     """
 
-    if(opt_cost - cost) > threshold:
+    if (opt_cost - cost) > threshold:
         return (False, 0)
 
-    elif(opt_cost - cost) <= threshold:
+    elif (opt_cost - cost) <= threshold:
         if count < patience - 1:
             return (False, count + 1)
         if count == patience - 1:
-            return(True, patience)
+            return (True, patience)
