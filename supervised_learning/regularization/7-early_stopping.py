@@ -7,7 +7,7 @@ by Ced
 
 def early_stopping(cost, opt_cost, threshold, patience, count):
     """
-    task 7 early stopping
+    task 7 early stopping, end of the project
 
     cost is the current validation cost of the neural network
     opt_cost is the lowest recorded validation cost of the neural network
