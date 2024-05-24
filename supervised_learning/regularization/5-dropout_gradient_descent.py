@@ -7,7 +7,7 @@ import numpy as np
 
 
 def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
-    """Calculates one pass of gradient descent on a DNN 
+    """Calculates one pass of gradient descent on a DNN
     with dropout regularization
     """
     # taille des exemples
