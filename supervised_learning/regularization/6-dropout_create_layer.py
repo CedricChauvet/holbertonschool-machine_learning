@@ -23,10 +23,14 @@ def dropout_create_layer(prev, n, activation, keep_prob, training=True):
     # Create a dense layer
 
     # got initialyzer on task1 tensorflow projet
-    initializer = tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg"))
-    dense_layer = tf.keras.layers.Dense(units=n, activation=activation, kernel_initializer=initializer)(prev)
-    
+    initializer = tf.keras.initializers.VarianceScaling(
+        scale=2.0, mode=("fan_avg"))
+    dense_layer = tf.keras.layers.Dense(
+        units=n, activation=activation,
+        kernel_initializer=initializer)(prev)
+
     # Apply dropout
-    dropout_layer = tf.keras.layers.Dropout(1 - keep_prob)(dense_layer, training=training)
-    
+    dropout_layer = tf.keras.layers.\
+        Dropout(1 - keep_prob)(dense_layer, training=training)
+
     return dropout_layer
