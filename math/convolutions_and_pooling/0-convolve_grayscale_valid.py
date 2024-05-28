@@ -30,6 +30,4 @@ def convolve_grayscale_valid(images, kernel):
             # beware to not sum the m number of images
             conv_image[:,i,j]= np.sum(crop[:] * kernel, axis=(1, 2))
     
-    print("conv shape", conv_image.shape)
-    
     return conv_image
