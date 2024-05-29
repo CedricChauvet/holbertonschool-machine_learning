@@ -35,11 +35,11 @@ def convolve_grayscale_same(images, kernel):
     # creating array for the output
     conv_image = np.zeros((m, h, w))
 
-    for i in range(conv_h):
-        for j in range(conv_w):
+    for i in range(h):
+        for j in range(w):
             crop = padded[:, i: i + kh, j:j + kw]
             # beware to not sum the m number of images
             conv_image[:, i, j] = np.sum(crop[:] * kernel, axis=(1, 2))
-
+    print("conv image", conv_image)
     return conv_image
 
