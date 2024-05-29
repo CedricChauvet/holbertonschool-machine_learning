@@ -11,8 +11,9 @@ def convolve_grayscale_same(images, kernel):
     performs a same convolution on grayscale images with padding
     """
 
-    kw = kernel.shape[0]
-    kh  = kernel.shape[1]
+    kh  = kernel.shape[0]
+    kw = kernel.shape[1]
+    
 
     # m is the number of images,  h is the height of  an image, w the width
     m = images.shape[0]
@@ -20,7 +21,7 @@ def convolve_grayscale_same(images, kernel):
     w = images.shape[2]
 
     # shape of the output
-    conv_h = h - (kw - 1)
+    conv_h = h - (kh - 1)
     conv_w = w - (kw - 1)
 
     padded = np.zeros((m, h + kw, w + kw))
@@ -34,7 +35,7 @@ def convolve_grayscale_same(images, kernel):
 
     for i in range(conv_h):
         for j in range(conv_w):
-            crop = padded[:, i: i + kw, j:j + kh]
+            crop = padded[:, i: i + kh, j:j + kw]
             # beware to not sum the m number of images
             conv_image[:, i, j] = np.sum(crop[:] * kernel, axis=(1, 2))
 
