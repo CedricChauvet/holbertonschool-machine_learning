@@ -22,9 +22,10 @@ def convolve_grayscale_same(images, kernel):
     conv_w = w - (kw - 1)
 
     padded = np.zeros((m, h + kw, w + kw))
-    star_index = kw  // 2
-    padded[:, star_index:star_index + h, star_index:star_index + w] = images
-
+    padding = (kw - 1)  // 2
+    padded[:, padding:padding + h, padding:padding + w] = images
+    # print("padded", images[0])
+    # print("padding", padding)
     # creating array for the output
     conv_image = np.zeros((m, h, w))
 
@@ -35,3 +36,4 @@ def convolve_grayscale_same(images, kernel):
             conv_image[:, i, j] = np.sum(crop[:] * kernel, axis=(1, 2))
 
     return conv_image
+
