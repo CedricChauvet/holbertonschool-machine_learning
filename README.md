@@ -11,6 +11,19 @@ I started my training in march 2024
 i am studying maching learning, in this repo  you will find project divided in task. those tasks are essencially writen in Python
 
 
+You will find several projects:
 
+  - classifcation
+  - decision tree
+  - error analysys
+  - keras
+  - optimization
+  - regularization
+  - tensoflow
+
+
+At Holberton we get our hands dirty, 
+
+![image](https://github.com/CedricChauvet/holbertonschool-machine_learning/assets/16280142/2ad29605-e8f4-4d72-80ac-b2fa61f3f426)
 
 
