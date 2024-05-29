@@ -13,7 +13,7 @@ def convolve_grayscale_same(images, kernel):
 
     kh = kernel[:,0].shape[0]
     kw = kernel[0,:].shape[0]
-    print("kernel", kh , kw)   
+    # print("kernel", kh , kw)   
 
     # m is the number of images,  h is the height of  an image, w the width
     m = images.shape[0]
