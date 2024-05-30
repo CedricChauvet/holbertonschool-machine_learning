@@ -46,11 +46,14 @@ You will find several projects:
 
 At Holberton we get our hands dirty, 
 
+### Publications Linkedin
+  [Optimize your Neural Networks training](https://www.linkedin.com/feed/update/urn:li:activity:7197324083594702848/)
+  [Master Overfitting: different Regularization Techniques to Improve Machine Learning](https://www.linkedin.com/pulse/regularization-technics-reduce-overfitting-cedric-olivier-chauvet-50spc/?trackingId=DuOCFbmpSk%2BaisYwiYnpOg%3D%3D)
 
 ### About me
 Je suis diplmoé d'un MASTER 2 PRO dans ingenierie intitulé "Pilotage et Surveillance des Procédés industriels" (Grenoble - 2011)
 
-J'ai aussi une maitrise dans les metiers de l'enseignement de l'education et de la formation (Toulouse 2013)
+J'ai aussi une maitrise dans les "metiers de l'enseignement de l'education et de la formation" (Toulouse 2013)
 
 Je suis micro entrepreneur, je donne des ateliers enfants pour leur faire découvrir la pensée onformatique.
 
