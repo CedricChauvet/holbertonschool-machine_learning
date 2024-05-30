@@ -1,4 +1,4 @@
-            **CedricChauvet/holbertonschool-machine_learning**
+**CedricChauvet/holbertonschool-machine_learning**
 
 
 ![image](https://github.com/CedricChauvet/holbertonschool-machine_learning/assets/16280142/9d2c3fa0-6e47-4bef-b3ba-fdf00036ddfb)
