@@ -5,7 +5,7 @@
 
 My name is Cédric CHAUVET
 
-This is the repo of my spe at Holberton.
+This is the repo of my spcializatione at Holberton.
 
 I started my training in march 2024
 
