@@ -22,25 +22,21 @@ cd holbertonschool-machine_learning
 
 You will find several projects:
 
-in supervised learning:
+## Projects Overview
+### Supervised Learning
+- **Classification:** Implementing various classification algorithms to categorize data.
+- **Decision Trees:** Building decision tree models for classification and regression tasks.
+- **Error Analysis:** Techniques for evaluating and improving model performance.
+- **Keras:** Projects utilizing the Keras library for deep learning.
+- **Optimization:** Methods for optimizing machine learning models.
+- **Regularization:** Techniques to prevent overfitting in models.
+- **TensorFlow:** Projects using TensorFlow for building and training neural networks.
 
-
-  - classifcation
-  - decision tree
-  - error analysys
-  - keras
-  - optimization
-  - regularization
-  - tensoflow
-
-and mathematical projects:
-
-  - calculus
-  - plotting
-  - convolution and pooling
-  - linear algebra
-
-    
+### Mathematics
+- **Calculus:** Applying calculus concepts in machine learning.
+- **Plotting:** Visualizing data and model results.
+- **Convolution and Pooling:** Understanding and implementing convolutional operations.
+- **Linear Algebra:** Essential linear algebra concepts for machine learning.
   
 
 At Holberton we get our hands dirty, 
