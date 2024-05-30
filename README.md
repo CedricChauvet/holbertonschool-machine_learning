@@ -17,6 +17,7 @@ To get started with these projects, clone the repository and navigate to the des
 ```bash
 git clone https://github.com/CedricChauvet/holbertonschool-machine_learning.git
 cd holbertonschool-machine_learning
+```
 
 
 You will find several projects:
