@@ -11,6 +11,13 @@ I started my training in march 2024
 
 i am studying maching learning, in this repo  you will find project divided in task. those tasks are essencially writen in Python
 
+## Getting Started
+To get started with these projects, clone the repository and navigate to the desired project directory:
+
+```bash
+git clone https://github.com/CedricChauvet/holbertonschool-machine_learning.git
+cd holbertonschool-machine_learning
+
 
 You will find several projects:
 
