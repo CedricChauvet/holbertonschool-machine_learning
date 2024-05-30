@@ -26,9 +26,10 @@ cd holbertonschool-machine_learning
 ```
 
 
-You will find several projects:
+#### Projects Overview
 
-## Projects Overview
+Chaque dossier correspond à un projet ou à un exercice spécifique. Vous pouvez exécuter les scripts individuellement en naviguant vers le dossier concerné et en lançant les scripts Python correspondants.
+
 ### Supervised Learning
 - **Classification:** Implementing various classification algorithms to categorize data.
 - **Decision Trees:** Building decision tree models for classification and regression tasks.
