@@ -49,9 +49,9 @@ At Holberton we get our hands dirty,
 
 ### Publications Linkedin
 
-  [Optimize your Neural Networks training](https://www.linkedin.com/feed/update/urn:li:activity:7197324083594702848/)
+  [Optimize your Neural Networks training](https://www.linkedin.com/feed/update/urn:li:activity:7197324083594702848/)  (May 2024)
 
-  [Master Overfitting: different Regularization Techniques to Improve Machine Learning](https://www.linkedin.com/pulse/regularization-technics-reduce-overfitting-cedric-olivier-chauvet-50spc/?trackingId=DuOCFbmpSk%2BaisYwiYnpOg%3D%3D)
+  [Master Overfitting: different Regularization Techniques to Improve Machine Learning](https://www.linkedin.com/pulse/regularization-technics-reduce-overfitting-cedric-olivier-chauvet-50spc/?trackingId=DuOCFbmpSk%2BaisYwiYnpOg%3D%3D)  (May 2024)
 
 ### About me
 Je suis diplmoé d'un MASTER 2 PRO dans ingenierie intitulé "Pilotage et Surveillance des Procédés industriels" (Grenoble - 2011)
