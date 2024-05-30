@@ -41,6 +41,18 @@ You will find several projects:
 
 At Holberton we get our hands dirty, 
 
+
+### About me
+Je suis micro entrepreneur, je donne des ateliers enfants pour leur faire découvrir la pensée onformatique.
+Ateliers de programmatin des 7 ans, Electronique et robotique.
+C'est une experience riche et j'adore le contact avec les jeunes.
+
+A l'heure actuelle je mets en pose mon activité pour me concentrer sur ma nouvelle formation a Holberton.
+Je suis a la recherche d'un alternance. Si vous êtes intéressé  n'hesitez pas a regarder mon CV!
+[https://itetudes.fr/wp-content/uploads/2024/05/cv-final-2024-1.pdf](url)
+
+
+
 ![image](https://github.com/CedricChauvet/holbertonschool-machine_learning/assets/16280142/2ad29605-e8f4-4d72-80ac-b2fa61f3f426)
 
 
