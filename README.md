@@ -49,11 +49,8 @@ At Holberton we get our hands dirty,
 
 ### Publications Linkedin
 
-![image](https://github.com/CedricChauvet/holbertonschool-machine_learning/assets/16280142/2e630cc2-aa71-4ffe-9dca-c4a8b5c43c54)
   [Optimize your Neural Networks training](https://www.linkedin.com/feed/update/urn:li:activity:7197324083594702848/)
 
-
-  ![image](https://github.com/CedricChauvet/holbertonschool-machine_learning/assets/16280142/c1ca6b78-0977-43a3-b6fe-a3307227c537)
   [Master Overfitting: different Regularization Techniques to Improve Machine Learning](https://www.linkedin.com/pulse/regularization-technics-reduce-overfitting-cedric-olivier-chauvet-50spc/?trackingId=DuOCFbmpSk%2BaisYwiYnpOg%3D%3D)
 
 ### About me
