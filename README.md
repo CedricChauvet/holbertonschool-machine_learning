@@ -12,7 +12,9 @@ I started my training in march 2024
 i am studying maching learning, in this repo  you will find project divided in task. those tasks are essencially writen in Python
 
 ## Sommaire
-[Getting started](https://github.com/CedricChauvet/holbertonschool-machine_learning/blob/main/README.md#projects-overview)
+  - [Getting started](https://github.com/CedricChauvet/holbertonschool-machine_learning?tab=readme-ov-file#getting-started)
+  - [Project Overview](https://github.com/CedricChauvet/holbertonschool-machine_learning/blob/main/README.md#projects-overview)
+  - [About Me](https://github.com/CedricChauvet/holbertonschool-machine_learning?tab=readme-ov-file#about-me)
 
 ## Getting Started
 To get started with these projects, clone the repository and navigate to the desired project directory:
