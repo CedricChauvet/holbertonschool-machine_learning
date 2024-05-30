@@ -44,6 +44,7 @@ At Holberton we get our hands dirty,
 
 ### About me
 Je suis diplmoé d'un MASTER 2 PRO dans ingenierie intitulé "Pilotage et Surveillance des Procédés industriels" (Grenoble - 2011)
+
 J'ai aussi une maitrise dans les metiers de l'enseignement de l'education et de la formation (Toulouse 2013)
 
 Je suis micro entrepreneur, je donne des ateliers enfants pour leur faire découvrir la pensée onformatique.
