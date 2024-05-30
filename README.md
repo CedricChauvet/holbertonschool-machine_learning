@@ -14,6 +14,7 @@ i am studying maching learning, in this repo  you will find project divided in t
 ## Sommaire
   - [Getting started](https://github.com/CedricChauvet/holbertonschool-machine_learning?tab=readme-ov-file#getting-started)
   - [Project Overview](https://github.com/CedricChauvet/holbertonschool-machine_learning/blob/main/README.md#projects-overview)
+  - [Publication Linkedin](https://github.com/CedricChauvet/holbertonschool-machine_learning/blob/main/README.md#publications-linkedin)
   - [About Me](https://github.com/CedricChauvet/holbertonschool-machine_learning?tab=readme-ov-file#about-me)
 
 ## Getting Started
@@ -48,6 +49,7 @@ At Holberton we get our hands dirty,
 
 ### Publications Linkedin
   [Optimize your Neural Networks training](https://www.linkedin.com/feed/update/urn:li:activity:7197324083594702848/)
+  
   [Master Overfitting: different Regularization Techniques to Improve Machine Learning](https://www.linkedin.com/pulse/regularization-technics-reduce-overfitting-cedric-olivier-chauvet-50spc/?trackingId=DuOCFbmpSk%2BaisYwiYnpOg%3D%3D)
 
 ### About me
