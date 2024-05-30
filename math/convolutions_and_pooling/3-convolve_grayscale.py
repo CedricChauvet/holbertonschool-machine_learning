@@ -4,7 +4,6 @@ Convolution and pooling project
 by Ced
 """
 import numpy as np
-import math
 
 def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     """
@@ -22,8 +21,8 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
         # shape of the output
        ph = 0
        pw = 0
-       conv_h = math.floor((h + 2 * ph - kh) / sh + 1)
-       conv_w = math.floor((w + 2 * pw - kw) / sw + 1)
+       conv_h = ((h + 2 * ph - kh) / sh + 1) // 1
+       conv_w = ((w + 2 * pw - kw) / sw + 1) // 1
 
     elif padding == 'same':
         
@@ -33,8 +32,8 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
 
     elif  type(padding) is tuple:
  
-        conv_h = math.floor((h + 2 * ph - kh) / sh + 1)
-        conv_w = math.floor((w + 2 * pw - kw) / sw + 1)
+        conv_h = ((h + 2 * ph - kh) / sh + 1) // 1
+        conv_w = ((w + 2 * pw - kw) / sw + 1) // 1
 
 
 
