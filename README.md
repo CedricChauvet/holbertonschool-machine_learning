@@ -48,7 +48,10 @@ Ateliers de programmatin des 7 ans, Electronique et robotique.
 C'est une experience riche et j'adore le contact avec les jeunes.
 
 A l'heure actuelle je mets en pose mon activité pour me concentrer sur ma nouvelle formation a Holberton.
-Je suis a la recherche d'un alternance. Si vous êtes intéressé  n'hesitez pas a regarder mon CV!
+Je suis a la recherche d'un alternance.
+
+Si vous êtes intéressé  n'hesitez pas a regarder mon CV!
+
 [https://itetudes.fr/wp-content/uploads/2024/05/cv-final-2024-1.pdf](url)
 
 
