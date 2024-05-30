@@ -48,15 +48,19 @@ Je suis diplmoé d'un MASTER 2 PRO dans ingenierie intitulé "Pilotage et Survei
 J'ai aussi une maitrise dans les metiers de l'enseignement de l'education et de la formation (Toulouse 2013)
 
 Je suis micro entrepreneur, je donne des ateliers enfants pour leur faire découvrir la pensée onformatique.
+
 Ateliers de programmatin des 7 ans, Electronique et robotique.
+
 C'est une experience riche et j'adore le contact avec les jeunes.
 
 A l'heure actuelle je mets en pose mon activité pour me concentrer sur ma nouvelle formation a Holberton.
+
 Je suis a la recherche d'un alternance.
 
 Si vous êtes intéressé  n'hesitez pas a regarder mon CV!
 
 [https://itetudes.fr/wp-content/uploads/2024/05/cv-final-2024-1.pdf](url)
+
 [https://www.linkedin.com/in/cedric-olivier-chauvet/](url)
 
 
