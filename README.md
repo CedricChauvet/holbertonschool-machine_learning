@@ -64,9 +64,9 @@ Je suis a la recherche d'un alternance.
 
 Si vous êtes intéressé  n'hesitez pas a regarder mon CV!
 
-[Mon CV](https://itetudes.fr/wp-content/uploads/2024/05/cv-final-2024-1.pdf)(url)
+[Mon CV](https://itetudes.fr/wp-content/uploads/2024/05/cv-final-2024-1.pdf)(
 
-[https://www.linkedin.com/in/cedric-olivier-chauvet/](url)
+[Linkedin](https://www.linkedin.com/in/cedric-olivier-chauvet/)
 
 
 
