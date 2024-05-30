@@ -26,7 +26,7 @@ cd holbertonschool-machine_learning
 ```
 
 
-#### Projects Overview
+## Projects Overview
 
 Chaque dossier correspond à un projet ou à un exercice spécifique. Vous pouvez exécuter les scripts individuellement en naviguant vers le dossier concerné et en lançant les scripts Python correspondants.
 
