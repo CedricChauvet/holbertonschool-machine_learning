@@ -4,7 +4,9 @@ Machine Learning training requires lot of mathematics knowledges.
 
 
 [Linear algebra](https://intranet.hbtn.io/projects/2275)
-
+[plotting](https://intranet.hbtn.io/projects/2280)
+[Calculus](https://intranet.hbtn.io/projects/2278)
+[Convolution and pooling](https://intranet.hbtn.io/projects/2301)
 
 
 You will find lot of Algebra and calculus tasks.
