@@ -11,6 +11,8 @@ Machine Learning training requires lot of mathematics knowledges.
 
 [Convolution and pooling](https://intranet.hbtn.io/projects/2301)
 
+### You need to have an access to the intranet to fetch the links below
+
 
 You will find lot of Algebra and calculus tasks.
 
