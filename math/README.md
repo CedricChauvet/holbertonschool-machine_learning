@@ -3,6 +3,10 @@ this  is the mathematics repo.
 Machine Learning training requires lot of mathematics knowledges.
 
 
+[Linear algebra](https://intranet.hbtn.io/projects/2275)
+
+
+
 You will find lot of Algebra and calculus tasks.
 
 One more thing: plotting with Matplotlib
