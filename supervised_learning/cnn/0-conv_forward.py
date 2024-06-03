@@ -36,8 +36,11 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
         # pw = int((w_prev * (sw - 1)  + kw - sw) / 2)
         pw = ((w_prev - 1) * sw + kw - w_prev) // 2
     # out contains the output of convolution layer, careful may gives wrog out_h and out_w
-    out_h = int((h_prev + 2 * ph - kh)/ sh + 1)
-    out_w = int((w_prev + 2 * pw - kw)/ sw + 1)
+    # out_h = int((h_prev + 2 * ph - kh)/ sh + 1)
+    # out_w = int((w_prev + 2 * pw - kw)/ sw + 1)
+
+    out_h = (h_prev + 2 * ph - kh) // sh + 1
+    out_w = (w_prev + 2 * pw - kw) // sw + 1
     out_c = c_new
     conv = np.zeros((m,out_h,out_w,out_c))
     # print("out", out_h, out_w, out_c)
