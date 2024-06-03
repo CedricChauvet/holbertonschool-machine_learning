@@ -60,8 +60,8 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
                 x = np.multiply(A_prev_pad[:,i:i+kh, j:j+kw,0:c_prev], W[: ,: ,0:c_prev,c])
                 # print("x before sum",x.shape)
                 x = np.sum(x, axis=(1,2,3)) 
-                # print("x after",x.shape)
-                x = relu(x+ b[0,0,0,c])
+                print("x after",x.shape)
+                x = activation(x+ b[0,0,0,c])
                 conv[:, i, j, c] = x
                     
     return conv
