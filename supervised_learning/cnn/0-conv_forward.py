@@ -31,17 +31,19 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
         ph = 0
         pw = 0
     if padding == 'same':
-        # ph = int((h_prev * (sh - 1)  + kh - sh) / 2)
-        ph = ((h_prev - 1) * sh + kh - h_prev) // 2
-        # pw = int((w_prev * (sw - 1)  + kw - sw) / 2)
-        pw = ((w_prev - 1) * sw + kw - w_prev) // 2
+        ph = int((h_prev * (sh - 1)  + kh - sh) / 2)
+        # ph = ((h_prev - 1) * sh + kh - h_prev) // 2
+        pw = int((w_prev * (sw - 1)  + kw - sw) / 2)
+        # pw = ((w_prev - 1) * sw + kw - w_prev) // 2
     # out contains the output of convolution layer, careful may gives wrog out_h and out_w
-    # out_h = int((h_prev + 2 * ph - kh)/ sh + 1)
-    # out_w = int((w_prev + 2 * pw - kw)/ sw + 1)
+    out_h = int((h_prev + 2 * ph - kh)/ sh + 1)
+    out_w = int((w_prev + 2 * pw - kw)/ sw + 1)
 
     out_h = (h_prev + 2 * ph - kh) // sh + 1
     out_w = (w_prev + 2 * pw - kw) // sw + 1
     out_c = c_new
+    
+    
     conv = np.zeros((m,out_h,out_w,out_c))
     # print("out", out_h, out_w, out_c)
 
@@ -57,7 +59,7 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
             for c in range(out_c):
                 # crop A_prev_pad by filter, the sum, 
 
-                x = np.multiply(A_prev_pad[:,i:i+kh, j:j+kw,0:c_prev], W[: ,: ,0:c_prev,c])
+                x = np.multiply(A_prev_pad[:,sh * i:sh * i+kh, sw * j:sw * j+kw,0:c_prev], W[: ,: ,0:c_prev,c])
                 # print("x before sum",x.shape)
                 x = np.sum(x, axis=(1,2,3)) 
                 # print("x after",x.shape)
