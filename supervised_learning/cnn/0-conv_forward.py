@@ -3,7 +3,6 @@
 project CNN
 by Ced
 """
-import tensorflow.keras as K
 import numpy as np
 
 
