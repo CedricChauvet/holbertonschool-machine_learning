@@ -5,10 +5,6 @@ by Ced
 """
 import numpy as np
 
-
-def relu(Z):
-    return np.maximum(Z, 0)
-
 def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
     """
     to be continued
@@ -35,9 +31,10 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
         ph = 0
         pw = 0
     if padding == 'same':
-        ph = int((h_prev * (sh - 1)  + kh - sh) / 2)
-        pw = int((w_prev * (sw - 1)  + kw - sw) / 2)
-
+        # ph = int((h_prev * (sh - 1)  + kh - sh) / 2)
+        ph = ((h_prev - 1) * sh + kh - h_prev) // 2
+        # pw = int((w_prev * (sw - 1)  + kw - sw) / 2)
+        pw = ((w_prev - 1) * sw + kw - w_prev) // 2
     # out contains the output of convolution layer, careful may gives wrog out_h and out_w
     out_h = int((h_prev + 2 * ph - kh)/ sh + 1)
     out_w = int((w_prev + 2 * pw - kw)/ sw + 1)
