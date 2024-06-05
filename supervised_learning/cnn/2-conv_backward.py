@@ -92,7 +92,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                                 #    ii = (i - k) // sh
                                 #    jj = (j - l) // sw
                                 #    if 0 <= ii < h_new and 0 <= jj < w_new:
-                                    dxp[n, i, j, c] += dZp[n, i +k, j +l, f] * W_[k, l, c, f ]
+                                    dxp[n, i, j, c] += dZp[n, sh*i +k, sw*j +l, f] * W_[k, l, c, f ]
   
     # Remove padding for dx
     #Remove padding for dx
