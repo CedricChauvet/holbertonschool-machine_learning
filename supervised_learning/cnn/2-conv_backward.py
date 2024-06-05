@@ -78,6 +78,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     for i in range(kh):
         for j in range(kw):
            W_[i,j, :, :] = W[kh-i-1,kw-j-1, :, :]
+    
+    
     # Version sans vectorisation
     for n in range(m):       # Parcours des images
         for f in range(c_new):   # Parcours des filtres
@@ -100,6 +102,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     if padding == "valid":
         dx = dxp
     # print("dxp shape", dxp.shape)
+    print("stride", sh,sw)
     return dx, dw,db
         
         
