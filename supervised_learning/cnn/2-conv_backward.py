@@ -90,10 +90,10 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     
     # Remove padding for dx
     #Remove padding for dx
-    if ph > 0:
+    if padding == "same":
         dx = dxp[:,ph:-ph,pw:-pw,:]
         # print("dx", dx.shape)
-    else:
+    if padding == "valid":
         dx = dxp
     # print("dxp shape", dxp.shape)
     return dx, dw,db
