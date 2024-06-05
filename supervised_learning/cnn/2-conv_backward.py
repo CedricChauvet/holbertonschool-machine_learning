@@ -32,7 +32,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     (m, h_prev, w_prev, c_prev) = A_prev.shape
     (kh, kw, c_prev, c_new) = W.shape
     (sh, sw) = stride
-    
+    print("stride", sh,sw)
     if padding == 'valid':
         ph = 0
         pw = 0
@@ -102,7 +102,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     if padding == "valid":
         dx = dxp
     # print("dxp shape", dxp.shape)
-    print("stride", sh,sw)
+   
     return dx, dw,db
         
         
