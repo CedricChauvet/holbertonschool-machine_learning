@@ -91,10 +91,10 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     
     # Remove padding for dx
     #Remove padding for dx
-    #dx = dxp[:,:,ph:-ph,pw:-pw]
+    dx = dxp[:,:,ph:-ph,pw:-pw]
     # print("dx", dxp)
     # print("dx shape", dxp.shape)
-    return dxp, dw,db
+    return dx, dw,db
         
         
         
