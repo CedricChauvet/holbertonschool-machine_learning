@@ -77,17 +77,19 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     #        W_[i,j, :, :] = W[kh-i-1,kw-j-1, :, :]
     W_ = np.flip(W, (0, 1))  # Retourner le filtre
     # Version sans vectorisation
-    for n in range(m):       # On parcourt toutes les images
-        for f in range(c_new):   # On parcourt tous les filtres
-            for k in range(h_new): # indices du filtre
-                for l in range(w_new): # indices du filtre
-                        h_start = k * sh
-                        h_end = h_start + kh
-                        w_start = l * sw
-                        w_end = w_start + kw
-                        
-                        dxp[n, h_start:h_end, w_start:w_end,:] += dZ[n, k, l, f] * W_[:,:,:,f]
-    
+    for n in range(m):       # Parcours des images
+        for f in range(c_new):   # Parcours des filtres
+            for i in range(h_prev + 2 * ph): # Parcours des indices de hauteur de l'entrée
+                for j in range(w_prev + 2 * pw): # Parcours des indices de largeur de l'entrée
+                    for k in range(kh): # Parcours des indices de hauteur du filtre
+                        for l in range(kw): # Parcours des indices de largeur du filtre
+                            for c in range(c_prev): # Parcours des canaux
+                                if (i - k) % sh == 0 and (j - l) % sw == 0:
+                                    ii = (i - k) // sh
+                                    jj = (j - l) // sw
+                                    if 0 <= ii < h_new and 0 <= jj < w_new:
+                                        dxp[n, i, j, c] += dZ[n, ii, jj, f] * W[k, l, c, f ]
+  
     # Remove padding for dx
     #Remove padding for dx
     if padding == "same":
