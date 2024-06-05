@@ -63,7 +63,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     # dx = dy_0 * w'
     # Valide seulement pour un stride = 1
     # 0-padding juste sur les deux dernières dimensions de dy = dout (N, F, H', W')
-    doutp = np.pad(dZ, ((0,), (kh-1,), (kw-1, ), (0,)), 'constant')   # attention j'ai inveré kh et kw
+    # dZp = np.pad(dZ, ((0,), (kh-1,), (kw-1, ), (0,)), 'constant')   # attention j'ai inveré kh et kw
 
     # 0-padding juste sur les deux dernières dimensions de dx
     dxp = np.pad(A_prev, ((0,), (ph,), (pw,), (0,)), 'constant')
@@ -71,10 +71,10 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
 
     # filtre inversé dimension (F, C, HH, WW)
-    w_ = np.zeros_like(W)
+    W_ = np.zeros_like(W)
     for i in range(kh):
         for j in range(kw):
-            w_[i,j, :, :] = W[kh-i-1,kw-j-1, :, :]
+            W_[i,j, :, :] = W[kh-i-1,kw-j-1, :, :]
     
     # Version sans vectorisation
     for n in range(m):       # On parcourt toutes les images
@@ -87,14 +87,17 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                         w_start = l * sw
                         w_end = w_start + kw
                         
-                        dxp[n, h_start:h_end, w_start:w_end,:] += doutp[n, k, l, f] * W[:,:,:,f]
+                        dxp[n, h_start:h_end, w_start:w_end,:] += dZ[n, k, l, f] * W[:,:,:,f]
     
     # Remove padding for dx
     #Remove padding for dx
-    dx = dxp[:,:,ph:-ph,pw:-pw]
-    # print("dx", dxp)
-    # print("dx shape", dxp.shape)
-    return dxp, dw,db
+    if ph > 0:
+        dx = dxp[:,ph:-ph,pw:-pw,:]
+        print("dx", dx.shape)
+    else:
+        dx = dxp
+    print("dxp shape", dxp.shape)
+    return dx, dw,db
         
         
         
