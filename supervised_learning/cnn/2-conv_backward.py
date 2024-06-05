@@ -81,7 +81,6 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         for f in range(c_new):   # On parcourt tous les filtres
             for k in range(h_new): # indices du filtre
                 for l in range(w_new): # indices du filtre
-                    for c in range(c_prev): # profondeur
                         h_start = k * sh
                         h_end = h_start + kh
                         w_start = l * sw
@@ -93,10 +92,10 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     #Remove padding for dx
     if ph > 0:
         dx = dxp[:,ph:-ph,pw:-pw,:]
-        print("dx", dx.shape)
+        # print("dx", dx.shape)
     else:
         dx = dxp
-    print("dxp shape", dxp.shape)
+    # print("dxp shape", dxp.shape)
     return dx, dw,db
         
         
