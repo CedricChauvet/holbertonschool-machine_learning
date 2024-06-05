@@ -23,7 +23,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     (dA_prev), the kernels (dW), and the biases (db), respectively
     """
     
-    # print("dZ", dZ.shape)
+    print("dZ", dZ.shape)
     # print("A_prev", A_prev.shape)
     # print("W", W.shape)
     # print("b", b.shape)
@@ -66,19 +66,18 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     # dx = dy_0 * w'
     # Valide seulement pour un stride = 1
     # 0-padding juste sur les deux dernières dimensions de dy = dout (N, F, H', W')
-    dZp = np.pad(dZ, ((0,), (kh-1,), (kw-1, ), (0,)), 'constant')   # attention j'ai inveré kh et kw
-
+    dZp = np.pad(dZ, ((0,), (kw-1,), (kh-1, ), (0,)), 'constant')   # attention j'ai inveré kh et kw
+    print("dzp", dZp.shape)
     # 0-padding juste sur les deux dernières dimensions de dx
     dxp = np.pad(A_prev, ((0,), (ph,), (pw,), (0,)), 'constant')
     # print("dxp shape", dxp.shape, "A_prev shape", A_prev.shape)
 
 
     # filtre inversé dimension (F, C, HH, WW)
-    # W_ = np.zeros_like(W)
-    # for i in range(kh):
-    #     for j in range(kw):
-    #        W_[i,j, :, :] = W[kh-i-1,kw-j-1, :, :]
-    W_ = np.flip(W, (0, 1))  # Retourner le filtre
+    W_ = np.zeros_like(W)
+    for i in range(kh):
+        for j in range(kw):
+           W_[i,j, :, :] = W[kh-i-1,kw-j-1, :, :]
     # Version sans vectorisation
     for n in range(m):       # Parcours des images
         for f in range(c_new):   # Parcours des filtres
@@ -87,11 +86,11 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     for k in range(kh): # Parcours des indices de hauteur du filtre
                         for l in range(kw): # Parcours des indices de largeur du filtre
                             for c in range(c_prev): # Parcours des canaux
-                                if (i - k) % sh == 0 and (j - l) % sw == 0:
-                                    ii = (i - k) // sh
-                                    jj = (j - l) // sw
-                                    if 0 <= ii < h_new and 0 <= jj < w_new:
-                                        dxp[n, i, j, c] += dZ[n, ii, jj, f] * W[k, l, c, f ]
+                                #if (i - k) % sh == 0 and (j - l) % sw == 0:
+                                #    ii = (i - k) // sh
+                                #    jj = (j - l) // sw
+                                #    if 0 <= ii < h_new and 0 <= jj < w_new:
+                                    dxp[n, i, j, c] += dZp[n, i +k, j +l, f] * W_[k, l, c, f ]
   
     # Remove padding for dx
     #Remove padding for dx
