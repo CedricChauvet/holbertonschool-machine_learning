@@ -63,7 +63,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     # dx = dy_0 * w'
     # Valide seulement pour un stride = 1
     # 0-padding juste sur les deux dernières dimensions de dy = dout (N, F, H', W')
-    doutp = np.pad(dZ, ((0,), (kw-1,), (kh-1, ), (0,)), 'constant')
+    doutp = np.pad(dZ, ((0,), (kh-1,), (kw-1, ), (0,)), 'constant')   # attention j'ai inveré kh et kw
 
     # 0-padding juste sur les deux dernières dimensions de dx
     dxp = np.pad(A_prev, ((0,), (ph,), (pw,), (0,)), 'constant')
