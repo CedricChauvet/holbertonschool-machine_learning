@@ -79,12 +79,15 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     # Version sans vectorisation
     for n in range(m):       # On parcourt toutes les images
         for f in range(c_new):   # On parcourt tous les filtres
-            for i in range(h_prev + 2 * ph): # indices du résultat
-                for j in range(w_prev + 2 * pw):
-                    for k in range(kh): # indices du filtre
-                        for l in range(kw):
-                            for c in range(c_prev): # profondeur
-                                dxp[n, i, j, c] += doutp[n, i+k, j+l, f] * w_[ k, l, c, f] 
+            for k in range(h_new): # indices du filtre
+                for l in range(w_new): # indices du filtre
+                    for c in range(c_prev): # profondeur
+                        h_start = k * sh
+                        h_end = h_start + kh
+                        w_start = l * sw
+                        w_end = w_start + kw
+                        
+                        dxp[n, h_start:h_end, w_start:w_end,:] += doutp[n, k, l, f] * W[:,:,:,f]
     
     # Remove padding for dx
     #Remove padding for dx
