@@ -8,7 +8,21 @@ import numpy as np
 
 def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
     """
-    to document
+    task 3: Pooling Back Prop
+        - dA is a numpy.ndarray of shape (m, h_new, w_new, c_new) containing
+        the partial derivatives with respect to the output of the pooling layer
+        - A_prev is a numpy.ndarray of shape (m, h_prev, w_prev, c)
+        containing the output of the previous layer
+        - kernel_shape is a tuple of (kh, kw) containing the size of the kernel
+        for the pooling
+        - stride is a tuple of (sh, sw) containing the strides for the pooling
+        - mode is a string containing either max or avg, indicating whether
+        to perform maximum or average pooling, respectively
+
+    Returns: the partial derivatives with respect to the previous layer
+
+
+
     """
     (m, h_new, w_new, c_new) = dA.shape
     (m, h_prev, w_prev, c) = A_prev.shape
