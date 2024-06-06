@@ -3,9 +3,9 @@
 Convolution and pooling project
 by Ced
 """
-import numpy as np
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
+
 
 def model_lenet5(x):
     """
