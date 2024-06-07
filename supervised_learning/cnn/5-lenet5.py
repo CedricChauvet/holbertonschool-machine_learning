@@ -3,8 +3,8 @@
 Convolution and pooling project
 by Ced
 """
-import numpy as np
-import tensorflow as tf
+
+
 from tensorflow import keras as K
 
 
