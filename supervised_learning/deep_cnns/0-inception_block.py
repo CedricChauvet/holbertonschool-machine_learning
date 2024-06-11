@@ -16,7 +16,7 @@ def inception_block(A_prev, filters):
         filters=F1,
         kernel_size=(1, 1),
         padding='same',
-        activation=K.layers.ReLU(),
+        activation="ReLU",
         kernel_initializer=K.initializers.he_normal(seed=0),
         )(A_prev)
 
@@ -24,7 +24,7 @@ def inception_block(A_prev, filters):
         filters=F3R,
         kernel_size=(1, 1),
         padding='same',
-        activation=K.layers.ReLU(),
+        activation="ReLU",
         kernel_initializer=K.initializers.he_normal(seed=0),
         )(A_prev)
 
@@ -32,7 +32,7 @@ def inception_block(A_prev, filters):
         filters=F3,
         kernel_size=(3, 3),
         padding='same',
-        activation=K.layers.ReLU(),
+        activation="ReLU",
         kernel_initializer=K.initializers.he_normal(seed=0)
         )(conv2d_1)
 
@@ -40,7 +40,7 @@ def inception_block(A_prev, filters):
         filters=F5R,
         kernel_size=(1, 1),
         padding='same',
-        activation=K.layers.ReLU(),
+        activation="ReLU",
         kernel_initializer=K.initializers.he_normal(seed=0),
         )(A_prev)
 
@@ -48,7 +48,7 @@ def inception_block(A_prev, filters):
         filters=F5,
         kernel_size=(5, 5),
         padding='same',
-        activation=K.layers.ReLU(),
+        activation="ReLU",
         kernel_initializer=K.initializers.he_normal(seed=0)
         )(conv2d_3)
 
@@ -60,7 +60,7 @@ def inception_block(A_prev, filters):
         filters=FPP,
         kernel_size=(1, 1),
         padding='same',
-        activation=K.layers.ReLU(),
+        activation="ReLU",
         kernel_initializer=K.initializers.he_normal(seed=0),
         )(max_pooling2d)
 
