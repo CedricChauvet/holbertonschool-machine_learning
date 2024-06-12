@@ -7,8 +7,18 @@ from tensorflow import keras as K
 
 
 def projection_block(A_prev, filters, s=2):
+    """
+    computes a projection block,
+    - A_prev is the input layer
+    - filters are the size of cnn
+    - s is the stride of the first convolution
+    in both the main path and the shortcut connection
+    returns: the activated output of the projection block
+    """
+
     (F11, F3, F12) = filters
-    
+    # module with conv 2D layer followed by batch normalization
+    # and activation
     conv2D = K.layers.Conv2D(
         filters=F11,
         kernel_size=(1, 1),
@@ -44,10 +54,7 @@ def projection_block(A_prev, filters, s=2):
     BN4 = K.layers.BatchNormalization()(shortcut)
 
     add = K.layers.Add()([BN3, BN4])
-    
+
     ReLU3 = K.layers.Activation(activation='relu')(add)
 
     return ReLU3
-
-
-
