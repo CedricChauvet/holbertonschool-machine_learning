@@ -8,7 +8,9 @@ from tensorflow import keras as K
 
 def identity_block(A_prev, filters):
     """
-    to be defined
+    performs an identity block, with
+        - prec layer in input
+        - size of the convolution
     """
 
     (F11, F3, F12) = filters
