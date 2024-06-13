@@ -27,6 +27,6 @@ def dense_block(X, nb_filters, growth_rate, layers):
             strides=(1, 1),
             kernel_initializer=K.initializers.he_normal(seed=0),
             padding="same")(ReLU1)
-        input0 = K.layers.Concatenate()([conv_1, input0])
+        input0 = K.layers.Concatenate()([input0, conv_1,])
 
     return input0,32
