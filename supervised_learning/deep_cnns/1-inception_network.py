@@ -20,7 +20,7 @@ def inception_network():
         kernel_size=(7, 7),
         strides=(2, 2),
         padding='same',
-        activation="ReLU"
+        activation="relu"
         )(input_1)
 
     max_pooling2d = K.layers.MaxPooling2D(
@@ -34,7 +34,7 @@ def inception_network():
         kernel_size=(1, 1),
         strides=(1, 1),
         padding='same',
-        activation="ReLU"
+        activation="relu"
         )(max_pooling2d)
 
     conv2d_2 = K.layers.Conv2D(
@@ -42,7 +42,7 @@ def inception_network():
         kernel_size=(3, 3),
         strides=(1, 1),
         padding='same',
-        activation="ReLU"
+        activation="relu"
         )(conv2d_1)
 
     max_pooling2d_1 = K.layers.MaxPooling2D(
