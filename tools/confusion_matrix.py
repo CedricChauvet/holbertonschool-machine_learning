@@ -6,9 +6,9 @@ ONLY WORKS ON ONEHOT arrays
 
 """
 import numpy as np
-
 # Applying the function to training set labels and testing set labels 
 from keras.utils import to_categorical 
+
 
 def one_hot_encode(train_labels, test_labels):
     """

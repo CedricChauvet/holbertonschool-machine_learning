@@ -37,7 +37,9 @@ def plot_batch_2 (images_df, grid_width, grid_height, im_scale_x, im_scale_y):
     for i in range(0, grid_width):
         for j in range(0, grid_height):
             ax[i][j].axis('off')
+            # print the "breed" column and a filepath containing "id column"
             ax[i][j].set_title(images_df.iloc[img_idx]['breed'][:10])
+            # here is the trick, to adapt for another database
             image_2 = cv2.imread(DATASET_PATH + images_df.iloc[img_idx]['id']+'.jpg') # iloc gives the index  with respect to id column
             ax[i][j].imshow(image_2)
             img_idx += 1
