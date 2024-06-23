@@ -18,7 +18,7 @@ from keras.layers import Dropout
 from keras.layers import Input
 from keras.applications import InceptionResNetV2
 from keras.callbacks import ModelCheckpoint
-from matplotlib import pyplot as ply
+from matplotlib import pyplot as plt
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
