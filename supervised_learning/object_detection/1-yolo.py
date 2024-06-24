@@ -47,5 +47,6 @@ class Yolo():
         boxes = outputs[0][:, :, :, 0:4]
         box_confidence = outputs[0][:, :, :, 4]
         box_class_probs = outputs[0][:, :, :, 5:]
+        print("boxes", box_class_probs.shape)
 
         return boxes, box_confidence, box_class_probs
