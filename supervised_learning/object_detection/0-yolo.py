@@ -25,7 +25,7 @@ class Yolo():
         """
         function that prepare the label classes
         """
-    
+
         list_class = []
         file = open(path, mode='r')
         classes = file.read().split("\n")
