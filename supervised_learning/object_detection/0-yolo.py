@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
+"""
+This is the yolo project
+By Ced
+"""
 from keras.models import load_model
 import numpy as np
 
 
 class Yolo():
     """
-    to be filled
+    Initialize Yolo
+    implementing model with load_model
+    an class name with read_classes(self,path)
     """
 
     def __init__(self, model_path, classes_path, class_t, nms_t, anchors):
