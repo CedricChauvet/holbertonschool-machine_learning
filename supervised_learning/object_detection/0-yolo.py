@@ -22,7 +22,10 @@ class Yolo():
         self.anchors = anchors
 
     def read_classes(self, path):
-
+        """
+        function that prepare the label classes
+        """
+    
         list_class = []
         file = open(path, mode='r')
         classes = file.read().split("\n")
