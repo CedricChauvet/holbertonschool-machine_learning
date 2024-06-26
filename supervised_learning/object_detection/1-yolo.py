@@ -35,45 +35,47 @@ class Yolo():
         return list_class
 
     def process_outputs(self, outputs, image_size):
-        # useless for now
-        grid_height, grid_width, anchor_boxes, lastclasse = outputs[0].shape
-        image_height, image_width = image_size[0], image_size[1]
-        # print("test", outputs[0][0,0,0,:])
+        """
+        Take the raw output : outputs
+        return the bounding boxes ,Prob0 confidence and Prob class(80 len)
+        """
         box_confidence=[]
         boxes=[]
         box_class_probs=[]
-        print("tete", outputs[0][:, :, :, 0:4])
-        for output in outputs:
-                box_confidence.append( 1 / ( 1 + np.exp(-output[:, :, :, 4])))
-                box_class_probs.append(1 / ( 1 + np.exp(-output[:, :, :, 5:])))
+        
+        for i,output in enumerate(outputs):
+            
+            grid_height, grid_width, anchor_boxes, lastclasse = output.shape
+            image_height, image_width = image_size[0], image_size[1]
+            
+            # found on internet
+            grid_x, grid_y = np.meshgrid(np.arange(grid_width), np.arange(grid_height))
+            grid_x = grid_x.reshape(1, grid_height, grid_width,1)
+            grid_y = grid_y.reshape(1,grid_height, grid_width, 1)
+           
+            # center_x is the center, kept times image width
+            center_x = (1 / ( 1 + np.exp(-output[..., 0])) + grid_x) / grid_width  * image_width
+            # center_y is the center, kepts times image height
+            center_y = (1 / ( 1 + np.exp(-output[:, :, :, 1])) + grid_y) / grid_height * image_height
+            # width of the bouding box beware the indexes 0 and 1... here it s ok!
+            width = self.anchors[i][:, 0] *  np.exp(output[:, :, :, 2]) / self.model.input.shape[1] * image_width
+            # pw is the weight
+            height = self.anchors[i][:, 1] * np.exp(output[:, :, :, 3]) / self.model.input.shape[2] * image_height
+            
+            
+            x1 = center_x - (width / 2)# * image_width
+            y1 = center_y - (height / 2)# * image_height
+            x2 = center_x + (width / 2)# * image_width
+            y2 = center_y + (height / 2)# * image_height
+            
+            box = np.zeros((grid_height, grid_width, anchor_boxes, 4))
+            box[:, :, :, 0] = x1
+            box[:, :, :, 1] = y1
+            box[:, :, :, 2] = x2
+            box[:, :, :, 3] = y2
+            boxes.append(box)
+
+            box_confidence.append(1 / ( 1 + np.exp(-output[:, :, :, 4])))
+            box_class_probs.append(1 / ( 1 + np.exp(-output[:, :, :, 5:])))
         
         return boxes, box_confidence, box_class_probs
-
-    """
-    def process_outputs(self, outputs, image_size):
-       
-        split outputs into
-        boxes, box confidence and box class prob
-       
-
-       
-
-        #(t_x, t_y, t_w, t_h) = outputs[:, :, :, 0:4]
-        t = outputs[0][:, :, :, 0]
-        t_x = outputs[0][:, :, :, 1]
-        t_y = outputs[0][:, :, :, 2]
-        t_h = outputs[0][:, :, :, 3]
-        #box_confidence = outputs[0][:, :, :, 4]
-        #(x1, y1, x2, y2) = (image_width * t_x, image_height * t_y, image_width * t_x + image_width * t_w, image_height * t_y + image_height * t_h   )    
-        boxes = []
-        #print("boxes",Pc)
-        box_confidence = outputs[0][:, :, :, 4]
-        box_class_probs = outputs[0][:, :, :, 5:]
-        #print("boxes prob", box_class_probs.shape)
-
-        return boxes, box_confidence, box_class_probs
-    """
-
-
-# Boxes: [array([[[[-2.13743365e+02, -4.85478868e+02,  3.05682061e+02,
-#            5.31534670e+02],
