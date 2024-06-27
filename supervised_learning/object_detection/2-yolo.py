@@ -94,7 +94,7 @@ class Yolo():
         pass the output trough a filter,
         this threshold is  self.class_t * box_class_prob
         """
-        
+
         threshold = self.class_t
         selected_BB = []
         selected_conf = []
