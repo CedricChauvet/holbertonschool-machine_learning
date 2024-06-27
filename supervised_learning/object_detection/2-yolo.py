@@ -90,7 +90,7 @@ class Yolo():
         return boxes, box_confidence, box_class_probs
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
-        threshold = self.nms_t
+        threshold = self.class_t
         selected_BB = []
         selected_conf = []
         selected_Class = []
@@ -103,12 +103,14 @@ class Yolo():
             for i in range(grid_height):
                 for j in range(grid_width):
                   for k in range(anchor_boxes):
-                      if box_confidences[nb_output][i, j, k, 0] > threshold:
+                        index_class = box_class_probs[nb_output][i, j, k].argmax()
+                        # max_class = box_class_probs[nb_output][i, j, k].max()
+                        max_class = box_class_probs[nb_output][i, j, k].max()
+                        if box_confidences[nb_output][i, j, k, 0] * max_class > threshold :
                             selected_BB.append(boxes[nb_output][i, j, k, 0:4])
                             
                             
-                            index_class = box_class_probs[nb_output][i, j, k].argmax()
-                            selected_Class.append(box_class_probs[nb_output][i, j, k][index_class])
+                            selected_Class.append(index_class)
                             
                             
                             selected_conf.append(box_confidences[nb_output][i, j, k] * box_class_probs[nb_output][i, j, k,index_class] )
