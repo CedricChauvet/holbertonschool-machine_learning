@@ -109,12 +109,14 @@ class Yolo():
                         if box_confidences[nb_output][i, j, k, 0] * max_class > threshold :
                             selected_BB.append(boxes[nb_output][i, j, k, 0:4])
                             selected_Class.append(index_class)
-                            selected_conf.append(box_confidences[nb_output][i, j, k] * box_class_probs[nb_output][i, j, k,index_class] )
+                            
+                            conf = box_confidences[nb_output][i, j, k] * box_class_probs[nb_output][i, j, k,index_class]
+                            selected_conf.append(float(conf))
                             
                                          
         selected_BB = np.array(selected_BB)
-        selected_conf = np.array(selected_conf, 0)                    
-        selected_Class = np.array(selected_Class)               
+        selected_conf = np.array(selected_conf)
                             
+        selected_Class = np.array(selected_Class)                                
         #print("conf", selected_BB)  
         return selected_BB, selected_Class, selected_conf

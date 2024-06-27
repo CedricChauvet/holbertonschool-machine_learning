@@ -16,5 +16,5 @@ if __name__ == '__main__':
     boxes, box_classes, box_scores = yolo.filter_boxes(boxes, box_confidences, box_class_probs)
     
     # print('Boxes:', boxes)
-    print('Box classes:', box_classes)
-    # print('Box scores:', box_scores)
+    #print('Box classes:', box_classes)
+    print('Box scores:', box_scores)
