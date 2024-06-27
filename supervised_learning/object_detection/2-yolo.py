@@ -103,7 +103,7 @@ class Yolo():
             for i in range(grid_height):
                 for j in range(grid_width):
                   for k in range(anchor_boxes):
-                      if box_confidences[nb_output][i, j, k, 0] >= threshold:
+                      if box_confidences[nb_output][i, j, k, 0] > threshold:
                             selected_BB.append(boxes[nb_output][i, j, k, 0:4])
                             
                             
