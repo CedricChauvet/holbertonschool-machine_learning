@@ -117,7 +117,7 @@ class Yolo():
                         if box_confidences[nb_output][i, j, k, 0]\
                                 * max_class > threshold:
                             selected_BB.append(boxes[nb_output][i, j, k, 0:4])
-                            selected_Class.append(index_class)
+                            selected_Class.append(index_C)
 
                             # shapping of datas to fit box score :()
                             conf = box_confidences[nb_output][i, j, k]\
