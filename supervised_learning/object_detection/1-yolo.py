@@ -7,6 +7,7 @@ from keras.models import load_model
 import numpy as np
 import math
 
+
 class Yolo():
     """
     Initialize Yolo
@@ -39,45 +40,50 @@ class Yolo():
         Take the raw output : outputs
         return the bounding boxes ,Prob0 confidence and Prob class(80 len)
         """
-        box_confidence=[]
-        boxes=[]
-        box_class_probs=[]
-        
-        for i,output in enumerate(outputs):
-            
+        box_confidence = []
+        boxes = []
+        box_class_probs = []
+
+        for i, output in enumerate(outputs):
+
             grid_height, grid_width, anchor_boxes, lastclasse = output.shape
             image_height, image_width = image_size[0], image_size[1]
-            
+
             # found on internet
-            grid_x, grid_y = np.meshgrid(np.arange(grid_width), np.arange(grid_height))
-            grid_x = grid_x.reshape(1, grid_height, grid_width,1)
-            grid_y = grid_y.reshape(1,grid_height, grid_width, 1)
-           
+            grid_x, grid_y = np.meshgrid(np.arange(grid_width),
+                                         np.arange(grid_height))
+            grid_x = grid_x.reshape(1, grid_height, grid_width, 1)
+            grid_y = grid_y.reshape(1, grid_height, grid_width, 1)
+
             # center_x is the center, kept times image width
-            center_x = (1 / ( 1 + np.exp(-output[..., 0])) + grid_x) / grid_width  * image_width
+            center_x = (1 / (1 + np.exp(-output[..., 0])) + grid_x)\
+                / grid_width * image_width
             # center_y is the center, kepts times image height
-            center_y = (1 / ( 1 + np.exp(-output[:, :, :, 1])) + grid_y) / grid_height * image_height
-            # width of the bouding box beware the indexes 0 and 1... here it s ok!
-            width = self.anchors[i][:, 0] *  np.exp(output[:, :, :, 2]) / self.model.input.shape[1] * image_width
+            center_y = (1 / (1 + np.exp(-output[:, :, :, 1])) + grid_y)\
+                / grid_height * image_height
+            # width of the bouding box beware the indexes 0 and 1
+            width = self.anchors[i][:, 0] * np.exp(output[:, :, :, 2])\
+                / self.model.input.shape[1] * image_width
             # pw is the weight
-            height = self.anchors[i][:, 1] * np.exp(output[:, :, :, 3]) / self.model.input.shape[2] * image_height
-            
-            
-            x1 = center_x - (width / 2)# * image_width
-            y1 = center_y - (height / 2)# * image_height
-            x2 = center_x + (width / 2)# * image_width
-            y2 = center_y + (height / 2)# * image_height
-            
+            height = self.anchors[i][:, 1] * np.exp(output[:, :, :, 3])\
+                / self.model.input.shape[2] * image_height
+
+            x1 = center_x - (width / 2)  # * image_width
+            y1 = center_y - (height / 2)  # * image_height
+            x2 = center_x + (width / 2)  # * image_width
+            y2 = center_y + (height / 2)  # * image_height
+
             box = np.zeros((grid_height, grid_width, anchor_boxes, 4))
             box[:, :, :, 0] = x1
             box[:, :, :, 1] = y1
             box[:, :, :, 2] = x2
             box[:, :, :, 3] = y2
             boxes.append(box)
-            
-            confidence = 1 / ( 1 + np.exp(-output[:, :, :,4]))
-            confidence = confidence.reshape(grid_height, grid_width, anchor_boxes, 1)
+
+            confidence = 1 / (1 + np.exp(-output[:, :, :, 4]))
+            confidence = confidence.reshape(grid_height, grid_width,
+                                            anchor_boxes, 1)
             box_confidence.append(confidence)
-            box_class_probs.append(1 / ( 1 + np.exp(-output[:, :, :, 5:])))
+            box_class_probs.append(1 / (1 + np.exp(-output[:, :, :, 5:])))
 
         return boxes, box_confidence, box_class_probs
