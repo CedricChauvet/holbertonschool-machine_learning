@@ -79,8 +79,8 @@ class Yolo():
             box[:, :, :, 2] = x2
             box[:, :, :, 3] = y2
             boxes.append(box)
-            
-            # reshaping for the checker, 
+
+            # reshaping for the checker,
             confidence = 1 / (1 + np.exp(-output[:, :, :, 4]))
             confidence = confidence.reshape(grid_height, grid_width,
                                             anchor_boxes, 1)
@@ -94,29 +94,32 @@ class Yolo():
         selected_BB = []
         selected_conf = []
         selected_Class = []
-        # Filtrez le tableau
-        #arr_filtre = boxes[box_confidences[] >= threshold]
 
+        # Filtrez le tableau
         for nb_output in range(len(box_confidences)):
-            grid_height, grid_width, anchor_boxes, lastclasse = box_confidences[nb_output].shape    
-            
+            grid_height, grid_width, anchor_boxes, lastclasse = \
+                box_confidences[nb_output].shape
+
             for i in range(grid_height):
                 for j in range(grid_width):
-                  for k in range(anchor_boxes):
-                      
-                        index_class = box_class_probs[nb_output][i, j, k].argmax()
+                    for k in range(anchor_boxes):
+
+                        index_C = box_class_probs[nb_output][i, j, k]\
+                            .argmax()
+
                         max_class = box_class_probs[nb_output][i, j, k].max()
-                        if box_confidences[nb_output][i, j, k, 0] * max_class > threshold :
+
+                        if box_confidences[nb_output][i, j, k, 0]\
+                                * max_class > threshold:
                             selected_BB.append(boxes[nb_output][i, j, k, 0:4])
                             selected_Class.append(index_class)
-                            
-                            conf = box_confidences[nb_output][i, j, k] * box_class_probs[nb_output][i, j, k,index_class]
+
+                            # shapping of datas to fit box score :()
+                            conf = box_confidences[nb_output][i, j, k]\
+                                * box_class_probs[nb_output][i, j, k, index_C]
                             selected_conf.append(float(conf))
-                            
-                                         
+
         selected_BB = np.array(selected_BB)
         selected_conf = np.array(selected_conf)
-                            
-        selected_Class = np.array(selected_Class)                                
-        #print("conf", selected_BB)  
+        selected_Class = np.array(selected_Class)
         return selected_BB, selected_Class, selected_conf
