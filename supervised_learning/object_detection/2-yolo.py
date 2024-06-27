@@ -90,6 +90,11 @@ class Yolo():
         return boxes, box_confidence, box_class_probs
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
+        """
+        pass the output trough a filter,
+        this threshold is  self.class_t * box_class_prob
+        """
+        
         threshold = self.class_t
         selected_BB = []
         selected_conf = []
