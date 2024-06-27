@@ -103,22 +103,18 @@ class Yolo():
             for i in range(grid_height):
                 for j in range(grid_width):
                   for k in range(anchor_boxes):
+                      
                         index_class = box_class_probs[nb_output][i, j, k].argmax()
-                        # max_class = box_class_probs[nb_output][i, j, k].max()
                         max_class = box_class_probs[nb_output][i, j, k].max()
                         if box_confidences[nb_output][i, j, k, 0] * max_class > threshold :
                             selected_BB.append(boxes[nb_output][i, j, k, 0:4])
-                            
-                            
                             selected_Class.append(index_class)
-                            
-                            
                             selected_conf.append(box_confidences[nb_output][i, j, k] * box_class_probs[nb_output][i, j, k,index_class] )
                             
                                          
         selected_BB = np.array(selected_BB)
         selected_conf = np.array(selected_conf)                    
-                            
+        selected_Class = no.arra(selected_Class)               
                             
         #print("conf", selected_BB)  
         return selected_BB, selected_Class, selected_conf
