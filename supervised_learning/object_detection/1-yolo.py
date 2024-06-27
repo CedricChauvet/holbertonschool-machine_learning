@@ -74,8 +74,10 @@ class Yolo():
             box[:, :, :, 2] = x2
             box[:, :, :, 3] = y2
             boxes.append(box)
-
-            box_confidence.append(1 / ( 1 + np.exp(-output[:, :, :,4])))
+            
+            confidence = 1 / ( 1 + np.exp(-output[:, :, :,4]))
+            confidence = confidence.reshape(grid_height, grid_width, anchor_boxes, 1)
+            box_confidence.append(confidence)
             box_class_probs.append(1 / ( 1 + np.exp(-output[:, :, :, 5:])))
-            print("box_confidence", box_confidence[0].shape) # penser a faire un reshape
+
         return boxes, box_confidence, box_class_probs
