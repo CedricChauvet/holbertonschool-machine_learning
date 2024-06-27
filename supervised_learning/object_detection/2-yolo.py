@@ -90,7 +90,7 @@ class Yolo():
         return boxes, box_confidence, box_class_probs
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
-        threshold = self. class_t
+        threshold = self.nms_t
         selected_BB = []
         selected_conf = []
         selected_Class = []
