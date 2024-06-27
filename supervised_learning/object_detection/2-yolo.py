@@ -114,7 +114,7 @@ class Yolo():
                                          
         selected_BB = np.array(selected_BB)
         selected_conf = np.array(selected_conf)                    
-        selected_Class = no.arra(selected_Class)               
+        selected_Class = np.arra(selected_Class)               
                             
         #print("conf", selected_BB)  
         return selected_BB, selected_Class, selected_conf
