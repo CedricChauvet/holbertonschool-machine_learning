@@ -147,7 +147,7 @@ class Yolo():
                 index_max_score = box_scores[class_rest].argmax()
                 best_index = class_rest[index_max_score]
                 class_rest = np.delete(class_rest,index_max_score)
-                classified_index.append(best_index)               
+                classified_index = np.append(classified_index,best_index)               
                 
 
             # création d'un tampon pour recuperer les nms
