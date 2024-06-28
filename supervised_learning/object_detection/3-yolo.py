@@ -134,7 +134,7 @@ class Yolo():
         # we start with class zero, wich is the minimum, to 79    
         tuple_de_sortie=np.array([],dtype=int)
         for number_class in range(80):
-            classified_index=[]
+            classified_index=np.array([],dtype=int)
             classified_index_nms=np.array([],dtype=int)
             #min_class contient tout les element d'un casse spécifique
             min_class =  np.where(box_classes == number_class)
