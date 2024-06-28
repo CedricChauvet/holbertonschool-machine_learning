@@ -165,7 +165,7 @@ class Yolo():
                        
             tuple_de_sortie = np.append(tuple_de_sortie, classified_index_nms, axis = None)
         # classé de la + grande boxe score a la plus peitite sur une classe precise
-        
+            print("tuple", tuple_de_sortie)
         return filtered_boxes[tuple_de_sortie], box_classes[tuple_de_sortie], box_scores[tuple_de_sortie]
     
     
