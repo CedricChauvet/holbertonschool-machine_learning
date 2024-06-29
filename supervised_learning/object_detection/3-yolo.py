@@ -169,7 +169,7 @@ class Yolo():
         # we start with class zero, wich is the minimum, to 79    
         tuple_de_sortie=np.array([],dtype=int)
         for number_class in range(80):
-            classified_index=np.array([],dtype=int)
+            sorted_indices=np.array([],dtype=int)
             classified_index_nms=np.array([],dtype=int)
             #min_class contient tout les element d'un casse spécifique
             class_rest =  np.where(box_classes == number_class)[0]
@@ -180,24 +180,26 @@ class Yolo():
                 index_max_score = box_scores[class_rest].argmax()
                 best_index = class_rest[index_max_score]
                 class_rest = np.delete(class_rest,index_max_score)
-                classified_index = np.append(classified_index,best_index) 
+                sorted_indices = np.append(sorted_indices,best_index) 
                
-
-            # création d'un tampon pour recuperer les nms
-            classified_index_nms=classified_index
-            
-            #compare le premier element i0 de la liste qui a le meilleur
-            # score au reste de la liste
-            for len_class in range(len(classified_index)):
-                i_0 = classified_index[len_class] 
-
-
-
-                ious = np.array([IoU(filtered_boxes[i_0], filtered_boxes[i]) for i in classified_index[1:]])
+            keep = []
+            while len(sorted_indices) > 0:
+                current = sorted_indices[0]
+                keep.append(current)
+                
+                if len(sorted_indices) == 1:
+                    break
+                
+                # Compute IoU of the picked box with the rest
+                ious = np.array([IoU(filtered_boxes[current], filtered_boxes[i]) 
+                                for i in sorted_indices[1:]])
+                
                 # Remove boxes with IoU over the threshold
-                classified_index_nms = classified_index[1:][ious < self.nms_t]
-                
-                
+                sorted_indices = sorted_indices[1:][ious < self.nms_t]
+            
+
+            tuple_de_sortie=np.append(tuple_de_sortie, keep)
+               
                 #print("i0 score", box_scores[i_0], "classe", box_classes[i_0])
                 # for index_i, i in enumerate(classified_index[len_class+1:]):
                 # print("i score   > ", box_scores[i], "classe",box_classes[i])
@@ -205,7 +207,8 @@ class Yolo():
                 #        classified_index_nms = np.delete(classified_index_nms,index_i)
                        
             # classé de la + grande boxe score a la plus peitite sur une classe precise
-            tuple_de_sortie = np.append(tuple_de_sortie, classified_index_nms, axis = None)
+            #
+            # tuple_de_sortie = np.append(tuple_de_sortie, classified_index_nms, axis = None)
         
         return filtered_boxes[tuple_de_sortie], box_classes[tuple_de_sortie], box_scores[tuple_de_sortie]
     
