@@ -131,6 +131,9 @@ class Yolo():
 
 
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
+        """
+        achieve non max suppression algorythm
+        """
         # we start with class zero, wich is the minimum, to 79    
         tuple_de_sortie=np.array([],dtype=int)
         for number_class in range(80):
@@ -160,7 +163,7 @@ class Yolo():
                 #print("i0 score", box_scores[i_0], "classe", box_classes[i_0])
                 for index_i, i in enumerate(classified_index[len_class+1:]):
                     # print("i score   > ", box_scores[i], "classe",box_classes[i])
-                    if IoU(filtered_boxes[i_0],filtered_boxes[i]) >= self.nms_t * box_classes[i]:
+                    if IoU(filtered_boxes[i_0],filtered_boxes[i]) >= self.nms_t * box_scores[i]:
                         classified_index_nms = np.delete(classified_index_nms,index_i)
                        
             # classé de la + grande boxe score a la plus peitite sur une classe precise
