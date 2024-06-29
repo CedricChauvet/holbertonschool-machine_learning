@@ -163,7 +163,7 @@ class Yolo():
                 #print("i0 score", box_scores[i_0], "classe", box_classes[i_0])
                 for index_i, i in enumerate(classified_index[len_class+1:]):
                     # print("i score   > ", box_scores[i], "classe",box_classes[i])
-                    if IoU(filtered_boxes[i_0],filtered_boxes[i]) * box_scores[i]  >= self.nms_t :
+                    if IoU(filtered_boxes[i_0],filtered_boxes[i]) * box_scores[i_0]  >= self.nms_t :
                         classified_index_nms = np.delete(classified_index_nms,index_i)
                        
             # classé de la + grande boxe score a la plus peitite sur une classe precise
