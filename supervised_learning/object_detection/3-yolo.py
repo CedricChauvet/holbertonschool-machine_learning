@@ -185,7 +185,7 @@ class Yolo():
             keep = []
             while len(sorted_indices) > 0:
                 current = sorted_indices[0]
-                keep.append(current)
+                keep.append(int(current)
                 
                 if len(sorted_indices) == 1:
                     break
