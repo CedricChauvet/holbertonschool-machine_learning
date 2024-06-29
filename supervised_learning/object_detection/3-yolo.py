@@ -2,6 +2,9 @@
 """
 This is the yolo project
 By Ced
+
+
+A REECRIRE!!!!!!!!!
 """
 from keras.models import load_model
 import numpy as np
