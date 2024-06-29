@@ -131,7 +131,7 @@ class Yolo():
 
     """
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
- 
+
         keep_boxes = []
         
         for class_id in range(80):
@@ -177,12 +177,11 @@ class Yolo():
             while( len(class_rest)>=1):
 
                 # find the best score in min_class
-                # index_max_score = box_scores[class_rest].argmax()
-                # best_index = class_rest[index_max_score]
-                # class_rest = np.delete(class_rest,index_max_score)
-                # classified_index = np.append(classified_index,best_index) 
-                classified_index = classified_index[np.argsort(-box_scores[class_indices])]              
-                
+                index_max_score = box_scores[class_rest].argmax()
+                best_index = class_rest[index_max_score]
+                class_rest = np.delete(class_rest,index_max_score)
+                classified_index = np.append(classified_index,best_index) 
+               
 
             # création d'un tampon pour recuperer les nms
             classified_index_nms=classified_index
@@ -191,11 +190,19 @@ class Yolo():
             # score au reste de la liste
             for len_class in range(len(classified_index)):
                 i_0 = classified_index[len_class] 
+
+
+
+                ious = np.array([IoU(filtered_boxes[i_0], filtered_boxes[i]) for i in classified_index[1:]])
+                # Remove boxes with IoU over the threshold
+                classified_index_nms = classified_index[1:][ious < self.nms_t]
+                
+                
                 #print("i0 score", box_scores[i_0], "classe", box_classes[i_0])
-                for index_i, i in enumerate(classified_index[len_class+1:]):
-                    # print("i score   > ", box_scores[i], "classe",box_classes[i])
-                    if IoU(filtered_boxes[i_0],filtered_boxes[i]) >= self.nms_t :
-                        classified_index_nms = np.delete(classified_index_nms,index_i)
+                # for index_i, i in enumerate(classified_index[len_class+1:]):
+                # print("i score   > ", box_scores[i], "classe",box_classes[i])
+                #    if IoU(filtered_boxes[i_0],filtered_boxes[i]) >= self.nms_t :
+                #        classified_index_nms = np.delete(classified_index_nms,index_i)
                        
             # classé de la + grande boxe score a la plus peitite sur une classe precise
             tuple_de_sortie = np.append(tuple_de_sortie, classified_index_nms, axis = None)
