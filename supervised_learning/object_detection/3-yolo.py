@@ -132,8 +132,42 @@ class Yolo():
 
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
         """
-        achieve non max suppression algorythm
+        Achieve non-max suppression algorithm
         """
+        keep_boxes = []
+        
+        for class_id in range(80):
+            # Get indices of boxes for this class
+            class_indices = np.where(box_classes == class_id)[0]
+            
+            if len(class_indices) == 0:
+                continue
+            
+            # Sort boxes by score
+            sorted_indices = class_indices[np.argsort(-box_scores[class_indices])]
+            
+            keep = []
+            while len(sorted_indices) > 0:
+                current = sorted_indices[0]
+                keep.append(current)
+                
+                if len(sorted_indices) == 1:
+                    break
+                
+                # Compute IoU of the picked box with the rest
+                ious = np.array([IoU(filtered_boxes[current], filtered_boxes[i]) 
+                                for i in sorted_indices[1:]])
+                
+                # Remove boxes with IoU over the threshold
+                sorted_indices = sorted_indices[1:][ious < self.nms_t]
+            
+            keep_boxes.extend(keep)
+        
+        keep_boxes = np.array(keep_boxes)
+        return filtered_boxes[keep_boxes], box_classes[keep_boxes], box_scores[keep_boxes]
+
+    """
+    def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
         # we start with class zero, wich is the minimum, to 79    
         tuple_de_sortie=np.array([],dtype=int)
         for number_class in range(80):
@@ -163,15 +197,14 @@ class Yolo():
                 #print("i0 score", box_scores[i_0], "classe", box_classes[i_0])
                 for index_i, i in enumerate(classified_index[len_class+1:]):
                     # print("i score   > ", box_scores[i], "classe",box_classes[i])
-                    if IoU(filtered_boxes[i_0],filtered_boxes[i]) * box_scores[i_0]  >= self.nms_t :
+                    if IoU(filtered_boxes[i_0],filtered_boxes[i]) >= self.nms_t :
                         classified_index_nms = np.delete(classified_index_nms,index_i)
                        
             # classé de la + grande boxe score a la plus peitite sur une classe precise
             tuple_de_sortie = np.append(tuple_de_sortie, classified_index_nms, axis = None)
         
         return filtered_boxes[tuple_de_sortie], box_classes[tuple_de_sortie], box_scores[tuple_de_sortie]
-    
-    
+    """
     
     
     
