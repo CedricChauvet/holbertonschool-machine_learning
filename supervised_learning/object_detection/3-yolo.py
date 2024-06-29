@@ -129,11 +129,9 @@ class Yolo():
         selected_Class = np.array(selected_Class)
         return selected_BB, selected_Class, selected_conf
 
-
+    """
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
-        """
-        Achieve non-max suppression algorithm
-        """
+ 
         keep_boxes = []
         
         for class_id in range(80):
@@ -165,8 +163,8 @@ class Yolo():
         
         keep_boxes = np.array(keep_boxes)
         return filtered_boxes[keep_boxes], box_classes[keep_boxes], box_scores[keep_boxes]
-
     """
+    
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
         # we start with class zero, wich is the minimum, to 79    
         tuple_de_sortie=np.array([],dtype=int)
@@ -174,17 +172,16 @@ class Yolo():
             classified_index=np.array([],dtype=int)
             classified_index_nms=np.array([],dtype=int)
             #min_class contient tout les element d'un casse spécifique
-            min_class =  np.where(box_classes == number_class)
-            #pour faciliter l'usage
-            class_rest = min_class[0]
-
+            class_rest =  np.where(box_classes == number_class)[0]
+            
             while( len(class_rest)>=1):
 
                 # find the best score in min_class
-                index_max_score = box_scores[class_rest].argmax()
-                best_index = class_rest[index_max_score]
-                class_rest = np.delete(class_rest,index_max_score)
-                classified_index = np.append(classified_index,best_index)               
+                # index_max_score = box_scores[class_rest].argmax()
+                # best_index = class_rest[index_max_score]
+                # class_rest = np.delete(class_rest,index_max_score)
+                # classified_index = np.append(classified_index,best_index) 
+                classified_index = classified_index[np.argsort(-box_scores[class_indices])]              
                 
 
             # création d'un tampon pour recuperer les nms
@@ -204,7 +201,7 @@ class Yolo():
             tuple_de_sortie = np.append(tuple_de_sortie, classified_index_nms, axis = None)
         
         return filtered_boxes[tuple_de_sortie], box_classes[tuple_de_sortie], box_scores[tuple_de_sortie]
-    """
+    
     
     
     
