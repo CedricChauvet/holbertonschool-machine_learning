@@ -132,110 +132,117 @@ class Yolo():
         selected_Class = np.array(selected_Class)
         return selected_BB, selected_Class, selected_conf
 
-    
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
+        """
+        version corrigées pour avancer sur le projet
+        """
 
         keep_boxes = []
-        
+
         for class_id in range(80):
             # Get indices of boxes for this class
             class_indices = np.where(box_classes == class_id)[0]
-            
+
             if len(class_indices) == 0:
                 continue
-            
+
             # Sort boxes by score
-            sorted_indices = class_indices[np.argsort(-box_scores[class_indices])]
-            
+            sorted_indices = class_indices[np.argsort(
+                -box_scores[class_indices])]
+
             keep = []
             while len(sorted_indices) > 0:
                 current = sorted_indices[0]
                 keep.append(current)
-                
+
                 if len(sorted_indices) == 1:
                     break
-                
+
                 # Compute IoU of the picked box with the rest
-                ious = np.array([IoU(filtered_boxes[current], filtered_boxes[i]) 
+                ious = np.array([IoU(filtered_boxes[current],
+                                     filtered_boxes[i])
                                 for i in sorted_indices[1:]])
-                
+
                 # Remove boxes with IoU over the threshold
                 sorted_indices = sorted_indices[1:][ious < self.nms_t]
-            
+
             keep_boxes.extend(keep)
-        
+
         keep_boxes = np.array(keep_boxes)
-        return filtered_boxes[keep_boxes], box_classes[keep_boxes], box_scores[keep_boxes]
+        return filtered_boxes[keep_boxes],\
+            box_classes[keep_boxes], box_scores[keep_boxes]
+
     """
-    
+
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
-        # we start with class zero, wich is the minimum, to 79    
+        # we start with class zero, wich is the minimum, to 79
         tuple_de_sortie=np.array([],dtype=int)
         for number_class in range(80):
             sorted_indices=np.array([],dtype=int)
             classified_index_nms=np.array([],dtype=int)
             #min_class contient tout les element d'un casse spécifique
             class_rest =  np.where(box_classes == number_class)[0]
-            
             while( len(class_rest)>=1):
 
                 # find the best score in min_class
                 index_max_score = box_scores[class_rest].argmax()
                 best_index = class_rest[index_max_score]
                 class_rest = np.delete(class_rest,index_max_score)
-                sorted_indices = np.append(sorted_indices,best_index) 
-               
+                sorted_indices = np.append(sorted_indices,best_index)
+
             keep = []
             while len(sorted_indices) > 0:
                 current = sorted_indices[0]
                 keep.append(int(current))
-                
+
                 if len(sorted_indices) == 1:
                     break
-                
+
                 # Compute IoU of the picked box with the rest
-                ious = np.array([IoU(filtered_boxes[current], filtered_boxes[i]) 
+                ious = np.array([IoU(filtered_boxes[current],
+                    filtered_boxes[i])
                                 for i in sorted_indices[1:]])
-                
+
                 # Remove boxes with IoU over the threshold
                 sorted_indices = sorted_indices[1:][ious < self.nms_t]
-            
 
             tuple_de_sortie=np.append(tuple_de_sortie, keep)
-               
+
                 #print("i0 score", box_scores[i_0], "classe", box_classes[i_0])
                 # for index_i, i in enumerate(classified_index[len_class+1:]):
                 # print("i score   > ", box_scores[i], "classe",box_classes[i])
-                #    if IoU(filtered_boxes[i_0],filtered_boxes[i]) >= self.nms_t :
-                #        classified_index_nms = np.delete(classified_index_nms,index_i)
-                       
-            # classé de la + grande boxe score a la plus peitite sur une classe precise
+                #    if IoU(filtered_boxes[i_0],filtered_boxes[i])
+                #    >= self.nms_t :
+                #        classified_index_nms = np.delete
+                # (classified_index_nms,index_i)
+            # classé de la + grande boxe score a la plus peitite sur
+            # une classe precise
             #
-            # tuple_de_sortie = np.append(tuple_de_sortie, classified_index_nms, axis = None)
-        
-        return filtered_boxes[tuple_de_sortie], box_classes[tuple_de_sortie], box_scores[tuple_de_sortie]
+            # tuple_de_sortie = np.append(tuple_de_sortie,
+            #  classified_index_nms, axis = None)
+        return filtered_boxes[tuple_de_sortie],
+            box_classes[tuple_de_sortie], box_scores[tuple_de_sortie]
     """
-    
-    
-    
-    
-    
+
+
 def IoU(BB1, BB2):
     x0_A, y0_A, x1_A, y1_A = BB1
     x0_B, y0_B, x1_B, y1_B = BB2
-    
-        # Get the coordinates of the intersection rectangle
+
+    # Get the coordinates of the intersection rectangle
     x0_I = max(x0_A, x0_B)
     y0_I = max(y0_A, y0_B)
     x1_I = min(x1_A, x1_B)
     y1_I = min(y1_A, y1_B)
-    #Calculate width and height of the intersection area.
-    width_I = x1_I - x0_I 
+    # Calculate width and height of the intersection area.
+    width_I = x1_I - x0_I
     height_I = y1_I - y0_I
     # Handle the negative value width or height of the intersection area
-    if width_I<0 : width_I=0
-    if height_I<0 : height_I=0
-    
+    if width_I < 0:
+        width_I = 0
+    if height_I < 0:
+        height_I = 0
+
     # Calculate the intersection area:
     intersection = width_I * height_I
     # Calculate the union area:
