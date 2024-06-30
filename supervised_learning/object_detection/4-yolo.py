@@ -9,6 +9,7 @@ import math
 import cv2
 import glob
 
+
 class Yolo():
     """
     Initialize Yolo
@@ -175,19 +176,13 @@ class Yolo():
         loads all images in a folder path
         """
 
-        image_paths = glob.glob(folder_path  + "/*.jpg")
-        images =[]
+        image_paths = glob.glob(folder_path + "/*.jpg")
+        images = []
         for path in image_paths:
             images.append(cv2.imread(path))
-        
+
         return images, image_paths
 
-
-
-
-
-
-        
 
 def IoU(BB1, BB2):
     """
@@ -221,5 +216,3 @@ def IoU(BB1, BB2):
 
     # Return the IoU and intersection box
     return IoU
-
-# hello world iiiiiiiiii
