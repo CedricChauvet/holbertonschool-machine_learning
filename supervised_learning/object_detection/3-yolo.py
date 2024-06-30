@@ -132,7 +132,7 @@ class Yolo():
         selected_Class = np.array(selected_Class)
         return selected_BB, selected_Class, selected_conf
 
-    """
+    
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
 
         keep_boxes = []
@@ -188,7 +188,7 @@ class Yolo():
             keep = []
             while len(sorted_indices) > 0:
                 current = sorted_indices[0]
-                keep.append(int(current)
+                keep.append(int(current))
                 
                 if len(sorted_indices) == 1:
                     break
@@ -214,7 +214,7 @@ class Yolo():
             # tuple_de_sortie = np.append(tuple_de_sortie, classified_index_nms, axis = None)
         
         return filtered_boxes[tuple_de_sortie], box_classes[tuple_de_sortie], box_scores[tuple_de_sortie]
-    
+    """
     
     
     
