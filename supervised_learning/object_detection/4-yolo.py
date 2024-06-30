@@ -175,7 +175,7 @@ class Yolo():
         loads all images in a folder path
         """
 
-        image_paths = glob.glob(folder_path[:-1]  + "/*.jpg")
+        image_paths = glob.glob(folder_path  + "/*.jpg")
         images =[]
         for path in image_paths:
             images.append(cv2.imread(path))
