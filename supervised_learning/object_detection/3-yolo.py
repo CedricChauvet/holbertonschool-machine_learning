@@ -169,7 +169,7 @@ class Yolo():
             keep_boxes.extend(keep)
 
         keep_boxes = np.array(keep_boxes)
-        return filtered_boxes[keep_boxes],\
+        return filtered_boxes[keep_boxes], \
             box_classes[keep_boxes], box_scores[keep_boxes]
 
     """
