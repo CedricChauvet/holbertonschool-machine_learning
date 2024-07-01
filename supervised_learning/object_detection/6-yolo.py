@@ -209,7 +209,9 @@ class Yolo():
 
 
     def show_boxes(self, image, boxes, box_classes, box_scores, file_name):
-        pass
+        """
+        USING cv2 to display the boxes inside the image
+        """
 
 def IoU(BB1, BB2):
     """
