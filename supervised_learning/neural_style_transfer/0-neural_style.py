@@ -46,10 +46,9 @@ class NST():
         
 
         if image.shape[0] > 512 or image.shape[1] > 512:
-
             resized_image = tf.image.resize(image, [512, 512], preserve_aspect_ratio=True)
-            rescaled_image =  resized_image / 255
-        
-            reshaped_image = tf.expand_dims(rescaled_image,axis=0)
+
+        rescaled_image =  resized_image / 255        
+        reshaped_image = tf.expand_dims(rescaled_image,axis=0)
         return reshaped_image
         
