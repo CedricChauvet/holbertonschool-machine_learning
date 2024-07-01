@@ -184,26 +184,28 @@ class Yolo():
         return images, image_paths
 
     def preprocess_images(self, images):
-        
+
         """
         cubic INTER_CUBIC - a bicubic interpolation over 4x4 pixel neighborhood
+        create  2 np nd array pimage of dim=4
+        and image_shape of dim 2
         """
         ni = len(images)
         input_h = self.model.input.shape[2]
         input_w = self.model.input.shape[1]
-        pimages=np.ndarray([ni,input_h,input_w,3])
-        image_shapes = np.ndarray([ni,2], dtype= int)
+
+        pimages = np.ndarray([ni, input_h, input_w, 3])
+        image_shapes = np.ndarray([ni, 2], dtype=int)
 
         for i in range(len(images)):
-            resized_img = cv2.resize(images[i], (input_w,input_h), interpolation=cv2.INTER_CUBIC)
+            resized_img = cv2.resize(images[i], (input_w, input_h),
+                                     interpolation=cv2.INTER_CUBIC)
             rescaled_img = resized_img/255.0
-        
+
             pimages[i] = rescaled_img
             image_shapes[i] = images[i].shape[0:2]
 
-
         return pimages, image_shapes
-
 
 
 def IoU(BB1, BB2):
