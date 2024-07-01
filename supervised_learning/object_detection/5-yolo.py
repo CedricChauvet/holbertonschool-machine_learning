@@ -191,7 +191,7 @@ class Yolo():
         ni = len(images)
         input_h = self.model.input.shape[2]
         input_w = self.model.input.shape[1]
-        pimages=np.ndarray([ni,input_h,input_w,3],dtype=int)
+        pimages=np.ndarray([ni,input_h,input_w,3])
         image_shapes = np.ndarray([ni,2], dtype= int)
 
         for i in range(len(images)):
