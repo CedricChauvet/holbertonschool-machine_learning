@@ -59,7 +59,7 @@ class NST():
 
         #tensor = tf.zeros([1, h, w, 3])
         image = np.expand_dims(image, axis = 0)
-        image = tf.image.resize(image, [h, w])
+        image = tf.image.resize(image, [h, w], method='bilinear')
 
         image =  image / 255.0 
         #reshaped_image = tf.expand_dims(image,axis=0)
