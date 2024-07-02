@@ -45,8 +45,8 @@ class NST():
             raise TypeError("image must be a numpy.ndarray with shape (h, w, 3)")
         
 
-        if image.shape[0] > 512 or image.shape[1] > 512:
-            image = tf.image.resize(image, [512, 512], preserve_aspect_ratio=True)
+        
+        image = tf.image.resize(image, [512, 512], preserve_aspect_ratio=True)
 
         rescaled_image =  image / 255        
         reshaped_image = tf.expand_dims(rescaled_image,axis=0)
