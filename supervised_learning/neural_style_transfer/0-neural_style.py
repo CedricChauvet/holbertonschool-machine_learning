@@ -45,11 +45,11 @@ class NST():
             raise TypeError("image must be a numpy.ndarray with shape (h, w, 3)")
         
 
-        
+        rescaled_image =  image / 255.0        
         image = tf.image.resize(image, [512, 512], preserve_aspect_ratio=True)
-        # image = tf.dtypes.cast(image, tf.float32)
+        image = tf.dtypes.cast(image, tf.float32)
        
         reshaped_image = tf.expand_dims(rescaled_image,axis=0)
-        rescaled_image =  image / 255.0
+        
         return reshaped_image
         
