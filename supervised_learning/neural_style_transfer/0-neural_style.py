@@ -43,13 +43,26 @@ class NST():
     def scale_image(image):
         if not isinstance(image,np.ndarray) or image.ndim != 3 or image.shape[2] != 3:
             raise TypeError("image must be a numpy.ndarray with shape (h, w, 3)")
-        
-
+        np.expand_dims(image, axis = 0)
+        # 
+        # print("image", image.shape)
                
-        image = tf.image.resize(image, [512, 512], preserve_aspect_ratio=True)
-        image = tf.dtypes.cast(image, tf.float32)
-        rescaled_image =  image / 255.0 
-        reshaped_image = tf.expand_dims(rescaled_image,axis=0)
+        h = image.shape[0]
+        w = image.shape[1]
+
+        if h >= w:
+            w = int(w * 512 / h)
+            h = 512
+        else:
+            h = int(h * 512 / w)
+            w = 512
+
+        #tensor = tf.zeros([1, h, w, 3])
+        image = np.expand_dims(image, axis = 0)
+        image = tf.image.resize(image, [h, w])
+
+        image =  image / 255.0 
+        #reshaped_image = tf.expand_dims(image,axis=0)
         
-        return reshaped_image
+        return image
         
