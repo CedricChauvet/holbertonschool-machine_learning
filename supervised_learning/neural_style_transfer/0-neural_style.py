@@ -47,8 +47,8 @@ class NST():
 
         
         image = tf.image.resize(image, [512, 512], preserve_aspect_ratio=True)
-
-        rescaled_image =  image / 255.0        
+        image = tf.dtypes.cast(image, tf.float32)
+        rescaled_image =  image / 255.0
         reshaped_image = tf.expand_dims(rescaled_image,axis=0)
         return reshaped_image
         
