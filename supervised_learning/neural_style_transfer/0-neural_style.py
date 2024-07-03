@@ -54,7 +54,9 @@ class NST():
 
         # tensor = tf.zeros([1, h, w, 3])
         image = np.expand_dims(image, axis=0)
-        image = tf.image.resize(image, [h, w], method='bilinear')
+        image = tf.image.resize(image, [h, w], method='bicubic')
         image = image / 255.0
+        image = tf.clip_by_value( image, 0, 1)
+
 
         return image
