@@ -39,8 +39,7 @@ class NST():
     @staticmethod
     def scale_image(image):
         if not isinstance(image, np.ndarray) or image.ndim != 3 or image.shape[2] != 3:
-            raise TypeError("image must be a\
-                            numpy.ndarray with shape (h, w, 3)")
+            raise TypeError("image must be a numpy.ndarray with shape (h, w, 3)")
 
         h = image.shape[0]
         w = image.shape[1]
