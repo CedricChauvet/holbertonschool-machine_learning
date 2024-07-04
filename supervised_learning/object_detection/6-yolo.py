@@ -207,11 +207,54 @@ class Yolo():
 
         return pimages, image_shapes
 
-
     def show_boxes(self, image, boxes, box_classes, box_scores, file_name):
         """
         USING cv2 to display the boxes inside the image
         """
+        n_boxes = boxes.shape[0]
+
+        for i in range(n_boxes):
+
+            start_point = (int(boxes[i, 0]), int(boxes[i, 1]))
+            end_point = (int(boxes[i, 2]), int(boxes[i, 3]))
+            color = (255, 0, 0)
+            thickness = 2
+            score = float("{0:.2f}".format(box_scores[i]))
+
+            # passer du numéro d'etiquette au nom reel de l'objet
+            with open('coco_classes.txt', 'r') as file:
+                content = file.read().split("\n")
+                box_name = content[box_classes[i]] + " " + str(score)
+
+            # affiche le rectangle de la bounding box
+            image = cv2.rectangle(image,
+                                  pt1=start_point,
+                                  pt2=end_point,
+                                  color=color,
+                                  thickness=thickness)
+
+            # ajoute le nombe de l objet et la confidence
+            image = cv2.putText(image, box_name,
+                                org=(int(boxes[i, 0]), int(boxes[i, 1] - 5)),
+                                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                                fontScale=0.5,
+                                color=(0, 0, 255),
+                                thickness=1,
+                                lineType=cv2.LINE_AA)
+
+        cv2.imshow(file_name, image)
+
+        while True:
+            # Wait for the S key, if s is pressed save the pitcure
+            if cv2.waitKey(1) & 0xFF == 115:
+                cv2.imwrite(file_name, image)
+                break
+            if cv2.waitKey(0) & 0xFF != 115:
+                break
+        cv2.destroyAllWindows()  # destroys the window showing image
+
+        return
+
 
 def IoU(BB1, BB2):
     """
