@@ -35,7 +35,7 @@ class NST():
         self.content_image = self.scale_image(content_image)  # the preprocessed content image
         self.alpha = alpha  # the weight for content cost
         self.beta = beta  # the weight for style cost
-
+        self.model = self.load_model()
     @staticmethod
     def scale_image(image):
         if not isinstance(image, np.ndarray) or image.ndim != 3 or image.shape[2] != 3:
@@ -57,12 +57,17 @@ class NST():
         image = image / 255.0
         image = tf.clip_by_value( image, 0, 1)
 
-
-<<<<<<< HEAD
-        rescaled_image =  resized_image / 255.0       
-        reshaped_image = tf.expand_dims(rescaled_image,axis=0)
-        return reshaped_image
-        
-=======
         return image
->>>>>>> 7878b7a204889f93a1766d92c46278b9c4735d23
+
+    def load_model(self):
+        model = tf.keras.applications.VGG19(
+        include_top=False,
+        weights="imagenet",
+        input_tensor=None,
+        input_shape= (None, None, 3),
+        pooling=None,
+        classes=1000,
+        classifier_activation="softmax",
+        )
+
+        return model
