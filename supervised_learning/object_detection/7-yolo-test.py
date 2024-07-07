@@ -263,12 +263,13 @@ class Yolo():
         """
         # charge les images dans le dossier
         images,image_paths = self.load_images(folder_path)
-        
+        save=[]
         print("images path", image_paths)
 
         for file_name in image_paths:
             file_name= file_name.split("/")
             print("filename", file_name[-1])
+            save.append(file_name[-1])    
 
         pimages, image_shapes = self.preprocess_images(images)
         print("pimages", pimages.shape)
@@ -296,7 +297,7 @@ class Yolo():
 
             boxes, box_classes, box_scores = self.non_max_suppression(filtered_boxes, box_classes, box_scores)            
 
-            self.show_boxes(img, boxes, box_classes, box_scores,image_paths[i][10:])
+            self.show_boxes(img, boxes, box_classes, box_scores,save[i])
             
 
 def IoU(BB1, BB2):

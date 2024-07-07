@@ -246,7 +246,7 @@ class Yolo():
 
         while True:
             # Wait for the S key, if s is pressed save the pitcure
-            if cv2.waitKey(1) & 0xFF == 115:
+            if cv2.waitKey(0) & 0xFF == 115:
                 cv2.imwrite(file_name, image)
                 break
             if cv2.waitKey(0) & 0xFF != 115:

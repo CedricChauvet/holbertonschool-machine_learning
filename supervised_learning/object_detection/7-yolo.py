@@ -4,6 +4,8 @@ This is the yolo project
 By Ced
 """
 from keras.models import load_model
+from keras.layers import Input
+import keras
 import numpy as np
 import math
 import cv2
@@ -56,6 +58,10 @@ class Yolo():
                                          np.arange(grid_height))
             grid_x = grid_x.reshape(1, grid_height, grid_width, 1)
             grid_y = grid_y.reshape(1, grid_height, grid_width, 1)
+
+            # fixing dtype
+            # Ensure the output is of type float32
+            output = output.astype(np.float32)
 
             # center_x is the center, kept times image width
             center_x = (1 / (1 + np.exp(-output[..., 0])) + grid_x)\
@@ -168,8 +174,7 @@ class Yolo():
             keep_boxes.extend(keep)
 
         keep_boxes = np.array(keep_boxes)
-        return filtered_boxes[keep_boxes], \
-            box_classes[keep_boxes], box_scores[keep_boxes]
+        return filtered_boxes[keep_boxes], box_classes[keep_boxes], box_scores[keep_boxes]
 
     def load_images(self, folder_path):
         """
@@ -178,8 +183,9 @@ class Yolo():
 
         image_paths = glob.glob(folder_path + "/*.jpg")
         images = []
+
         for path in image_paths:
-            images.append(cv2.imread(path))
+            images.append(cv2.imread(path, cv2.IMREAD_COLOR))
 
         return images, image_paths
 
@@ -196,15 +202,15 @@ class Yolo():
        
         pimages = np.ndarray([ni, input_h, input_w, 3])
         image_shapes = np.ndarray([ni, 2], dtype=int)
+        for i, image in enumerate(images):
+            print("proc", type(image), image.shape)
+            image_shapes[i] = image.shape[0:2]
 
-        for i in range(len(images)):
-            print("ni", i)
-            resized_img = cv2.resize(images[i], (416, 416), interpolation=cv2.INTER_CUBIC)
+            resized_img = cv2.resize(image, (input_h, input_w), interpolation=cv2.INTER_CUBIC)
             rescaled_img = resized_img/255.0
 
             pimages[i] = rescaled_img
-            image_shapes[i] = images[i].shape[0:2]
-
+           
         return pimages, image_shapes
 
     def show_boxes(self, image, boxes, box_classes, box_scores, file_name):
@@ -212,7 +218,7 @@ class Yolo():
         USING cv2 to display the boxes inside the image
         """
         n_boxes = boxes.shape[0]
-
+        print("show")
         for i in range(n_boxes):
 
             start_point = (int(boxes[i, 0]), int(boxes[i, 1]))
@@ -226,6 +232,9 @@ class Yolo():
                 content = file.read().split("\n")
                 box_name = content[box_classes[i]] + " " + str(score)
 
+            	
+
+            """
             # affiche le rectangle de la bounding box
             image = cv2.rectangle(image,
                                   pt1=start_point,
@@ -241,13 +250,16 @@ class Yolo():
                                 color=(0, 0, 255),
                                 thickness=1,
                                 lineType=cv2.LINE_AA)
-
+            """
         cv2.imshow(file_name, image)
 
         while True:
             # Wait for the S key, if s is pressed save the pitcure
-            if cv2.waitKey(1) & 0xFF == 115:
-                cv2.imwrite(file_name, image)
+            if cv2.waitKey(0) & 0xFF == 115:
+                success = cv2.imwrite(file_name, image)
+                if success:
+                    print( "ca a marché")
+                
                 break
             if cv2.waitKey(0) & 0xFF != 115:
                 break
@@ -256,33 +268,48 @@ class Yolo():
         return
 
     def predict(self, folder_path):
+        """
+        c'est la tache qui me pose des difficultés,
+        prendre plusieurs images et dessiner les boundings boxes
+        """
         # charge les images dans le dossier
-        images = self.load_images(folder_path)
+        images,image_paths = self.load_images(folder_path)
+        save=[]
+        print("images path", image_paths)
+
+        for file_name in image_paths:
+            file_name= file_name.split("/")
+            print("filename", file_name[-1])
+            save.append(file_name[-1])    
+
         pimages, image_shapes = self.preprocess_images(images)
-        output = self.model
-        output = output(image)        
-        for image in pimages:
-            # get the output when an image pass into a model
-            print("dim img", image.shape)    
+        print("pimages", pimages.shape)
+        for i, img in enumerate(pimages):
+
+            # mon probleme se situe ici!
+            output = self.model(np.expand_dims(img, axis=0))
+    
             
-
-            # do the process output        
-            image_size = (image.shape[0], image.shape[1])
-            print ("size img", image_size)
-            process_output = self.process_outputs(output, image_size)
-            boxes, box_confidences, box_class_probs = process_output
             
-            # filter boxes
-            filter = self.filter_boxes(boxes, box_confidences, box_class_probs)
-            filtered_boxes, box_classes, box_scores = filter
-        
-            # non max suppression
-            nms = self.non_max_suppression(filtered_boxes, box_classes, box_scores)
-            boxes, box_classes, box_scores = nms
-            print("nms")
-            self.show_boxes(image, boxes, box_classes, box_scores, "./test.jpg" )
+            # Je crois que c'est l'instruction a saisir
+            # ou bien celle ci
+            # output = self.model.predict(np.expand_dims(img, axis=0))
 
+            print("len output", len(output)) # donne 3, sans doute pour chien velo et truck
+            print("output3", output[2].shape)
+            output1 = output[0][0,:,:,:]
+            output2 = output[1][0,:,:,:]
+            output3 = output[2][0,:,:,:]
+            image_size = (img.shape[0], img.shape[1])
 
+            boxes, box_confidences, box_class_probs = self.process_outputs([output1, output2, output3],image_shapes)
+            
+            filtered_boxes, box_classes, box_scores = self.filter_boxes(boxes, box_confidences, box_class_probs)
+
+            boxes, box_classes, box_scores = self.non_max_suppression(filtered_boxes, box_classes, box_scores)            
+            print("mon image", image_shapes)
+            self.show_boxes(img, boxes, box_classes, box_scores,save[i])
+            
 
 def IoU(BB1, BB2):
     """

@@ -2,7 +2,7 @@
 
 if __name__ == '__main__':
     import numpy as np
-    Yolo = __import__('7-yolo-test').Yolo
+    Yolo = __import__('7-yolo').Yolo
 
     np.random.seed(0)
     anchors = np.array([[[116, 90], [156, 198], [373, 326]],
