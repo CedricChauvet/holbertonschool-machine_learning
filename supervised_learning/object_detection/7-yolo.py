@@ -59,10 +59,6 @@ class Yolo():
             grid_x = grid_x.reshape(1, grid_height, grid_width, 1)
             grid_y = grid_y.reshape(1, grid_height, grid_width, 1)
 
-            # fixing dtype
-            # Ensure the output is of type float32
-            output = output.astype(np.float32)
-
             # center_x is the center, kept times image width
             center_x = (1 / (1 + np.exp(-output[..., 0])) + grid_x)\
                 / grid_width * image_width
@@ -203,7 +199,6 @@ class Yolo():
         pimages = np.ndarray([ni, input_h, input_w, 3])
         image_shapes = np.ndarray([ni, 2], dtype=int)
         for i, image in enumerate(images):
-            print("proc", type(image), image.shape)
             image_shapes[i] = image.shape[0:2]
 
             resized_img = cv2.resize(image, (input_h, input_w), interpolation=cv2.INTER_CUBIC)
@@ -218,7 +213,6 @@ class Yolo():
         USING cv2 to display the boxes inside the image
         """
         n_boxes = boxes.shape[0]
-        print("show")
         for i in range(n_boxes):
 
             start_point = (int(boxes[i, 0]), int(boxes[i, 1]))
@@ -234,7 +228,7 @@ class Yolo():
 
             	
 
-            """
+            
             # affiche le rectangle de la bounding box
             image = cv2.rectangle(image,
                                   pt1=start_point,
@@ -250,15 +244,14 @@ class Yolo():
                                 color=(0, 0, 255),
                                 thickness=1,
                                 lineType=cv2.LINE_AA)
-            """
+        
         cv2.imshow(file_name, image)
 
         while True:
             # Wait for the S key, if s is pressed save the pitcure
             if cv2.waitKey(0) & 0xFF == 115:
-                success = cv2.imwrite(file_name, image)
-                if success:
-                    print( "ca a marché")
+                cv2.imwrite(file_name, image)
+                
                 
                 break
             if cv2.waitKey(0) & 0xFF != 115:
@@ -275,15 +268,12 @@ class Yolo():
         # charge les images dans le dossier
         images,image_paths = self.load_images(folder_path)
         save=[]
-        print("images path", image_paths)
 
         for file_name in image_paths:
             file_name= file_name.split("/")
-            print("filename", file_name[-1])
             save.append(file_name[-1])    
 
         pimages, image_shapes = self.preprocess_images(images)
-        print("pimages", pimages.shape)
         for i, img in enumerate(pimages):
 
             # mon probleme se situe ici!
@@ -291,23 +281,17 @@ class Yolo():
     
             
             
-            # Je crois que c'est l'instruction a saisir
-            # ou bien celle ci
-            # output = self.model.predict(np.expand_dims(img, axis=0))
 
-            print("len output", len(output)) # donne 3, sans doute pour chien velo et truck
-            print("output3", output[2].shape)
             output1 = output[0][0,:,:,:]
             output2 = output[1][0,:,:,:]
             output3 = output[2][0,:,:,:]
             image_size = (img.shape[0], img.shape[1])
 
-            boxes, box_confidences, box_class_probs = self.process_outputs([output1, output2, output3],image_shapes)
+            boxes, box_confidences, box_class_probs = self.process_outputs([output1, output2, output3],image_size)
             
             filtered_boxes, box_classes, box_scores = self.filter_boxes(boxes, box_confidences, box_class_probs)
 
             boxes, box_classes, box_scores = self.non_max_suppression(filtered_boxes, box_classes, box_scores)            
-            print("mon image", image_shapes)
             self.show_boxes(img, boxes, box_classes, box_scores,save[i])
             
 
