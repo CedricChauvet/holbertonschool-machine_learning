@@ -170,7 +170,8 @@ class Yolo():
             keep_boxes.extend(keep)
 
         keep_boxes = np.array(keep_boxes)
-        return filtered_boxes[keep_boxes], box_classes[keep_boxes], box_scores[keep_boxes]
+        return filtered_boxes[keep_boxes], \
+            box_classes[keep_boxes], box_scores[keep_boxes]
 
     def load_images(self, folder_path):
         """
@@ -195,17 +196,18 @@ class Yolo():
         ni = len(images)
         input_h = self.model.input.shape[2]
         input_w = self.model.input.shape[1]
-       
+
         pimages = np.ndarray([ni, input_h, input_w, 3])
         image_shapes = np.ndarray([ni, 2], dtype=int)
         for i, image in enumerate(images):
             image_shapes[i] = image.shape[0:2]
 
-            resized_img = cv2.resize(image, (input_h, input_w), interpolation=cv2.INTER_CUBIC)
+            resized_img = cv2.resize(
+                image, (input_h, input_w), interpolation=cv2.INTER_CUBIC)
             rescaled_img = resized_img/255.0
 
             pimages[i] = rescaled_img
-           
+
         return pimages, image_shapes
 
     def show_boxes(self, image, boxes, box_classes, box_scores, file_name):
@@ -225,10 +227,6 @@ class Yolo():
             with open('coco_classes.txt', 'r') as file:
                 content = file.read().split("\n")
                 box_name = content[box_classes[i]] + " " + str(score)
-
-            	
-
-            
             # affiche le rectangle de la bounding box
             image = cv2.rectangle(image,
                                   pt1=start_point,
@@ -244,15 +242,14 @@ class Yolo():
                                 color=(0, 0, 255),
                                 thickness=1,
                                 lineType=cv2.LINE_AA)
-        
+
         cv2.imshow(file_name, image)
 
         while True:
             # Wait for the S key, if s is pressed save the pitcure
             if cv2.waitKey(0) & 0xFF == 115:
                 cv2.imwrite(file_name, image)
-                
-                
+
                 break
             if cv2.waitKey(0) & 0xFF != 115:
                 break
@@ -265,35 +262,36 @@ class Yolo():
         c'est la tache qui me pose des difficultés,
         prendre plusieurs images et dessiner les boundings boxes
         """
+
         # charge les images dans le dossier
-        images,image_paths = self.load_images(folder_path)
-        save=[]
+        images, image_paths = self.load_images(folder_path)
+        save = []
 
         for file_name in image_paths:
-            file_name= file_name.split("/")
-            save.append(file_name[-1])    
+            file_name = file_name.split("/")
+            save.append(file_name[-1])
 
         pimages, image_shapes = self.preprocess_images(images)
         for i, img in enumerate(pimages):
 
             # mon probleme se situe ici!
             output = self.model(np.expand_dims(img, axis=0))
-    
-            
-            
 
-            output1 = output[0][0,:,:,:]
-            output2 = output[1][0,:,:,:]
-            output3 = output[2][0,:,:,:]
+            output1 = output[0][0, :, :, :]
+            output2 = output[1][0, :, :, :]
+            output3 = output[2][0, :, :, :]
             image_size = (img.shape[0], img.shape[1])
 
-            boxes, box_confidences, box_class_probs = self.process_outputs([output1, output2, output3],image_size)
-            
-            filtered_boxes, box_classes, box_scores = self.filter_boxes(boxes, box_confidences, box_class_probs)
+            boxes, box_confidences, box_class_probs = self.process_outputs(
+                [output1, output2, output3], image_size)
 
-            boxes, box_classes, box_scores = self.non_max_suppression(filtered_boxes, box_classes, box_scores)            
-            self.show_boxes(img, boxes, box_classes, box_scores,save[i])
-            
+            filtered_boxes, box_classes, box_scores = self.filter_boxes(
+                boxes, box_confidences, box_class_probs)
+
+            boxes, box_classes, box_scores = self.non_max_suppression(
+                filtered_boxes, box_classes, box_scores)
+            self.show_boxes(img, boxes, box_classes, box_scores, save[i])
+
 
 def IoU(BB1, BB2):
     """
@@ -327,4 +325,3 @@ def IoU(BB1, BB2):
 
     # Return the IoU and intersection box
     return IoU
-
