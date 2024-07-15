@@ -1,4 +1,7 @@
-
+#!/usr/bin/env python3
+"""
+Project linear algebra
+"""
 
 def minor(matrix):
     """
