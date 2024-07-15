@@ -3,6 +3,7 @@
 Project linear algebra
 """
 
+
 def minor(matrix):
     """
     get minor
@@ -17,7 +18,7 @@ def minor(matrix):
         raise ValueError("matrix must be a non-empty square matrix")
 
     if len(matrix) == 1:
-        return 1
+        return [[1]]
 
     sol2D = []
     for i in range(len(matrix)):
