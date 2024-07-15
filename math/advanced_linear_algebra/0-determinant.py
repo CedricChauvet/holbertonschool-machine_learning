@@ -8,17 +8,24 @@ def determinant(matrix):
     """
     make the determinant of a matrix
     """
+
+    if matrix == [[]]:
+        return 1
+    
     if not all(isinstance(lst,list)  for lst in matrix):
 
         raise TypeError("matrix must be a list of lists")
     
     first_len = len(matrix[0])
     
-    if not all(len(lst) == first_len for lst in matrix) and len(matrix) == first_len:
+    if not all(len(lst) == first_len for lst in matrix) or len(matrix) != first_len:
         raise ValueError("matrix must be a square matrix")
 
-    if matrix == [[]]:
-        return 1
+    
+    
+    
+    
+    
     if len(matrix) == 1:
         return matrix[0][0]
     if len(matrix) == 2:
