@@ -13,8 +13,9 @@ def determinant(matrix):
         raise TypeError("matrix must be a list of lists")
     
     first_len = len(matrix[0])
-    if not all(len(lst) == first_len for lst in matrix):
-        raise ValueError("  olla!")
+    
+    if not all(len(lst) == first_len for lst in matrix) and len(matrix) == first_len:
+        raise ValueError("matrix must be a square matrix")
 
     if matrix == [[]]:
         return 1
@@ -24,7 +25,7 @@ def determinant(matrix):
         return  (matrix[0][0]* matrix[1][1]) - (matrix[1][0]* matrix[0][1])  
     
 
-    
+
     det = 0
     for i in range(len(matrix)):
         det += ((-1) ** i) *  matrix[0][i] * determinant(get_matrix_minor(matrix, i))
