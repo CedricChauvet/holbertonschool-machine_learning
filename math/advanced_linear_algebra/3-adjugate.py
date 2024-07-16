@@ -1,15 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
 #!/usr/bin/env python3
 """
 Project linear algebra
@@ -17,9 +5,9 @@ By Ced
 """
 
 
-def adjugate    (matrix):
+def adjugate(matrix):
     """
-    produce cofactor of a matrix
+    produce adjugate of a matrix
     """
 
     if not all(isinstance(lst, list) for lst in matrix):
@@ -84,6 +72,8 @@ def get_matrix_minor(matrix, i, j):
     return [row[:j] + row[j+1:] for row in (matrix[:i] + matrix[i+1:])]
 
 
-
 def transpose(matrix):
+    """
+    pruduce the transpose a a list of list
+    """
     return list(map(list, zip(*matrix)))
