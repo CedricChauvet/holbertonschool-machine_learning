@@ -5,7 +5,6 @@ By Ced
 """
 
 
-
 def cofactor(matrix):
     """
     produce cofactor of a matrix
