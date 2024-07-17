@@ -2,7 +2,6 @@
 """
 probability project
 """
-import numpy as np
 
 
 class Poisson():
@@ -17,7 +16,15 @@ class Poisson():
         if  type(self.data) == list :
             
             if len(data)>=2:
-                self.lambtha = np.mean(self.data)
+                s=0
+                for i in data:
+                    s+=i
+                mean = s /len(data)
+                self.lambtha = mean
+
+
+
+
             else:
                 raise ValueError("data must contain multiple values")
 
