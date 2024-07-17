@@ -26,8 +26,6 @@ class Poisson():
 
         else:
             raise TypeError("data must be a list")
-        
-       
 
         if self.lambtha <= 0:
             raise ValueError("lambtha must be a positive value")
