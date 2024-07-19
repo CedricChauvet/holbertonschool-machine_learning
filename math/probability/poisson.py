@@ -46,7 +46,13 @@ class Poisson:
 
         return pow(self.lambtha, k) * pow(e, -self.lambtha) / factorielle(k)
 
-
+    def cdf(self, k):
+        cdf = 0
+        for i in range(k):
+            pmf_i = self.pmf(i)
+            cdf += pmf_i
+        return cdf
+    
 def factorielle(n):
     """
     alog factoriel
