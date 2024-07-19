@@ -2,7 +2,7 @@
 """
 probability project
 """
-import math
+
 class Poisson():
     """
     Task 0  constructor
@@ -48,10 +48,12 @@ def factorielle(n):
     """
     alog factoriel
     """
-    if not isinstance(n,int):
-        n = math.floor(n)
+
     if n < 0:
         n = 0
+    if not isinstance(n,int):
+        n = int(n)
+
     if n == 0:
         return 1
     else:
