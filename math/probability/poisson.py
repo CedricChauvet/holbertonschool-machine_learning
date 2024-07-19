@@ -38,11 +38,17 @@ class Poisson():
             raise ValueError("lambtha must be a positive value")
 
     def pmf(self, k):
+        """
+        Fonctions de masse de probabilité
+        """
         e = 2.7182818285
         return pow(self.lambtha, k) * pow(e, -self.lambtha) / factorielle(k)
 
 
 def factorielle(n):
+    """
+    alog factoriel
+    """
     if n == 0:
         return 1
     else:
