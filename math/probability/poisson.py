@@ -49,6 +49,7 @@ def factorielle(n):
     """
     alog factoriel
     """
+    n = int(n)
     if n == 0:
         return 1
     else:
@@ -57,3 +58,4 @@ def factorielle(n):
         F = F * k
 
     return F
+
