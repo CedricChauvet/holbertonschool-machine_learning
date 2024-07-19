@@ -48,6 +48,7 @@ class Poisson:
 
     def cdf(self, k):
         cdf = 0
+        k = int(k)
         for i in range(k):
             pmf_i = self.pmf(i)
             cdf += pmf_i
