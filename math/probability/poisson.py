@@ -49,7 +49,8 @@ def factorielle(n):
     """
     alog factoriel
     """
-    n = int(n)
+    if not isinstance(n,int):
+        n = int(n) +1
     if n < 0:
         n = 0
     if n == 0:
