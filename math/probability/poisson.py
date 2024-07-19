@@ -2,6 +2,8 @@
 """
 probability project
 """
+
+
 class Poisson:
     """
     Poisson distribution class
@@ -41,9 +43,8 @@ class Poisson:
         k = int(k)
         if k < 0:
             return 0
-        
-        return pow(self.lambtha, k) * pow(e, -self.lambtha) / factorielle(k)
 
+        return pow(self.lambtha, k) * pow(e, -self.lambtha) / factorielle(k)
 
 
 def factorielle(n):
@@ -59,4 +60,3 @@ def factorielle(n):
         F = F * k
 
     return F
-
