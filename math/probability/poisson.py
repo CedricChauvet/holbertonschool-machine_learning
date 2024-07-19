@@ -41,7 +41,7 @@ class Poisson():
         Fonctions de masse de probabilité
         """
         e = 2.7182818285
-        print("n",k )
+        print("n",k ,"lambtha", self.lambtha)
         return pow(self.lambtha, k) * pow(e, -self.lambtha) / factorielle(k)
 
 
