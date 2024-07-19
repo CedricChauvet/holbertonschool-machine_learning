@@ -47,13 +47,20 @@ class Poisson:
         return pow(self.lambtha, k) * pow(e, -self.lambtha) / factorielle(k)
 
     def cdf(self, k):
+        """
+        cdf :  fonction de répartition cumulative
+        :param k: number of occurrences
+        :return: cdf value for k occurrences
+        """
+
         cdf = 0
         k = int(k)
         for i in range(k + 1):
             pmf_i = self.pmf(i)
             cdf += pmf_i
         return cdf
-    
+
+
 def factorielle(n):
     """
     alog factoriel
