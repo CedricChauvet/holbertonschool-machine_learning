@@ -2,56 +2,54 @@
 """
 probability project
 """
-
-class Poisson():
+class Poisson:
     """
-    Task 0  constructor
+    Poisson distribution class
     """
 
     def __init__(self, data=None, lambtha=1.):
         """
-        lambtha is the expected number of occurences in a given time frame
-        data is a list of the data to be used to estimate the distribution
+        Initialize the Poisson distribution
+
+        :param data: list of the data to be used to estimate the distribution
+        :param lambtha: expected number of occurrences in a given time frame
         """
-        self.lambtha = lambtha
         self.data = data
 
-        if type(self.data) is list:
-
-            if len(data) >= 2:
-                s = 0
-                for i in data:
-                    s += i
-                mean = s / len(data)
-                self.lambtha = mean
+        if data is not None:
+            if isinstance(data, list):
+                if len(data) >= 2:
+                    self.lambtha = sum(data) / len(data)
+                else:
+                    raise ValueError("data must contain multiple values")
             else:
-                raise ValueError("data must contain multiple values")
-
-        elif self.data is None:
-            pass
-
+                raise TypeError("data must be a list")
         else:
-            raise TypeError("data must be a list")
+            self.lambtha = float(lambtha)
 
         if self.lambtha <= 0:
             raise ValueError("lambtha must be a positive value")
 
     def pmf(self, k):
         """
-        Fonctions de masse de probabilité
+        Probability mass function
+
+        :param k: number of occurrences
+        :return: PMF value for k occurrences
         """
         e = 2.7182818285
-        if k < 0 or not isinstance(k, int):
-            k=0
-        k = int(k)  
+        k = int(k)
+        if k < 0:
+            return 0
+        
         return pow(self.lambtha, k) * pow(e, -self.lambtha) / factorielle(k)
+
 
 
 def factorielle(n):
     """
     alog factoriel
     """
-
 
     if n == 0:
         return 1
