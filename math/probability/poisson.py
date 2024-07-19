@@ -41,6 +41,9 @@ class Poisson():
         Fonctions de masse de probabilité
         """
         e = 2.7182818285
+        if k < 0 or not isinstance(k, int):
+            k=0
+        k = int(k)            
         return (self.lambtha** k) * (e ** -self.lambtha) / factorielle(k)
 
 
