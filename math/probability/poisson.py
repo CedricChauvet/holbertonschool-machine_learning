@@ -43,8 +43,8 @@ class Poisson():
         e = 2.7182818285
         if k < 0 or not isinstance(k, int):
             k=0
-        k = int(k)            
-        return (self.lambtha** k) * (e ** -self.lambtha) / factorielle(k)
+        k = int(k)  
+        return pow(self.lambtha, k) * pow(e, -self.lambtha) / factorielle(k)
 
 
 def factorielle(n):
@@ -52,10 +52,6 @@ def factorielle(n):
     alog factoriel
     """
 
-    if n < 0:
-        n = 0
-    if not isinstance(n,int):
-        n = int(n) 
 
     if n == 0:
         return 1
