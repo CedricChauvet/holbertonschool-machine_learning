@@ -49,7 +49,7 @@ def factorielle(n):
     """
     alog factoriel
     """
-    n = round(n)
+    n = int(n)
     if n == 0:
         return 1
     else:
