@@ -31,3 +31,10 @@ class Exponential:
 
         if self.lambtha <= 0:
             raise ValueError("lambtha must be a positive value")
+        
+    def pdf(self, x):
+        """
+        return probability density function 
+        """
+        e = 2.7182818285
+        return  self.lambtha * pow(e, -x * self.lambtha)
