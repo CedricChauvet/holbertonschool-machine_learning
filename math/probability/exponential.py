@@ -41,3 +41,17 @@ class Exponential:
             return 0
         else:
             return self.lambtha * pow(e, -x * self.lambtha)
+
+    def cdf(self, k):
+        """
+        cdf :  fonction de répartition cumulative
+        :param k: number of occurrences
+        :return: cdf value for k occurrences
+        """
+
+        cdf = 0
+        k = int(k)
+        for i in range(k + 1):
+            pdf_i = self.pdf(i)
+            cdf += pdf_i
+        return cdf
