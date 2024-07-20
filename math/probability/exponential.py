@@ -51,6 +51,6 @@ class Exponential:
         e = 2.7182818285
         if k < 0:
             return 0
-        
+
         else:
             return 1 - pow(e, - self.lambtha * k)
