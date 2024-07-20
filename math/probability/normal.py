@@ -15,22 +15,18 @@ class Normal():
             self.mean = mean
             self.stddev = stddev
             if stddev < 0 or not isinstance(stddev, float):
-                raise ValueError ("stddev must be a positive value")
-        
+                raise ValueError("stddev must be a positive value")
+
         else:
             if not isinstance(data, list):
-                raise TypeError ("data must be a list")
-            
+                raise TypeError("data must be a list")
+
             if len(data) < 2:
-                raise ValueError ("data must contain multiple values")  
-            
+                raise ValueError("data must contain multiple values")
 
-
-            #data_sorted = sorted(data)
-            #i = len(data) // 2
             self.mean = sum(data)/len(data)
             variance = 0
             for val in data:
-                variance += (val - self.mean ) ** 2 / len(data)
-            
-            self.stddev =  pow(variance, 1/2)
+                variance += (val - self.mean) ** 2 / len(data)
+
+            self.stddev = pow(variance, 1/2)
