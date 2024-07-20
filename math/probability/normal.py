@@ -54,3 +54,13 @@ class Normal():
 
         return 1 / pow(2 * pi * (self.stddev ** 2), 1 / 2) *\
             pow(e, -(x - self.mean) ** 2 / (2 * (self.stddev ** 2)))
+
+    def cdf(self, x):
+        return  1 / 2 * (1 + self.erf( (x - self.mean) / (self.stddev * pow(2, 1/2))))
+
+    def erf(self, x):
+        """
+        erf
+        """
+        pi = 3.1415926536
+        return 2 / pow(pi, 1/2) * (x - (pow(x, 3) / 3) + (pow(x, 5) / 10) - (pow(x, 7) / 42) + (pow(x, 9) / 216))
