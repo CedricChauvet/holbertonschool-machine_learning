@@ -37,4 +37,7 @@ class Exponential:
         return probability density function 
         """
         e = 2.7182818285
-        return  self.lambtha * pow(e, -x * self.lambtha)
+        if x < 0:
+            return 0
+        else:
+            return  self.lambtha * pow(e, -x * self.lambtha)
