@@ -52,4 +52,5 @@ class Normal():
         pi = 3.1415926536
         e = 2.7182818285
 
-        return 1 / pow(2 * pi * (self.stddev ** 2), 1 / 2) * pow (e, -(x - self.mean) ** 2 / (2 * (self.stddev ** 2))) 
+        return 1 / pow(2 * pi * (self.stddev ** 2), 1 / 2) *\
+            pow(e, -(x - self.mean) ** 2 / (2 * (self.stddev ** 2)))
