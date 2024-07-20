@@ -2,7 +2,7 @@
 """
 probability project
 """
-import numpy as np
+
 
 class Normal():
     """
@@ -26,7 +26,11 @@ class Normal():
             
 
 
-            data_sorted = sorted(data)
-            i = len(data) // 2
-            self.mean = data_sorted[i-2]
-            self.stddev =  1
+            #data_sorted = sorted(data)
+            #i = len(data) // 2
+            self.mean = sum(data)/len(data)
+            variance = 0
+            for val in data:
+                variance += (val - self.mean ) ** 2 / len(data)
+            
+            self.stddev =  pow(variance, 1/2)
