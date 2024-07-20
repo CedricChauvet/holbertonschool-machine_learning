@@ -48,10 +48,9 @@ class Exponential:
         :param k: number of occurrences
         :return: cdf value for k occurrences
         """
-
-        cdf = 0
-        k = int(k)
-        for i in range(k + 1):
-            pdf_i = self.pdf(i)
-            cdf += pdf_i
-        return cdf
+        e = 2.7182818285
+        if x < 0:
+            return 0
+        
+        else:
+            return 1 - pow(e, - self.lambtha * k)
