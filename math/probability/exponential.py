@@ -21,7 +21,7 @@ class Exponential:
         if data is not None:
             if isinstance(data, list):
                 if len(data) >= 2:
-                    self.lambtha =  len(data) / sum(data)
+                    self.lambtha = len(data) / sum(data)
                 else:
                     raise ValueError("data must contain multiple values")
             else:
@@ -31,13 +31,13 @@ class Exponential:
 
         if self.lambtha <= 0:
             raise ValueError("lambtha must be a positive value")
-        
+
     def pdf(self, x):
         """
-        return probability density function 
+        return probability density function
         """
         e = 2.7182818285
         if x < 0:
             return 0
         else:
-            return  self.lambtha * pow(e, -x * self.lambtha)
+            return self.lambtha * pow(e, -x * self.lambtha)
