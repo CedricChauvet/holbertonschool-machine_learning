@@ -49,7 +49,7 @@ class Exponential:
         :return: cdf value for k occurrences
         """
         e = 2.7182818285
-        if x < 0:
+        if k < 0:
             return 0
         
         else:
