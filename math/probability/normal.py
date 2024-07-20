@@ -14,7 +14,7 @@ class Normal():
         if data is None:
             self.mean = mean
             self.stddev = stddev
-            if stddev < 0 or not isinstance(stddev, float):
+            if stddev < 0 or not isinstance(stddev, (float, int)):
                 raise ValueError("stddev must be a positive value")
 
         else:
@@ -30,3 +30,17 @@ class Normal():
                 variance += (val - self.mean) ** 2 / len(data)
 
             self.stddev = pow(variance, 1/2)
+
+    def z_score(self, x):
+        """
+        return standard normal deviation
+        """
+
+        return (x - self.mean) / self.stddev
+
+    def x_value(self, z):
+        """
+        return to  normal deviation
+        """
+
+        return z * self.stddev + self.mean
