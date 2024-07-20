@@ -14,7 +14,7 @@ class Normal():
         if data is None:
             self.mean = mean
             self.stddev = stddev
-            if stddev < 0:
+            if stddev < 0 or not isinstance(stddev, float):
                 raise ValueError ("stddev must be a positive value")
         
         else:
