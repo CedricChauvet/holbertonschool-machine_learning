@@ -21,7 +21,7 @@ def mean_cov(X):
     mean = np.zeros((1, d))
     cov = np.zeros((d, d))
     
-    mean = np.mean(X, axis=0)
+    mean[0] = np.mean(X, axis=0)
 
     cov = np.dot((X - mean).T , (X- mean)) / (n -1) 
 
