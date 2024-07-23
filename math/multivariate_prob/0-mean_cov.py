@@ -20,9 +20,9 @@ def mean_cov(X):
     d = X.shape[1]
     mean = np.zeros((1, d))
     cov = np.zeros((d, d))
-    
+
     mean[0] = np.mean(X, axis=0)
 
-    cov = np.dot((X - mean).T , (X- mean)) / (n -1) 
+    cov = np.dot((X - mean).T, (X - mean)) / (n - 1)
 
     return mean, cov
