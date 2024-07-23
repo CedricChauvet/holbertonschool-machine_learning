@@ -36,10 +36,8 @@ is greater than or equal to 0")
     if not np.isclose(sum(Pr), 1):
         raise ValueError("Pr must sum to 1")
 
-
-
-    variable = likelihood(x, n, P) * Pr /marginal(x, n, P, Pr)
-    return variable
+    sol = likelihood(x, n, P) * Pr / marginal(x, n, P, Pr)
+    return sol
 
 
 def marginal(x, n, P, Pr):
@@ -81,8 +79,6 @@ is greater than or equal to 0")
 
     prob_marginale = sum(likelihood(x, n, P) * Pr)
     return prob_marginale
-
-
 
 
 def likelihood(x, n, P):
