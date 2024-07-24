@@ -35,7 +35,7 @@ class MultiNormal():
         if not isinstance(x, np.ndarray):
             raise TypeError("x must be a numpy.ndarray")
         if x.shape != (self.d, 1):
-            raise ValueError("x must have the shape ({self.d}, 1)")
+            raise ValueError("x must have the shape ({d}, 1)")
         pi = np.pi
         pdf_first = 1 / (pow(2 * pi, self.d / 2) *
                          pow(np.linalg.det(self.cov), 1 / 2)) *\
