@@ -13,9 +13,7 @@ class MultiNormal():
     """
 
     def __init__(self, data):
-        self.data = data
-        self.n = data.shape[1]
-        self.d = data.shape[0]
+
 
         if not isinstance(data, np.ndarray) or len(data.shape) != 2:
             raise TypeError("data must be a 2D numpy.ndarray")
@@ -23,6 +21,9 @@ class MultiNormal():
         if self.n < 2:
             raise ValueError(" data must contain multiple data points")
 
+        self.data = data
+        self.n = data.shape[1]
+        self.d = data.shape[0]
         self.mean = np.reshape(np.mean(data.T, axis=0), ((self.d, 1)))
         self.cov = np.dot((data - self.mean),
                           (data - self.mean).T) / (self.n - 1)
