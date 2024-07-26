@@ -1,4 +1,10 @@
+#!/usr/bin/env python3
+"""
+Project Dimensionality reduction
+By Ced+
+"""
 import numpy as np
+
 
 def pca(X, ndim):
     """
