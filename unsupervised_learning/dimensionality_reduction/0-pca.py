@@ -26,12 +26,7 @@ def pca(X, var=0.95):
     zipW= list(zip(eigv_norm,W.T))
     sorted_zip =  sorted(zipW, key=lambda x:x[0], reverse = True)
     
-    for j in range(d):
-        print("sorted_zip", sorted_zip[j][0])
-    
-    
     # get nd wich is the domension reduction
-    print("somme", sum(eigv_norm) )
     summation = 0
     i = 0
     threshold = sum(eigv_norm) * var
@@ -48,4 +43,4 @@ def pca(X, var=0.95):
     for i in range(nd):
         W_r[:,i] = sorted_zip[i][1]
 
-    # return -W_r
+    return -W_r
