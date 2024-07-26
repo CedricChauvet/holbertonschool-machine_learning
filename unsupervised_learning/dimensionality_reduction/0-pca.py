@@ -17,19 +17,19 @@ def pca(X, var=0.95):
     cov = X.T @ X
     # finding eigenvalues and eigenvectors
     eigv, W = np.linalg.eig(cov)
-    
+    print("egv", eigv)
     # it appear eignenvalues a imaginary
-    for i in range(d):
-        eigv_norm.append(round(np.linalg.norm(eigv[i]),5))    
+    #for i in range(d):
+    #    eigv_norm.append(round(np.linalg.norm(eigv[i]),5))    
     
     # sorting elements
-    zipW= list(zip(eigv_norm,W.T))
+    zipW= list(zip(eigv,W.T))
     sorted_zip =  sorted(zipW, key=lambda x:x[0], reverse = True)
     
     # get nd wich is the domension reduction
     summation = 0
     i = 0
-    threshold = sum(eigv_norm) * var
+    threshold = sum(eigv) * var
     while summation < threshold:
         summation += sorted_zip[i][0]
         i += 1
@@ -41,6 +41,6 @@ def pca(X, var=0.95):
     
     # sorted zip a 2 dimension les deuxieme donne eigen
     for i in range(nd):
-        W_r[:,i] = sorted_zip[i][1]
+        W_r[:,i] = np.sign(sorted_zip[i][0] ) *  sorted_zip[i][1]
 
-    return W_r
+    return - W_r
