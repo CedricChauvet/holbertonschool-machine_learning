@@ -16,8 +16,15 @@ def pca(X, var=0.95):
     # covariance matrix
     cov = X.T @ X
     # finding eigenvalues and eigenvectors
+    
+    
+    
     eigv, W = np.linalg.eig(cov)
-    print("egv", eigv)
+    #eigv = np.linalg.eigvals(cov)
+   
+   
+    eigv = np.real(eigv)
+    # print("egv", eigv)
     # it appear eignenvalues a imaginary
     #for i in range(d):
     #    eigv_norm.append(round(np.linalg.norm(eigv[i]),5))    
@@ -41,6 +48,5 @@ def pca(X, var=0.95):
     
     # sorted zip a 2 dimension les deuxieme donne eigen
     for i in range(nd):
-        W_r[:,i] = np.sign(sorted_zip[i][0] ) *  sorted_zip[i][1]
-
-    return - W_r
+        W_r[:,i] =   - sorted_zip[i][1]
+    return W_r
