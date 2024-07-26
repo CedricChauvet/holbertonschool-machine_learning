@@ -48,5 +48,5 @@ def pca(X, var=0.95):
     
     # sorted zip a 2 dimension les deuxieme donne eigen
     for i in range(nd):
-        W_r[:,i] =   -pow(-1 , i) sorted_zip[i][1]
+        W_r[:,i] =   -pow(-1 , i) * sorted_zip[i][1]
     return W_r
