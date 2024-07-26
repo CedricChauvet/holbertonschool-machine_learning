@@ -43,4 +43,4 @@ def pca(X, var=0.95):
     for i in range(nd):
         W_r[:,i] = sorted_zip[i][1]
 
-    return -W_r
+    return W_r
