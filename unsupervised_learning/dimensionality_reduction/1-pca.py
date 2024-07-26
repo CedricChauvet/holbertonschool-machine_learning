@@ -8,26 +8,21 @@ import numpy as np
 
 def pca(X, ndim):
     """
-    Perform PCA on the given data matrix X and reduce its dimensionality to ndim.
-
-    Parameters:
-    X (numpy.ndarray): Data matrix with shape (n, d) where n is the number of data points and d is the number of dimensions
-    ndim (int): Number of dimensions to reduce to
-
-    Returns:
-    T (numpy.ndarray): The transformed data matrix with shape (n, ndim)
+    Takes X a matrix,
+    return Tr( reduction score)
     """
-    # Center the data by subtracting the mean of each feature
-    X_centered = X - np.mean(X, axis=0)
+    n = X.shape[0]  # number of data points
+    d = X.shape[1]  # number of dimensions
+
+    X = X - np.mean(X, axis=0)
     
-    # Perform Singular Value Decomposition
-    U, S, Vt = np.linalg.svd(X_centered)
+    # decompose X into SVD
+    U, S, _ = np.linalg.svd(X, full_matrices=True)
+    # reduction dimension r
     
-    # Select the top 'ndim' components
-    Ur = U[:, :ndim]
-    Sr = np.diag(S[:ndim])
-    
-    # Transform the data to the new reduced dimension space
+    if ndim >= d:
+        ndim = d
+    Ur = U[:,0:ndim]
+    Sr = np.diag(S[0:ndim])    
     T = Ur @ Sr
-    
     return T
