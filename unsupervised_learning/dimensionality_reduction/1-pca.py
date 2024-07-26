@@ -17,7 +17,7 @@ def pca(X, ndim):
     X = X - np.mean(X, axis=0)
     
     # decompose X into SVD
-    U, S, _ = np.linalg.svd(X, full_matrices=True)
+    U, S, _ = np.linalg.svd(X, full_matrices=False)
     # reduction dimension r
     
     if ndim >= d:
