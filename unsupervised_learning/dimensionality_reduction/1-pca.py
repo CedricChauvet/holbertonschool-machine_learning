@@ -14,6 +14,7 @@ def pca(X, ndim):
     n = X.shape[0]  # number of data points
     d = X.shape[1]  # number of dimensions
 
+    # normalize X
     X = X - np.mean(X, axis=0)
 
     # decompose X into SVD
