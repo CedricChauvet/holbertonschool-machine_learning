@@ -15,14 +15,14 @@ def pca(X, ndim):
     d = X.shape[1]  # number of dimensions
 
     X = X - np.mean(X, axis=0)
-    
+
     # decompose X into SVD
     U, S, _ = np.linalg.svd(X)
-    
+
     # reduction dimension r
     if ndim >= d:
         ndim = d
-    Ur = U[:,0:ndim]
-    Sr = np.diag(S[0:ndim])    
+    Ur = U[:, 0:ndim]
+    Sr = np.diag(S[0:ndim])
     T = Ur @ Sr
     return T
