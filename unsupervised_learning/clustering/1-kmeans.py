@@ -40,4 +40,4 @@ def kmeans(X, k, iterations=1000):
         if np.array_equal(new_centroid, centroid):
             break
 
-    return centroid, clss
+    return new_centroid, clss
