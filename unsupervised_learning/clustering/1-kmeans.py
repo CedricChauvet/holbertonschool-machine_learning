@@ -21,24 +21,23 @@ def kmeans(X, k, iterations=1000):
 
     centroid = np.random.uniform(low=np.min(X, axis=0),
                                  high=np.max(X, axis=0), size=(k, d))
-    new_centroid = np.copy(centroid)
+
     for i in range(iterations):
         distances = np.linalg.norm(X[:, np.newaxis] - centroid, axis=2)
         clss = np.argmin(distances, axis=1)
 
-    
+        new_centroid = np.copy(centroid)
 
         for j in range(k):
             if len(np.where(clss == j)[0]) == 0:
                 # print("on a pas  trouvé", j) dans clss
-                new_centroid[j] = np.random.uniform(np.min(X, axis=0),
+                centroid[j] = np.random.uniform(np.min(X, axis=0),
                                                 np.max(X, axis=0), d)
             else:
                 # print("on a ", j) on a trouvé j dans clsss
-                new_centroid[j] = np.mean(X[np.where(clss == j)], axis=0)
+                centroid[j] = np.mean(X[np.where(clss == j)], axis=0)
 
         if np.array_equal(new_centroid, centroid):
             break
-        centroid = new_centroid
 
     return centroid, clss
