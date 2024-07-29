@@ -4,39 +4,40 @@ Project Clusters
 By Ced+
 """
 import numpy as np
-initialize = __import__('0-initialize').initialize
-
 
 
 def kmeans(X, k, iterations=1000):
-    
+    """
+    Calculate the centroid by K mean algorithm
+    return  the K centroids and the clss
+    """
+
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
     if not isinstance(k, int) or k <= 0:
         return None
 
-    centroid = initialize(X, k)
-
     n, d = X.shape
-    C = np.zeros((k, d))
-    C_sum = np.zeros((n, k,d))
-    clss = np.zeros(n)
-    point = np.ones(n)
-    for i in range(n):
-        dist = []
+
+    centroid = np.random.uniform(low=np.min(X, axis=0),
+                                 high=np.max(X, axis=0), size=(k, d))
+
+    for i in range(iterations):
+        distances = np.linalg.norm(X[:, np.newaxis] - centroid, axis=2)
+        clss = np.argmin(distances, axis=1)
+
+        new_centroid = np.copy(centroid)
+
         for j in range(k):
-            print("X", X[i])
-            print("centroid", centroid[j])
-            dis = distance(X[i],centroid[j])
-            dist.append(dis)
+            if len(np.where(clss == j)[0]) == 0:
+                # print("on a pas  trouvé", j) dans clss
+                centroid[j] = np.random.uniform(np.min(X, axis=0),
+                                                np.max(X, axis=0), d)
+            else:
+                # print("on a ", j) on a trouvé j dans clsss
+                centroid[j] = np.mean(X[np.where(clss == j)], axis=0)
 
-        clss[i] = np.argmin(dist)
-        C_sum[i, int(clss[i])] = X[i]
+        if np.array_equal(new_centroid, centroid):
+            return centroid, clss
 
-    C = C_sum.mean(axis =0)
-    print("cent", C.shape) 
-    return C, clss
-
-
-def distance(p1,p2):
-    return np.sqrt(np.sum((p1-p2)**2))
+    return centroid, clss
