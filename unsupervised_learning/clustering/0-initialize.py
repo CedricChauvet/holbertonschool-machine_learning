@@ -12,9 +12,9 @@ def initialize(X, k):
     """
 
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        raise TypeError("X must be an array")
+        return None
     if not isinstance(k, int) or k <= 0:
-        raise ValueError(" K must be a positive int")
+        return None
 
     n, d = X.shape
 
