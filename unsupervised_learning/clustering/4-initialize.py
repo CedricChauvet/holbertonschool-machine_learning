@@ -11,10 +11,12 @@ def initialize(X, k):
     """
     intialze my gaussian
     """
+    
+    n, d = X.shape
     m, _ = kmeans(X, k, iterations=1000)
     
     pi = np.zeros(k)
     pi[:] = np.round(1 / k , decimals=8)
-    s = np.repeat([np.identity(2)], repeats=k, axis=0)
+    s = np.repeat([np.identity(d)], repeats=k, axis=0)
 
     return pi, m, s
