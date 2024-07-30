@@ -16,13 +16,16 @@ def variance(X, C):
 
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
-    n, d = X.shape
+    n, d1 = X.shape
 
     if not isinstance(C, np.ndarray) or len(C.shape) != 2:
         return None
-    k, _ = C.shape
+    k, d2 = C.shape
 
     if not isinstance(k, int) or k <= 0:
+        return None
+    
+    if d1 != d2:
         return None
 
     distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
