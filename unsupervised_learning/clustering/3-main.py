@@ -22,3 +22,5 @@ if __name__ == "__main__":
     plt.ylabel('Delta Variance')
     plt.title('Optimizing K-means')
     plt.show()
+
+
