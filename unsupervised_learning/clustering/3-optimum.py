@@ -13,6 +13,24 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     analyze variance wrt numbers of clusters
     """
 
+
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None
+    n, d1 = X.shape
+
+    if not isinstance(k, int) or k <= 0:
+        return None
+
+    if kmax < kmin:
+        return None
+    
+    if not isinstance(kmax, int) or kmax < 0:
+        return None
+
+    
+    if not isinstance(kmin, int) or kmax < 0:
+        return None
+    
     n, d = X.shape
     results = []
     d_var = []
