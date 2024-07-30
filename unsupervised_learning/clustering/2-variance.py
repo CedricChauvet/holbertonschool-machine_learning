@@ -24,7 +24,7 @@ def variance(X, C):
 
     if not isinstance(k, int) or k <= 0:
         return None
-    
+
     if d1 != d2:
         return None
 
