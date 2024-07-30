@@ -12,12 +12,12 @@ def initialize(X, k):
     intialze my gaussian
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None
+        return None, None, None
 
     n, d = X.shape
 
     if not isinstance(k, int) or k <= 0:
-        return None
+        return None, None, None
 
     m, _ = kmeans(X, k, iterations=1000)
 
