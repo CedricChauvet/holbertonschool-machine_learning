@@ -26,8 +26,8 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
 
         if k == kmin:
             var_min = var
-        results.append(C)
-        results.append(clss)
+        results.append((C, clss))
+        
         d_var.append(var_min - var)
 
     return results, d_var
