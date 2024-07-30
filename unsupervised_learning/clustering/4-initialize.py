@@ -11,8 +11,8 @@ def initialize(X, k):
     """
     intialze my gaussian
     """
-    m, clss = kmeans(X, k, iterations=1000)
-    pi = [1 / k] * k
+    m, _ = kmeans(X, k, iterations=1000)
+    pi = [np.round(1 / k , decimals=0)] * k
     s = np.repeat([np.identity(2)], repeats=k, axis=0)
 
     return pi, m, s
