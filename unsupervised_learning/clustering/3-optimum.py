@@ -18,9 +18,6 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
         return None
     n, d1 = X.shape
 
-    if not isinstance(k, int) or k <= 0:
-        return None
-
     if kmax < kmin:
         return None
     
