@@ -18,6 +18,20 @@ def expectation(X, pi, m, S):
     the covariance matrices for each cluster
     return posterior an likelihood
     """
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None
+    if not isinstance(m, np.ndarray) or len(m.shape) != 2:
+        return None
+    if not isinstance(S, np.ndarray) or\
+            len(S.shape) != 2 or S.shape[0] != S.shape[1]:
+        return None
+    if X.shape[1] != m.shape[0] or X.shape[1] != S.shape[0]:
+        return None
+    if not isinstance(pi, np.ndarray) or len(pi.shape) != 1:
+        return None
+    if not isinstance(S, np.ndarray) or len(pi.shape) != 3:
+        return None
+
     n, d = X.shape
     k = pi.shape[0]
 
@@ -28,8 +42,9 @@ def expectation(X, pi, m, S):
         pdf_0 = pdf(X, m[i], S[i])
         g[i] = pi[i] * pdf_0
         sigma_g += g[i]
-    
+
     g = g / sigma_g
+    
     # Calculer la vraisemblance totale (produit des probabilités)
     likelihood = np.sum(np.log(sigma_g))
 
