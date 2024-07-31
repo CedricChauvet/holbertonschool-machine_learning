@@ -30,5 +30,6 @@ def pdf(X, m, S):
     x_mu = X - m
     inv_cov = np.linalg.inv(S)
     result = np.exp(-0.5 * np.sum(np.dot(x_mu, inv_cov) * x_mu, axis=1))
-
-    return norm_const * result
+    sol = norm_const * result
+    sol[sol < 1e-300] = 1e-300
+    return sol
