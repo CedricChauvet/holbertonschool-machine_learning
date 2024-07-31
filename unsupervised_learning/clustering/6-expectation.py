@@ -28,7 +28,8 @@ def expectation(X, pi, m, S):
         pdf_0 = pdf(X, m[i], S[i])
         g[i] = pi[i] * pdf_0
         sigma_g += g[i]
-
+    
+    g = g / sigma_g
     # Calculer la vraisemblance totale (produit des probabilités)
     likelihood = np.sum(np.log(sigma_g))
 
