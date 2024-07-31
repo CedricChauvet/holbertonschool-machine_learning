@@ -10,12 +10,13 @@ def pdf(X, m, S):
     """
     Probability density function
     """
-    
+
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
     if not isinstance(m, np.ndarray) or len(m.shape) != 1:
         return None
-    if not isinstance(S, np.ndarray) or len(S.shape) != 2 or S.shape[0] != S.shape[1]:
+    if not isinstance(S, np.ndarray) or\
+            len(S.shape) != 2 or S.shape[0] != S.shape[1]:
         return None
     if X.shape[1] != m.shape[0] or X.shape[1] != S.shape[0]:
         return None
@@ -29,7 +30,8 @@ def pdf(X, m, S):
     # Calcul de l'exponentielle
     x_mu = X - m
     inv_cov = np.linalg.inv(S)
-    result = np.exp(-0.5 * np.sum(np.dot(x_mu, inv_cov) * x_mu, axis=1))
+    result = np.exp(-0.5 * np.sum(np.dot(x_mu, inv_cov)
+                                  * x_mu, axis=1))
     sol = norm_const * result
     sol[sol < 1e-300] = 1e-300
     return sol
