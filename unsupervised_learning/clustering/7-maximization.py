@@ -21,7 +21,7 @@ def maximization(X, g):
     for i in range(k):
         pi[i] = 1/ n * np.sum(g[i], axis=0)
         m = np.sum(g[:, :, np.newaxis] * X, axis=1) / np.sum(g, axis=1)[:, np.newaxis]
-        #m[i,:] = np.sum(g[i,np.newaxis] * X,axis =0) / np.sum(g[i])
+        # a la place de ci dessous
         #m[i][0] = np.sum(g[i] * X[:, 0]) / np.sum(g[i])
         #m[i][1] = np.sum(g[i] * X[:, 1]) / np.sum(g[i])
     # print("pi", pi)
