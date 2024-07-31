@@ -24,14 +24,21 @@ def pdf(X, m, S):
     pi = np.pi
 
     # Calcul de la constante de normalisation
+    
+    #determinant of covariance matrix
     det = np.linalg.det(S)
     norm_const = 1.0 / (np.power((2 * np.pi), d / 2) * np.sqrt(det))
 
     # Calcul de l'exponentielle
+    
+    # set the moyenne 
     x_mu = X - m
+    # inverse of covariance matrix
     inv_cov = np.linalg.inv(S)
+
     result = np.exp(-0.5 * np.sum(np.dot(x_mu, inv_cov)
                                   * x_mu, axis=1))
     sol = norm_const * result
+    # set minimum of sol values to 1e-300
     sol[sol < 1e-300] = 1e-300
     return sol
