@@ -26,6 +26,8 @@ def expectation(X, pi, m, S):
         return None, None
 
     k = pi.shape[0]
+    if k <= 0 or not np.isclose(np.sum(pi), 1):
+        return None, None
 
     if pi.shape[0] != k or S.shape[0] != k or m.shape[0] != k:
         return None, None
