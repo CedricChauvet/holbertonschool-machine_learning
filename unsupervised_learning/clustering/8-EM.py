@@ -15,7 +15,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     """
 
     pi, m, S = initialize(X, k)
-    L = 0
+    L = 0.0000000
     for i in range(iterations):
         l_last = L
         g, L = expectation(X, pi, m, S)
