@@ -40,8 +40,10 @@ def kmeans(X, k, iterations=1000):
                 centroid[j] = np.mean(X[np.where(clss == j)], axis=0)
         # if centroid don't change, break
         if np.array_equal(new_centroid, centroid):
-            distances = np.linalg.norm(X[:, np.newaxis] - centroid, axis=2)
-            clss = np.argmin(distances, axis=1)
+
             break
+
+    distances = np.linalg.norm(X[:, np.newaxis] - centroid, axis=2)
+    clss = np.argmin(distances, axis=1)
 
     return centroid, clss
