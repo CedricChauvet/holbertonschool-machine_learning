@@ -11,6 +11,12 @@ def maximization(X, g):
     but what does maximization do?
     je crois qu'elle ecarte les clusters
     """
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None, None, None
+    if not isinstance(g, np.ndarray) or len(g.shape) != 2:
+        return None, None, None
+    if X.shape[0] != g.shape[1]:
+        return None, None, None
 
     n, d = X.shape
     k = g.shape[0]
