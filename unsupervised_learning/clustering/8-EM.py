@@ -30,4 +30,6 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
 
         pi, m, S = maximization(X, g)
 
+    g, L = expectation(X, pi, m, S)
+
     return pi, m, S, g, L
