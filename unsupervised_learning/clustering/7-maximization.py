@@ -17,6 +17,8 @@ def maximization(X, g):
         return None, None, None
     if g.shape[0] < 1:
         return None, None, None
+    if g.shape[1] != X.shape[0]:
+        return None, None, None
     n, d = X.shape
     k = g.shape[0]
 
