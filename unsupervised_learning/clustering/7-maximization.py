@@ -9,7 +9,9 @@ import numpy as np
 def maximization(X, g):
     """
     but what does maximization do?
+    je crois qu'elle ecarte les clusters
     """
+
     n, d = X.shape
     k = g.shape[0]
     print("X = ", X.shape)
@@ -19,10 +21,9 @@ def maximization(X, g):
     m = np.zeros((k, d))
     S = np.zeros((k, d, d))
     for i in range(k):
-        pi[i] = 1/ n * np.sum(g[i], axis=0)
-        m = np.sum(g[:, :, np.newaxis] * X, axis=1) / np.sum(g, axis=1)[:, np.newaxis]
-        # a la place de ci dessous
-        #m[i][0] = np.sum(g[i] * X[:, 0]) / np.sum(g[i])
-        #m[i][1] = np.sum(g[i] * X[:, 1]) / np.sum(g[i])
-    # print("pi", pi)
-    print("mu", m)
+        pi[i] = 1 / n * np.sum(g[i], axis=0)
+        m = np.sum(g[:, :, np.newaxis] * X, axis=1) /\
+            np.sum(g, axis=1)[:, np.newaxis]
+        S[i] = (g[i] * (X - m[i]).T @ (X - m[i])) / np.sum(g[i], axis=0)
+
+    return pi, m, S
