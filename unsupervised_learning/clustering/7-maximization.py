@@ -14,8 +14,6 @@ def maximization(X, g):
 
     n, d = X.shape
     k = g.shape[0]
-    print("X = ", X.shape)
-    print("g = ", g.shape)
 
     pi = np.zeros(k)
     m = np.zeros((k, d))
