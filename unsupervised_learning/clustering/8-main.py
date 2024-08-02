@@ -18,7 +18,7 @@ if __name__ == '__main__':
     plt.scatter(X[:, 0], X[:, 1], s=20, c=clss)
     plt.scatter(m[:, 0], m[:, 1], s=50, c=np.arange(k), marker='*')
     plt.show()
-    print(X.shape[0] * pi)
+    print("here ",X.shape[0] * pi)
     print(m)
     print(S)
     print(l)
