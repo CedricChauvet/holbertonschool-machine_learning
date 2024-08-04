@@ -9,9 +9,10 @@ expectation = __import__('6-expectation').expectation
 maximization = __import__('7-maximization').maximization
 
 
-
-
 def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
+    """
+    not working yet
+    """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None, None
     if not isinstance(k, int) or k <= 0:
@@ -22,11 +23,11 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         return None, None, None, None, None
     if not isinstance(verbose, bool):
         return None, None, None, None, None
-    
+
     # Initialize the parameters
     pi, m, S = initialize(X, k)
     prev_L = None
-    
+
     for i in range(iterations):
         # E-step: calculate the responsibilities and the log likelihood
         g, L = expectation(X, pi, m, S)
