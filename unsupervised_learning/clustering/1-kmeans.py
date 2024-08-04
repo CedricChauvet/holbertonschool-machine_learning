@@ -42,4 +42,7 @@ def kmeans(X, k, iterations=1000):
 
             break
 
+    distances = np.linalg.norm(X[:, np.newaxis] - centroid, axis=2)
+    clss = np.argmin(distances, axis=1)
+
     return centroid, clss
