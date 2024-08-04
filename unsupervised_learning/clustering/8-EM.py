@@ -46,5 +46,4 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         # M-step: update the parameters
         pi, m, S = maximization(X, g)
 
-
     return pi, m, S, g, L
