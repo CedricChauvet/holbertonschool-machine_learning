@@ -46,7 +46,7 @@ def expectation(X, pi, m, S):
     g = np.zeros((k, n))
     sigma_g = np.zeros(n)
 
-    for i in range(k + 1):
+    for i in range(k):
         pdf_0 = pdf(X, m[i], S[i])
         g[i] = pi[i] * pdf_0
         sigma_g += g[i]
