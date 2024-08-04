@@ -38,7 +38,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
 
         if abs(L - prev_L) < tol:
             if verbose:
-                print(f"Log Likelihood after {i + 1} iterations: {L:.5f}")
+                print(f"Log Likelihood after {i} iterations: {L:.5f}")
             break
         # Update the previous log likelihood
         prev_L = L
@@ -46,8 +46,5 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         # M-step: update the parameters
         pi, m, S = maximization(X, g)
 
-    # Final verbose logging
-    if verbose and (i + 1) % 10 != 0:
-        print(f"Log Likelihood after {i + 1} iterations: {L:.5f}")
 
     return pi, m, S, g, L
