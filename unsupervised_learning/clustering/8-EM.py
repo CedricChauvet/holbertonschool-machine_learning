@@ -26,7 +26,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
 
     # Initialize the parameters
     pi, m, S = initialize(X, k)
-    prev_L = None
+    prev_L = 0
 
     for i in range(iterations):
         # E-step: calculate the responsibilities and the log likelihood
