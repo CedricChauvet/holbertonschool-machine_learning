@@ -13,15 +13,18 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     """
     combition of  task expectation and optimization the achive GMM
     """
+    n, d = X.shape
+    if iterations > n:
+        iterations = n
+
 
     pi, m, S = initialize(X, k)
     new_L = 0
     for i in range(iterations):
-
         g, L = expectation(X, pi, m, S)
 
-
         if verbose and (i % 10 == 0):
+            # X de grande dimension j'ai une erreur sur L:.5f a la ligne en dessous
             print(f"Log Likelihood after {i} iterations: {L:.5f}")
 
         if abs(L - new_L) < tol:
@@ -30,7 +33,5 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
             break
         new_L=L    
         pi, m, S = maximization(X, g)
-
-    # g, L = expectation(X, pi, m, S)
 
     return pi, m, S, g, L
