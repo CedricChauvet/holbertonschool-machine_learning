@@ -16,18 +16,18 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
 
     pi, m, S = initialize(X, k)
     for i in range(iterations):
-        
+
         g, L = expectation(X, pi, m, S)
 
 
         if verbose and (i % 10 == 0):
             print(f"Log Likelihood after {i} iterations: {L:.5f}")
 
-        if abs(L - l_last) < tol:
+        if abs(L - new_L) < tol:
             if verbose:
                 print(f"Log Likelihood after {i} iterations: {L:.5f}")
             break
-
+        new_L=L    
         pi, m, S = maximization(X, g)
 
     # g, L = expectation(X, pi, m, S)
