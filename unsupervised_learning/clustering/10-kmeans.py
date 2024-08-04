@@ -3,11 +3,15 @@
 Project Clusters
 By Ced+
 """
-import numpy as np
 import sklearn.cluster
 
 
 def kmeans(X, k):
+    """
+    get kmean with sklearn
+    return centroids and labels
+    """
+
     kmean = sklearn.cluster.KMeans(n_clusters=k).fit(X)
     C = kmean.cluster_centers_
     clss = kmean.labels_
