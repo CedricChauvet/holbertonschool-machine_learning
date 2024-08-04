@@ -18,7 +18,7 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
 
     if not isinstance(kmin, int) or kmin < 1:
         return None, None
-    if not isinstance(kmax, int) or kmax < 1:
+    if not isinstance(kmax, int):
         return None, None
 
     results = []
