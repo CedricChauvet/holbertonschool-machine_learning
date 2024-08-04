@@ -18,11 +18,12 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
 
     if not isinstance(kmin, int) or kmin < 1:
         return None, None
-    if kmax == None:
+    if kmax is None:
         kmax = iterations
     if not isinstance(kmax, int) or kmax < 1:
         return None, None
-
+    if kmin > kmax:
+        return None, None
     results = []
     d_var = []
 
