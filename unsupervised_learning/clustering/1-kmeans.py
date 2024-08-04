@@ -13,9 +13,11 @@ def kmeans(X, k, iterations=1000):
     """
 
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None
+        return None, None
     if not isinstance(k, int) or k <= 0:
-        return None
+        return None, None
+    if not isinstance(iterations, int) or iterations < 1:
+        return None, None
 
     n, d = X.shape
 
@@ -34,7 +36,7 @@ def kmeans(X, k, iterations=1000):
             if len(np.where(clss == j)[0]) == 0:
                 centroid[j] = np.random.uniform(np.min(X, axis=0),
                                                 np.max(X, axis=0), d)
-            
+
             else:
                 centroid[j] = np.mean(X[np.where(clss == j)], axis=0)
         # if centroid don't change, break
