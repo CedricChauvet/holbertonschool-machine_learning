@@ -14,20 +14,6 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     """
 
 
-    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None
-    n, d1 = X.shape
-
-    if not isinstance(kmin, int) and not isinstance(kmax, int) and kmax < kmin:
-        return None
-    
-    if not isinstance(kmax, int) or kmax < 0:
-        return None
-
-    
-    if not isinstance(kmin, int) or kmax < 0:
-        return None
-    
     n, d = X.shape
     results = []
     d_var = []
@@ -36,8 +22,6 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
         kmax = n
 
     for k in range(kmin, kmax+ 1 ):
-
-        
         C, clss = kmeans(X, k, iterations)
         var = np.sum((X[:] - C[clss]) ** 2)
 
