@@ -13,10 +13,12 @@ def regular(P):
 
     n, n = P.shape
     t = 300
-    s = np.zeros(n)
+    s = np.zeros((1, n))
     s[0] = 1
     limit = np.linalg.matrix_power(P, t)
+
     if np.any(limit == 0):
         return None
+
     else:
         return s @ limit
