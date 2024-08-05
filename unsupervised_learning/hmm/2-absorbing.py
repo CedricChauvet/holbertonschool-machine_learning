@@ -7,18 +7,20 @@ import numpy as np
 
 
 def absorbing(P):
+    """
+    decide if a transition matrice is or not absorbing
+    """
     n = P.shape[0]
     t = 300
     limit = np.zeros((n, n))
     limit = np.linalg.matrix_power(P, t)
     for i in range(n):
-        if limit[i,i] == 1:
+        if limit[i, i] == 1:
             absorb = True
             for j in range(n):
-                if i != j and (not np.isclose(limit[i, j], 0.0) or not np.isclose(limit[j, i], 0.0)):
+                if i != j and (not np.isclose(limit[i, j], 0.0)
+                               or not np.isclose(limit[j, i], 0.0)):
                     absorb = False
-            if absorb == True:
+            if absorb:
                 return True
     return False
-
-
