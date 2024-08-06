@@ -32,10 +32,3 @@ if __name__ == '__main__':
     print(absorbing(e))
     print(absorbing(f))
 
-
-    e = np.array([[1, 0, 0, 0, 0],
-                  [0.25, 0.75, 0, 0, 0],
-                  [0, 0.1, 0.5, 0.2, 0.2],
-                  [0, 0.1, 0.2, 0.5, .2],
-                  [0, 0.1, 0.2, 0.2, 0.5]])
-    print("et", round(np.linalg.matrix_power(e, 300),2))

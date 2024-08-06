@@ -18,8 +18,7 @@ def absorbing(P):
         if limit[i, i] == 1:
             absorb = True
             for j in range(n):
-                if i != j and (not np.isclose(limit[i, j], 0.0)
-                               or not np.isclose(limit[j, i], 0.0)):
+                if i != j and (not np.isclose(limit[i, j], 0.0)):
                     absorb = False
             if absorb:
                 return True
