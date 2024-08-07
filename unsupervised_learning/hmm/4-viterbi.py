@@ -13,7 +13,7 @@ def viterbi(Observation, Emission, Transition, Initial):
     Observations from HMM: Obers (Integer list with outcomes).
     Output: (the most likely sequence of states, maximal joint probability)
     '''
-    return 0, []
+    return [],0
     exit()
     n = len(Observation)
     num_S = Transition.shape[0]
