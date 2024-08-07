@@ -33,10 +33,9 @@ def viterbi(Observation, Emission, Transition, Initial):
 
     # The last element of the most likely sequence of states
     x = np.argmax(d[:, n-1])
-    most_lik.append(x)
+    most_lik.append(int(x))
     # Backtracking
     for t in reversed(range(n-1)):
         x = f[x, t]
         most_lik.append(x)
-
-    return (p_star, most_lik)
+    return p_star, most_lik[::-1]
