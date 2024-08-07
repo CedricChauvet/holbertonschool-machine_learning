@@ -13,8 +13,8 @@ def viterbi(Observation, Emission, Transition, Initial):
     Observations from HMM: Obers (Integer list with outcomes).
     Output: (the most likely sequence of states, maximal joint probability)
     '''
-    return [],0
-    exit()
+
+    
     n = len(Observation)
     num_S = Transition.shape[0]
     d = np.empty([num_S, n], dtype='float')
@@ -41,4 +41,4 @@ def viterbi(Observation, Emission, Transition, Initial):
         x = f[x, t]
         most_lik.append(int(x))
 
-    return p_star,[]
+    return most_lik[::-1], p_star
