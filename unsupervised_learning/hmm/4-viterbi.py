@@ -28,7 +28,7 @@ def viterbi(Observation, Emission, Transition, Initial):
             f[i, t-1] = np.argmax(temp_vec)
             d[i, t] = Emission[i, Observation[t]] * np.max(temp_vec)
 
-    p_star = np.exp(np.max(d[:, n-1]))     # likeli log
+    p_star  = d[num_S-2, n-1]    # likeli log
     most_lik = []
 
     # The last element of the most likely sequence of states
