@@ -18,6 +18,7 @@ def viterbi(Observation, Emission, Transition, Initial):
     num_S = Transition.shape[0]
     d = np.empty([num_S, n], dtype='float')
     f = np.empty([num_S, n-1], dtype=int)    # Matrix for backtracking
+    
     # Base case
     d[:, 0] = np.multiply(Initial[:, 0], Emission[:, Observation[0]])
 
@@ -37,5 +38,6 @@ def viterbi(Observation, Emission, Transition, Initial):
     # Backtracking
     for t in reversed(range(n-1)):
         x = f[x, t]
-        most_lik.append(x)
-    return p_star, most_lik[::-1]
+        most_lik.append(int(x))
+
+    return p_star,[]
