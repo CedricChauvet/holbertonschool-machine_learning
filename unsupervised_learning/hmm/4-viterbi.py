@@ -21,7 +21,8 @@ def viterbi(Observation, Emission, Transition, Initial):
     
     # Base case
     d[:, 0] = np.multiply(Initial[:, 0], Emission[:, Observation[0]])
-
+    return 0, []
+    exit()
     # Recursive case
     for t in range(1, n):         # NUMBER OF STEP
         for i in range(num_S):    # NUMBER OF STATES
