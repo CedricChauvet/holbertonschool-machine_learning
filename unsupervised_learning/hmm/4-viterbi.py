@@ -13,7 +13,8 @@ def viterbi(Observation, Emission, Transition, Initial):
     Observations from HMM: Obers (Integer list with outcomes).
     Output: (the most likely sequence of states, maximal joint probability)
     '''
-
+    return 0, []
+    exit()
     n = len(Observation)
     num_S = Transition.shape[0]
     d = np.empty([num_S, n], dtype='float')
@@ -21,8 +22,7 @@ def viterbi(Observation, Emission, Transition, Initial):
     
     # Base case
     d[:, 0] = np.multiply(Initial[:, 0], Emission[:, Observation[0]])
-    return 0, []
-    exit()
+
     # Recursive case
     for t in range(1, n):         # NUMBER OF STEP
         for i in range(num_S):    # NUMBER OF STATES
