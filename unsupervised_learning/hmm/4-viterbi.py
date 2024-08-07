@@ -14,12 +14,11 @@ def viterbi(Observation, Emission, Transition, Initial):
     Output: (the most likely sequence of states, maximal joint probability)
     '''
 
-    
     n = len(Observation)
     num_S = Transition.shape[0]
     d = np.empty([num_S, n], dtype='float')
     f = np.empty([num_S, n-1], dtype=int)    # Matrix for backtracking
-    
+
     # Base case
     d[:, 0] = np.multiply(Initial[:, 0], Emission[:, Observation[0]])
 
@@ -30,7 +29,7 @@ def viterbi(Observation, Emission, Transition, Initial):
             f[i, t-1] = np.argmax(temp_vec)
             d[i, t] = Emission[i, Observation[t]] * np.max(temp_vec)
 
-    p_star  = np.max(d[:, n-1])    # max sequence
+    p_star = np.max(d[:, n-1])    # max sequence
     most_lik = []
 
     # The last element of the most likely sequence of states
