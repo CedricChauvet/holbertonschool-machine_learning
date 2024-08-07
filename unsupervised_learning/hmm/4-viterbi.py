@@ -39,4 +39,4 @@ def viterbi(Observation, Emission, Transition, Initial):
         x = f[x, t]
         most_lik.append(x)
 
-    return (0, most_lik[::-1])
+    return (p_star, most_lik)
