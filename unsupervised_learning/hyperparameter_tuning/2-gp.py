@@ -67,6 +67,6 @@ class GaussianProcess:
         kss = self.sigma_f**2 * np.exp(-0.5 / self.l**2 * sqdist)
         new_K[0:d, 0:d] = self.K
         new_K[d, :] = kss.T
-        new_K[:, d] = kss[0]
+        new_K[:, d] = kss[:,0]
         self.K = new_K
         return self.X, self.Y, self.K
