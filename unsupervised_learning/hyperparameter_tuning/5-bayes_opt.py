@@ -48,7 +48,10 @@ class BayesianOptimization():
         return X_next, ei
 
     def optimize(self, iterations=100):
-        X_next=0
+        X_next= np.zeros((1,))
+        Y_next= np.zeros((1,))
+        X_opt = np.zeros((1,))
+        Y_opt = np.zeros((1,))
         for i in range(iterations):
             old_X_next = X_next
             X_next, _ = self.acquisition()
@@ -56,4 +59,7 @@ class BayesianOptimization():
             self.gp.update(X_next, Y_next)
             if X_next == old_X_next:
                 break
-        return X_next,Y_next
+        
+        X_opt = X_next
+        Y_opt = Y_next
+        return X_opt, Y_opt
