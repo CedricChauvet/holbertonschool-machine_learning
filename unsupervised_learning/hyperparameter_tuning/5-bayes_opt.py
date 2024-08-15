@@ -53,12 +53,16 @@ class BayesianOptimization():
         X_opt = np.zeros((1,))
         Y_opt = np.zeros((1,))
         for i in range(iterations):
-            old_X_next = X_next
-            X_next, _ = self.acquisition()
-            Y_next = self.f(X_next)
-            if X_next == old_X_next:
+            
+            try:
+                old_X_next = X_next
+                X_next, _ = self.acquisition()
+                Y_next = self.f(X_next)
+                if X_next == old_X_next:
+                    break
+                self.gp.update(X_next, Y_next)
+            except:
                 break
-            self.gp.update(X_next, Y_next)
         X_opt = X_next
         Y_opt = Y_next
         return X_opt, Y_opt
