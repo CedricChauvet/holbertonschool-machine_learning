@@ -55,5 +55,5 @@ class BayesianOptimization():
             Y_next = self.f(X_next)
             self.gp.update(X_next, Y_next)
             if X_next == old_X_next:
-                return X_next, Y_next
+                break
         return X_next,Y_next

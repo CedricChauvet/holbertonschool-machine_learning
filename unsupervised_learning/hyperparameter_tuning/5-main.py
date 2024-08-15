@@ -15,7 +15,7 @@ if __name__ == '__main__':
     Y_init = f(X_init)
 
     bo = BO(f, X_init, Y_init, (-np.pi, 2*np.pi), 50, l=0.6, sigma_f=2)
-    X_opt, Y_opt = bo.optimize(25)
+    X_opt, Y_opt = bo.optimize(50)
     print('Optimal X:', X_opt)
     print('Optimal Y:', Y_opt)
     print('All sample inputs:', bo.gp.X)
