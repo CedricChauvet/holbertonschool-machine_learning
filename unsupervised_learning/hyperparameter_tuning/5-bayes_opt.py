@@ -50,13 +50,10 @@ class BayesianOptimization():
     def optimize(self, iterations=100):
         X_next=0
         for i in range(iterations):
-            try:
-                old_X_next = X_next
-                X_next, ei = self.acquisition()
-                Y_next = self.f(X_next)
-                self.gp.update(X_next, Y_next)
-            except:
-                return X_next,Y_next
+            old_X_next = X_next
+            X_next, _ = self.acquisition()
+            Y_next = self.f(X_next)
+            self.gp.update(X_next, Y_next)
             if X_next == old_X_next:
                 return X_next, Y_next
         return X_next,Y_next
