@@ -6,7 +6,6 @@ By Ced+
 """
 import numpy as np
 from scipy.stats import norm
-from scipy.optimize import minimize
 GP = __import__('2-gp').GaussianProcess
 
 
