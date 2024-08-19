@@ -9,13 +9,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.callbacks import EarlyStopping
 from GPyOpt.methods import BayesianOptimization
 import matplotlib.pyplot as plt
-<<<<<<< HEAD
-
-
-=======
 from tensorflow.keras.utils import plot_model
 
->>>>>>> refs/remotes/origin/main
 import tensorflow as tf
 
 # Load the MNIST dataset
@@ -64,10 +59,7 @@ def objective_function(params):
     verbose=1,           # Verbosity mode
     )
     history = model.fit(x_train, y_train, epochs=20, batch_size=256, validation_split=0.2, callbacks=[early_stopping], verbose=True)
-<<<<<<< HEAD
-=======
     plot_model(model, to_file='model_structure.png', show_shapes=True, show_layer_names=True)
->>>>>>> refs/remotes/origin/main
     validation_accuracy = history.history['val_accuracy'][-1]
     return -validation_accuracy
 
