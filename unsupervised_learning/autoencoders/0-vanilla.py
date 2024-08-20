@@ -20,7 +20,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     encoder.add(keras.Input(shape=(input_dims,)))
     for n in hidden_layers:
         encoder.add(keras.layers.Dense(n, activation="relu"))
-    encoder.add(keras.layers.Dense(latent_dims, activation="relu"))
+    #encoder.add(keras.layers.Dense(latent_dims, activation="relu"))
 
     # création du décodeur
     decoder = keras.Sequential()
