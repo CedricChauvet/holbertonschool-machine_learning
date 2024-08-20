@@ -29,11 +29,28 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         decoder.add(keras.layers.Dense(n, activation="relu"))
     decoder.add(keras.layers.Dense(input_dims, activation="sigmoid"))
     
+
+
+
+
     auto = keras.Sequential()
     auto.add(encoder)
     auto.add(decoder)
     
-
+    
+    # # Compiler le modèle
+    encoder.compile(optimizer='adam',
+                    loss='binary_crossentropy',
+                    metrics=['accuracy'])
+    # Afficher le résumé du modèle
+   
+   
+    # # Compiler le modèle
+    decoder.compile(optimizer='adam',
+                    loss='binary_crossentropy',
+                    metrics=['accuracy'])
+    # Afficher le résumé du modèle
+   
     
     # # Compiler le modèle
     auto.compile(optimizer='adam',
