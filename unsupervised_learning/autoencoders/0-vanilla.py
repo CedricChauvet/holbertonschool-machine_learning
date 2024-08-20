@@ -15,48 +15,33 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     latent_dims is an integer containing the dimensions of the latent space representation
     """
 
-    # création de l'encodeur
-    encoder = keras.Sequential()
-    encoder.add(keras.Input(shape=(input_dims,)))
-    for n in hidden_layers:
-        encoder.add(keras.layers.Dense(n, activation="relu"))
-    #encoder.add(keras.layers.Dense(latent_dims, activation="relu"))
-
-    # création du décodeur
-    decoder = keras.Sequential()
-    decoder.add(keras.Input(shape=(latent_dims,)))
-    for n in hidden_layers[::-1]:
-        decoder.add(keras.layers.Dense(n, activation="relu"))
-    decoder.add(keras.layers.Dense(input_dims, activation="sigmoid"))
+def autoencoder(input_dims, hidden_layers, latent_dims):
+    # Encoder
+    encoder_input = keras.layers.Input(shape=(input_dims,))
+    x = encoder_input
     
-
-
-
-
-    auto = keras.Sequential()
-    auto.add(encoder)
-    auto.add(decoder)
+    for units in hidden_layers:
+        x = keras.layers.Dense(units, activation='relu')(x)
     
+    latent = keras.layers.Dense(latent_dims, activation='relu')(x)
+    encoder = keras.models.Model(inputs=encoder_input, outputs=latent)
     
-    # # Compiler le modèle
-    encoder.compile(optimizer='adam',
-                    loss='binary_crossentropy',
-                    metrics=['accuracy'])
-    # Afficher le résumé du modèle
-   
-   
-    # # Compiler le modèle
-    decoder.compile(optimizer='adam',
-                    loss='binary_crossentropy',
-                    metrics=['accuracy'])
-    # Afficher le résumé du modèle
-   
+    # Decoder
+    decoder_input = keras.layers.Input(shape=(latent_dims,))
+    x = decoder_input
     
-    # # Compiler le modèle
-    auto.compile(optimizer='adam',
-                    loss='binary_crossentropy',
-                    metrics=['accuracy'])
-    # Afficher le résumé du modèle
-   
-
+    for units in reversed(hidden_layers):
+        x = keras.layers.Dense(units, activation='relu')(x)
+    
+    decoder_output = keras.layers.Dense(input_dims, activation='sigmoid')(x)
+    decoder = keras.models.Model(inputs=decoder_input, outputs=decoder_output)
+    
+    # Autoencoder (encoder + decoder)
+    auto_input = encoder_input
+    auto_output = decoder(encoder(auto_input))
+    auto = keras.models.Model(inputs=auto_input, outputs=auto_output)
+    auto.summary()
+    # Compile the autoencoder
+    auto.compile(optimizer='adam', loss='binary_crossentropy')
+    
     return encoder, decoder, auto

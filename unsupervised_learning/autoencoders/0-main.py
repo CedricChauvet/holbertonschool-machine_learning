@@ -38,3 +38,4 @@ for i in range(10):
     ax = plt.subplot(2, 10, i + 11)
     ax.axis('off')
     plt.imshow(reconstructed[i].reshape((28, 28)))
+plt.show()
