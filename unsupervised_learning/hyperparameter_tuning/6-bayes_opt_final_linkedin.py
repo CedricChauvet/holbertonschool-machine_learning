@@ -4,12 +4,12 @@ from tensorflow.keras.datasets import mnist
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.regularizers import L2
-from tensorflow.keras.layers import Flatten, Conv2D, Dropout
-from tensorflow.keras.layers import MaxPooling2D, Dense
+from tensorflow.keras.layers import MaxPooling2D, Dense, Flatten, Conv2D, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.callbacks import EarlyStopping
 from GPyOpt.methods import BayesianOptimization
 import matplotlib.pyplot as plt
+from tensorflow.keras.utils import plot_model
 
 import tensorflow as tf
 
@@ -28,7 +28,6 @@ x_test = np.expand_dims(x_test, -1)
 y_train = to_categorical(y_train, 10)
 y_test = to_categorical(y_test, 10)
 
-
 def create_model(learning_rate, momentum, l2_weight, Drop, dense):
     # Define the model
     model = Sequential([
@@ -43,37 +42,26 @@ def create_model(learning_rate, momentum, l2_weight, Drop, dense):
 
     # Compile the model
     opt = SGD(learning_rate=learning_rate, momentum=momentum)
-    model.compile(optimizer=opt,
-                  loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
     return model
 
-
 def objective_function(params):
-    """
-    part of bayesian optimisation
-    """
-
     learning_rate = params[0][0]
     momentum = params[0][1]
     l2_weight = params[0][2]
     Drop = params[0][3]
     dense = int(params[0][4])
-
+    
     model = create_model(learning_rate, momentum, l2_weight, Drop, dense)
     early_stopping = EarlyStopping(
-        monitor='val_loss',  # Metric to monitor
-        patience=3,
-        verbose=1,           # Verbosity mode
-        )
-    history = model.fit(x_train, y_train,
-                        epochs=20,
-                        batch_size=256,
-                        validation_split=0.2,
-                        callbacks=[early_stopping], verbose=True)
-
+    monitor='val_loss',  # Metric to monitor
+    patience=3,          # Number of epochs with no improvement after which training will be stopped
+    verbose=1,           # Verbosity mode
+    )
+    history = model.fit(x_train, y_train, epochs=20, batch_size=256, validation_split=0.2, callbacks=[early_stopping], verbose=True)
+    plot_model(model, to_file='model_structure.png', show_shapes=True, show_layer_names=True)
     validation_accuracy = history.history['val_accuracy'][-1]
     return -validation_accuracy
-
 
 # Define the bounds of the search space
 bounds = [
@@ -81,9 +69,9 @@ bounds = [
     {'name': 'momentum', 'type': 'continuous', 'domain': (0.7, 0.95)},
     {'name': 'l2_weight', 'type': 'continuous', 'domain': (1e-8, 1e-5)},
     {'name': 'Drop', 'type': 'continuous', 'domain': (0.2, 0.8)},
-    # Discrete hyperparameter
-    {'name': 'Dense', 'type': 'discrete', 'domain': (150, 175, 200, 225)},
-    ]
+    {'name': 'Dense', 'type': 'discrete', 'domain': (100,125,150,175,200, 225)},  # Discrete hyperparameter
+    
+]
 
 # Create the Bayesian optimization object
 optimizer = BayesianOptimization(f=objective_function, domain=bounds)
@@ -94,12 +82,12 @@ optimizer.run_optimization(max_iter=num_iterations)
 
 # Plot the convergence
 optimizer.plot_convergence()
-X = optimizer.X  # Points évalués
-# Valeurs de la fonction objectif (négatif de l'accuracy dans notre cas)
-Y = optimizer.Y
+
+X = optimizer.X # Points évalués
+Y = optimizer.Y  # Valeurs de la fonction objectif (négatif de l'accuracy dans notre cas)
 
 best_params = optimizer.X[np.argmin(optimizer.Y)]
-# Save the best parameters into a file
+# Save the point of the plt into a file
 with open('bayes_opt.txt', 'w') as report_file:
     report_file.write("Bayesian Optimization Report\n")
     report_file.write("===========================\n")
@@ -120,6 +108,9 @@ with open('bayes_opt.txt', 'w') as report_file:
         report_file.write(f"Iteration {i+1}, : Accuracy = {-acc[0]:.5f} \n")
 print("Optimization report saved to 'bayes_opt.txt'")
 
+
 # Display the results
 print("Optimal parameters:", best_params)
 print("Best validation accuracy:", -np.min(optimizer.Y))
+
+
