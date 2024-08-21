@@ -50,7 +50,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
 
     auto_input = keras.layers.Input(shape=input_dims)
-    z, _, _ = encoder(auto_input)
+    _, _, z = encoder(auto_input)
     decoded = decoder(z)
     auto = keras.models.Model(auto_input, decoded, name='autoencoder')
 
