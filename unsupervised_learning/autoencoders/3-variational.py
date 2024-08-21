@@ -50,6 +50,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     # Autoencoder (encoder + decoder)
     auto_input = encoder_input   # mise en cache
+    mu, sigma, z = encoder(auto_input)
     auto_output = decoder(z)
 
     # dernier modele
