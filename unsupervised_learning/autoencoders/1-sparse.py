@@ -8,7 +8,8 @@ import tensorflow.keras as keras
 
 def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     """
-    same as task 0 add regularizer onto the encoder output, use of activity reagularizer
+    same as task 0. add regularizer onto the encoder output,
+    use of activity reagularizer
     """
     # Encoder
     # creation d'une input pour les images
@@ -17,7 +18,9 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
 
     for units in hidden_layers:
         x = keras.layers.Dense(units, activation='relu')(x)
-    latent = keras.layers.Dense(latent_dims, activation='relu',activity_regularizer=keras.regularizers.l1(lambtha))(x)
+    latent = keras.layers.Dense(latent_dims, activation='relu',
+                                activity_regularizer=keras.
+                                regularizers.l1(lambtha))(x)
 
     # premier modele
     encoder = keras.models.Model(inputs=encoder_input, outputs=latent)
