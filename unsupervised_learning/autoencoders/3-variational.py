@@ -32,7 +32,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     # premier modele
     encoder = keras.models.Model(inputs=encoder_input, outputs=[z_mu, z_sigma, z], name='encoder')
-    encoder.summary()
+    #encoder.summary()
 
 
     
