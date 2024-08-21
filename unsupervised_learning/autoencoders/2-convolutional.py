@@ -33,7 +33,7 @@ def autoencoder(input_dims, filters, latent_dims):
         X = keras.layers.Conv2D(n, activation='relu', padding='same', kernel_size=(3, 3))(X)
         X = keras.layers.UpSampling2D((2, 2))(X)
 
-    X = keras.layers.Conv2D(filters[0], activation='same', padding='valid',
+    X = keras.layers.Conv2D(filters[0], activation='relu', padding='valid',
                        kernel_size=(3, 3))(X)
 
     X = keras.layers.UpSampling2D((2, 2))(X)
