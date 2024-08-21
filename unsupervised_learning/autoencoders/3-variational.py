@@ -48,22 +48,15 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     decoder_output = keras.layers.Dense(input_dims, activation='sigmoid')(x)
     decoder = keras.models.Model(inputs=decoder_input, outputs=decoder_output)
 
-    # Autoencoder (encoder + decoder)
-    auto_input = encoder_input   # mise en cache
-    mu, sigma, z = encoder(auto_input)
-    auto_output = decoder(z)
 
-    # dernier modele
-    auto = keras.models.Model(inputs=encoder_input, outputs=auto_output)
-    # auto.summary()
-    # Compile the autoencoder
-    auto.compile(optimizer='adam', loss='binary_crossentropy')
+    auto_input = keras.layers.Input(shape=input_dims)
+    z, _, _ = encoder(auto_input)
+    decoded = decoder(z)
+    auto = keras.models.Model(auto_input, decoded, name='autoencoder')
+
     return encoder, decoder, auto
-
-
-
 
 def sample_z(args):
     z_mu,z_sigma = args
-    eps = keras.backend.random_normal(shape = (keras.backend.shape(z_mu)[0], keras.backend.int_shape(z_mu)[1]) , mean=0.0, stddev=1.0)
+    eps = keras.backend.random_normal(shape = (keras.backend.shape(z_mu)[0], keras.backend.int_shape(z_mu)[1]))
     return z_mu + keras.backend.exp(z_sigma / 2) * eps
