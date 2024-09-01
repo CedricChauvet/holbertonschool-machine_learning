@@ -1,3 +1,10 @@
+
+#!/usr/bin/env python3
+"""
+Project GAN
+By Ced+
+"""
+
 import numpy as np
 # load the pictures
 import matplotlib.pyplot as plt
