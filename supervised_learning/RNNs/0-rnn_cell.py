@@ -26,9 +26,10 @@ class RNNCell:
 
         y = np.dot(h_next, self.Wy) + self.by
         y = self.softmax(y)
+
         return h_next, y
 
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
-        e_x = np.exp(x - np.max(x))
+        e_x = np.exp(x)
         return e_x / e_x.sum(axis=1, keepdims=True)
