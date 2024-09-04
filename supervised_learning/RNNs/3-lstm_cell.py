@@ -9,6 +9,7 @@ import numpy as np
 class LSTMCell():
     """
     LSTMCell class
+    https://penseeartificielle.fr/comprendre-lstm-gru-fonctionnement-schema/
     """
 
     def __init__(self, i, h, o):
@@ -23,13 +24,33 @@ class LSTMCell():
         self.bo = np.zeros((1,h))
         self.by = np.zeros((1,o))
 
-        def forward(self, h_prev, c_prev, x_t):
-            """
-            forward, from left to right
-            """
-            h_next = None
-            c_next = None
-            y = None
-            return h_next, c_next, y
+    def forward(self, h_prev, c_prev, x_t):
+        """
+        forward, from left to right
+        """
+        
 
+        z = np.concatenate((h_prev, x_t), axis=1)
+        z1 = self.sigmoid(np.dot(z, self.Wf) + self.bf)
+        z2 = (self.sigmoid(np.dot(z,self.Wu)+self.bu)) * (np.tanh(np.dot(z,self.Wc)+self.bc))
+        z3 = self.sigmoid(np.dot(z,self.Wo)+self.bo)
+        c_next = c_prev * z1 + z2
+        h_next = np.tanh(c_next) * z3
+
+        y = np.dot(h_next, self.Wy) + self.by
+        y = self.softmax(y)
+
+        return h_next, c_next, y
+
+
+    def sigmoid(self, x):
+        """
+        compute sigmoid values for each sets of scores in x
+        """
+        return 1 / (1 + np.exp(-x))
+
+    def softmax(self, x):
+        """Compute softmax values for each sets of scores in x."""
+        e_x = np.exp(x)
+        return e_x / e_x.sum(axis=1, keepdims=True)    
 
