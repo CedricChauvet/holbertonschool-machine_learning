@@ -17,7 +17,7 @@ def convolutional_GenDiscr() :
     def get_generator() :
         inputs     = K.Input(shape=( 16 , ))
 
-        hidden     = K.layers.Dense( 2048, activation="tanh"    )(inputs)
+        hidden     = K.layers.Dense( 2048, K.layers.Activation("tanh"))(inputs)
         hidden = K.layers.Reshape((2, 2, 512))(hidden)
         hidden = K.layers.UpSampling2D((2, 2))(hidden)
 
@@ -62,10 +62,12 @@ def convolutional_GenDiscr() :
 
         # flatten
         hidden = K.layers.Flatten()(hidden)
-        outputs       = K.layers.Dense( 1, activation="tanh" )(hidden)
+        outputs       = K.layers.Dense( 1,K.layers.Activation("tanh") )(hidden)
         discriminator = K.Model(inputs, outputs, name="discriminator")
         return discriminator
-            
+    
+
+    
     return get_generator() , get_discriminator()
 
 gen, discr = convolutional_GenDiscr( ) 
