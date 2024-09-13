@@ -6,84 +6,95 @@ from tensorflow.keras.layers import LSTM, Dense
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
-# btc = df[ ['Open','Close', 'Weighted_Price', 'Volume_(BTC)'] ]
-# btc.plot()
-
 df = pd.read_csv('output_btc0.csv')
-# print(df)
+df = df.dropna()  # Supprimer les valeurs manquantes
 dataset = df.values
 dataset = dataset.astype('float32') 
-scaler = MinMaxScaler(feature_range=(0, 1))
-dataset = scaler.fit_transform(dataset)
 
-# Convertir en tf.data.Dataset
-def create_dataset(dataset, time_steps=1):
-    X, y = [], []
-    for i in range(len(dataset) - time_steps):
-        X.append(dataset[i:(i + time_steps), :])
-        y.append(dataset[i + time_steps, 1])
-    return np.array(X), np.array(y) # attetion à la sortie y[1] qui est un scalaire
+X = np.delete(dataset, 3, axis=1)  # Supprimer la 3ème colonne
+y = dataset[:, 3]  
 
 
-  
-# Définir le nombre de pas de temps (time steps) pour la séquence
-time_steps = 24  # par exemple, utiliser les 60 dernières minutes pour prédire la prochaine
+print(np.isnan(X).sum(), np.isinf(X).sum())
+print(np.isnan(y).sum(), np.isinf(y).sum())
 
-# Créer les ensembles X et y
-n = 0.66
-X, y = create_dataset(dataset, time_steps)
 
-x_train, y_train = X[:int(n*len(X))], y[:int(n*len(X))]
-x_test, y_test = X[int(n*len(X)):], y[int(n*len(X)):]
-# print("eln", int(n*len(X)))
-# print("x", X.shape)
-# print("x_test shape", x_test.shape)
-# print("x_train shape", x_train.shape)
-# x_train = x_train.reshape(x_train.shape[0],1,  x_train.shape[1] )
-# x_test = x_test.reshape(None,x_test.shape[1], x_test.shape[2] )
+#  using MinMaxScaler to scale the data, X the whole data and y the third column
+scaler = MinMaxScaler()
+X = scaler.fit_transform(X)
+scaler_y = MinMaxScaler()
+y = scaler_y.fit_transform(y.reshape(-1, 1))
 
+# Fenêtrage des données (séries temporelles)
+seq_size = 24  # Longueur des séquences
+def create_sequences(X, y, seq_size):
+    Xs, ys = [], []
+    for i in range(len(X) - seq_size):
+        Xs.append(X[i:i+seq_size])
+        ys.append(y[i+seq_size])
+    return np.array(Xs), np.array(ys)
+
+X_seq, y_seq = create_sequences(X, y, seq_size)
+
+# Si vous voulez une séparation 80/20
+n = 0.8
+len = len(X_seq)
+
+# Division des données en train et validation (80/20)
+train_size = int(n * len)
+X_train, X_val = X_seq[:train_size], X_seq[train_size:]
+y_train, y_val = y_seq[:train_size], y_seq[train_size:]
+
+
+# print("len", len, "train_size", train_size)
+# print("x_train", X_train.shape, "y_train", y_train.shape)
+# print("x_val", X_val.shape, "y_val", y_val.shape)
+
+
+train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train)).batch(32)
+val_dataset = tf.data.Dataset.from_tensor_slices((X_val, y_val)).batch(32)
+
+# modele classique
 seq_size= 24
 model = Sequential()
-model.add(LSTM(50, activation='relu', input_shape=(seq_size, 7)))
+model.add(LSTM(50, activation='relu', input_shape=(seq_size, 6)))
 model.add(Dense(32))
 model.add(Dense(1))
 
-# Compiler le modèle
-model.compile(optimizer='adam', loss='mean_squared_error')
+model.compile(optimizer='adam', loss='mse', metrics=['mae'])
 
-# Entraîner le modèle
 history = model.fit(
-    x_train, y_train, validation_data=(x_test, y_test),
-    epochs=5)
+    train_dataset,
+    epochs=10,
+    validation_data=val_dataset
+)
 
-train_predictions = model.predict(x_train)
-test_predictions = model.predict(x_test)
 
-train_predictions = train_predictions.reshape(-1)
-test_predictions = test_predictions.reshape(-1)
-print("train_predictions", train_predictions.shape)
+pred_train = model.predict(X_train)
+print("pred_train", pred_train[10])
+#train_predictions = train_predictions.reshape(-1, 1)
+# print("train_predictions", train_predictions.shape)
+#test_predictions = test_predictions.reshape(1, -1)
+
+pred_train_unscaled =  scaler_y.inverse_transform(pred_train) 
+#test_predictions = scaler.inverse_transform(test_predictions)
+y_train = scaler_y.inverse_transform(y_train)
+
+# y_pred = scaler.inverse_transform(x_train_scaled)
+
 print("y_train", y_train.shape)
-train_predictions = scaler.inverse_transform(train_predictions)
-test_predictions = scaler.inverse_transform(test_predictions)
-y_test = scaler.inverse_transform(y_test)
-y_train = scaler.inverse_transform(y_train)
+#pred_train_unscaled = pred_train_unscaled.reshape(-1, 1)
+print("y train_pred", pred_train_unscaled.shape)
 
-"""
-exit()
-
-trainpredictplot = np.empty_like(dataset)
-trainpredictplot[:,:] = np.nan
-trainpredictplot[seq_size:len(train_predictions)+seq_size, :] = train_predictions
-
-testpredictplot = np.empty_like(dataset)
-testpredictplot[:,:] = np.nan
-testpredictplot[len(train_predictions)+(seq_size*2)+1:len(dataset)-1, :] = test_predictions
-
-
-plt.plot(scaler.inverse_transform(dataset))
-plt.plot(trainpredictplot) 
-plt.plot(testpredictplot)
+plt.figure(figsize=(10, 6))
+plt.plot(pred_train_unscaled) 
+plt.plot(y_train, label='y')
 plt.show()        
+
+
+
+
+
 
 # # Tracer l'historique d'entraînement
 # plt.figure(figsize=(10, 6))
@@ -106,4 +117,3 @@ plt.show()
 # plt.ylabel('Prix normalisé')
 # plt.legend()
 # plt.show()
-"""
