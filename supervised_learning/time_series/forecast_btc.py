@@ -14,9 +14,8 @@ dataset = df.values
 X = dataset  # Supprimer la 3ème colonne
 y = dataset[:, 3]  
 
-
-# print(np.isnan(X).sum(), np.isinf(X).sum())
-# print(np.isnan(y).sum(), np.isinf(y).sum())
+# print(np.isnan(X).sum())
+# print(np.isnan(y).sum())
 
 
 #  using MinMaxScaler to scale the data, X the whole data and y the third column
@@ -45,8 +44,6 @@ train_size = int(n * len)
 X_train, X_val = X_seq[:train_size], X_seq[train_size:]
 y_train, y_val = y_seq[:train_size], y_seq[train_size:]
 
-
-
 train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train)).batch(32)
 val_dataset = tf.data.Dataset.from_tensor_slices((X_val, y_val)).batch(32)
 
@@ -65,20 +62,12 @@ history = model.fit(
     validation_data=val_dataset
 )
 
-
 pred_train = model.predict(X_train)
-#train_predictions = train_predictions.reshape(-1, 1)
-# print("train_predictions", train_predictions.shape)
-#test_predictions = test_predictions.reshape(1, -1)
-
 pred_train_unscaled =  scaler_y.inverse_transform(pred_train) 
-#test_predictions = scaler.inverse_transform(test_predictions)
 y_train = scaler_y.inverse_transform(y_train)
 
-# y_pred = scaler.inverse_transform(x_train_scaled)
-
 print("y_train", y_train.shape)
-#pred_train_unscaled = pred_train_unscaled.reshape(-1, 1)
+
 print("y train_pred", pred_train_unscaled.shape)
 
 plt.figure(figsize=(10, 6))
@@ -90,8 +79,6 @@ plt.ylabel("Valeur de Y en dollars")
 plt.legend()
 plt.grid(True)
 plt.show()    
-
-
 
 # Afficher les 24 dernières heures de données et prédire pour h+1
 # Prenons une séquence d'exemple des 24 dernières heures pour prédire h+1
