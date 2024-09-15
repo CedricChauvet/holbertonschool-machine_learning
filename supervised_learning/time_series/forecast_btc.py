@@ -65,12 +65,20 @@ history = model.fit(
     validation_data=val_dataset
 )
 
-# Prédiction sur tout le dataset
+
 pred_train = model.predict(X_train)
+#train_predictions = train_predictions.reshape(-1, 1)
+# print("train_predictions", train_predictions.shape)
+#test_predictions = test_predictions.reshape(1, -1)
+
 pred_train_unscaled =  scaler_y.inverse_transform(pred_train) 
+#test_predictions = scaler.inverse_transform(test_predictions)
 y_train = scaler_y.inverse_transform(y_train)
 
+# y_pred = scaler.inverse_transform(x_train_scaled)
+
 print("y_train", y_train.shape)
+#pred_train_unscaled = pred_train_unscaled.reshape(-1, 1)
 print("y train_pred", pred_train_unscaled.shape)
 
 plt.figure(figsize=(10, 6))
@@ -83,26 +91,35 @@ plt.legend()
 plt.grid(True)
 plt.show()    
 
-# Afficher les 24 dernières heures de données et prédire pour h+1
 
+
+# Afficher les 24 dernières heures de données et prédire pour h+1
 # Prenons une séquence d'exemple des 24 dernières heures pour prédire h+1
 last_24_hours_X = X_seq[-1].reshape(1, seq_size, X.shape[1])  # Dernière séquence (24 heures)
 real_y_next_hour = y_seq[-1]  # Valeur réelle à prédire pour h+1
+
 # Utiliser le modèle pour prédire h+1
 predicted_y_next_hour = model.predict(last_24_hours_X)
+
 # Inverser la transformation pour obtenir les valeurs originales (non scalées)
 predicted_y_next_hour = scaler_y.inverse_transform(predicted_y_next_hour)
 real_y_next_hour = scaler_y.inverse_transform(real_y_next_hour.reshape(-1, 1))
+
 # Extraire les valeurs de la dernière séquence de 24 heures (non scalées)
 last_24_hours_y = scaler_y.inverse_transform(y_seq[-seq_size:].reshape(-1, 1))
+
 # Affichage des 24 dernières heures et prédiction pour h+1
 plt.figure(figsize=(10, 6))
+
 # Affichage des 24 dernières heures (valeurs réelles)
 plt.plot(range(24), last_24_hours_y, label='24h de données (réelles)', color='blue')
+
 # Affichage de la prédiction pour h+1
 plt.scatter(24, predicted_y_next_hour, color='red', label=f'Prédiction pour h+1: {predicted_y_next_hour[0][0]:.2f}')
+
 # Affichage de la vraie valeur pour h+1
 plt.scatter(24, real_y_next_hour, color='green', label=f'Valeur réelle pour h+1: {real_y_next_hour[0][0]:.2f}')
+
 # Labels et légende
 plt.title("Prédiction de la valeur Y à h+1")
 plt.xlabel("Heures")
