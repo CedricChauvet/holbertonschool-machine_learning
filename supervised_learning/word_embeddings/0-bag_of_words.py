@@ -14,16 +14,16 @@ def bag_of_words(sentences, vocab=None):
 
     if vocab is None:
         features = set()
-    else:
-        features = vocab.copy()
 
-    for sentence in sentences:
-        words = sentence.split(" ")
-        for word in words:
-            word = word.lower()
-            word = formatter(word)
-            features.add(word)  
-    
+
+        for sentence in sentences:
+            words = sentence.split(" ")
+            for word in words:
+                word = word.lower()
+                word = formatter(word)
+                features.add(word)  
+    else:
+        features = vocab    
     features = sorted(features)            
     embeddings = np.zeros((len(sentences), len(features)), dtype=int)
 
