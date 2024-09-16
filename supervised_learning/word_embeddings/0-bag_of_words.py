@@ -14,6 +14,8 @@ def bag_of_words(sentences, vocab=None):
 
     if vocab is None:
         features = set()
+    else:
+        features = vocab.copy()
 
     for sentence in sentences:
         words = sentence.split(" ")
