@@ -67,7 +67,7 @@ def formatter(word):
     """
     # Crée un pattern qui recherche le mot entier
     resultat = re.sub(r"(\w+)'s\b", r"\1", word)
-    resultat = re.sub(r"[!,?.]", "", word)
+    resultat = re.sub(r"[!,?.]", "", resultat)
 
     return resultat
 
