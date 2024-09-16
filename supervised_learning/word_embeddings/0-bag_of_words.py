@@ -18,9 +18,8 @@ def bag_of_words(sentences, vocab=None):
     for sentence in sentences:
         words = sentence.split(" ")
         for word in words:
-            word = word.replace("!", "").replace(".", "")\
-                   .replace(",", "").replace("?", "")\
-                   .replace("'", "").replace('"', "").lower()
+            word = word.lower()
+            word = formatter(word)
             features.add(word)  
     
     features = sorted(features)            
@@ -53,4 +52,20 @@ def compter(word, phrase):
     # Trouve toutes les occurrences et retourne leur nombre
     occurrences = len(re.findall(pattern, phrase, re.IGNORECASE))
     return occurrences
+
+
+def formatter(word):
+    """
+    Compte les occurrences d'un mot spécifique dans une phrase.
+    
+    Args:
+    word (str): Le mot à rechercher.
+    phrase (str): La phrase dans laquelle chercher.
+    
+    Returns:
+    int: Le nombre d'occurrences du mot dans la phrase.
+    """
+    # Crée un pattern qui recherche le mot entier
+    resultat = re.sub(r"(\w+)'s\b", r"\1", word)
+    return resultat
 
