@@ -53,3 +53,4 @@ def compter(word, phrase):
     # Trouve toutes les occurrences et retourne leur nombre
     occurrences = len(re.findall(pattern, phrase, re.IGNORECASE))
     return occurrences
+
