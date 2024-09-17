@@ -14,5 +14,6 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5, negative=5
     train and text word2vec model
     """
 
-    model = Word2Vec(sentences=sentences, vector_size=vector_size, window=window, min_count=min_count, workers=workers, sg=True, seed=seed, negative=negative, epochs=epochs)
+    model = Word2Vec(common_texts, vector_size=vector_size, window=window, min_count=min_count, workers=workers,  seed=seed, negative=negative, sg=cbow)
+    model.train(common_texts, total_examples=len(common_texts), epochs=epochs)
     return model
