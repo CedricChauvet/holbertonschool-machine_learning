@@ -5,3 +5,5 @@ supervised_learning/time_series/gitignore
 .gitignore
 supervised_learning/time_series/gitignore
 .gitignore
+supervised_learning/time_series/output.csv
+supervised_learning/word_embeddings/__pycache__/0-bag_of_words.cpython-39.pyc
