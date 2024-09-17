@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import numpy as np
-RNNCell = __import__('0-rnn_cell').RNNCell
+RNNCell = __import__('4-deep_rnn').RNNCell
 deep_rnn = __import__('4-deep_rnn').deep_rnn
 
 np.random.seed(1)
