@@ -14,7 +14,6 @@ def tf_idf(sentences, vocab=None):
     Convert a collection of raw documents to a matrix of TF-IDF features
     """
 
-    X = np.zeros((len(sentences), len(vocab)))
     vectorizer = TfidfVectorizer(vocabulary=vocab)
     Y = vectorizer.fit_transform(sentences).todense()
 
