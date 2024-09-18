@@ -10,7 +10,12 @@ import gensim
 def fasttext_model(sent, vector_size=100, min_count=5,
                    negative=5, window=5, cbow=True,
                    epochs=5, seed=0, workers=1):
-
+    """
+    build and train, fasttext model, using gensim
+    params: sent: list of sentences to be trained
+    etc...
+    return: model, which keep the semantic of a word
+    """
     cbow = not cbow
     model = gensim.models.FastText(
         sentences=sent,
