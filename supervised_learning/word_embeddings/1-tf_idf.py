@@ -5,29 +5,16 @@ by Ced
 """
 import re
 import numpy as np
-
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 def tf_idf(sentences, vocab=None):
     """
-    
+    Convert a collection of raw documents to a matrix of TF-IDF features
     """    
+    X = np.zeros((len(sentences), len(vocab)))
+    vectorizer =  TfidfVectorizer(vocabulary=vocab)
+    Y = vectorizer.fit_transform(sentences).todense()
 
-    if vocab is None:  # si le vocabulaire n'est pas donné
-        features = set()
-        for sentence in sentences:
-            words = sentence.split(" ")
-            for word in words:
-                word = word.lower()
-                word = formatter(word)
-                features.add(word)
+    feat = vectorizer.get_feature_names_out()
+    return Y, feat
 
-        features = sorted(features)
-    else:
-        features = vocab
-    for i, sentence in enumerate(sentences):
-        sentence = sentence.lower()
-        for j, word in enumerate(features):
-            tf[i,j]
-
-
-    return embeddings, np.array(features)
