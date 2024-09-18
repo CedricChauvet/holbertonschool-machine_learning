@@ -15,7 +15,7 @@ def word2vec_model(sent, vector_size=100,
     """
 
     cbow = not cbow
-    print("cbow: ", cbow)
+    # print("cbow: ", cbow)
     # Initialize the model with additional parameters
 
     model = gensim.models.Word2Vec(
