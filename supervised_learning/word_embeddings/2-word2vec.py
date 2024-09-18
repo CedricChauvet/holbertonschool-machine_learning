@@ -3,16 +3,14 @@
 NLP project
 by Ced
 """
-
-from gensim.test.utils import common_texts
-from gensim.models import Word2Vec
+import gensim
 
 
 def word2vec_model(sentences, vector_size=100, min_count=5, window=5, negative=5, cbow=True, epochs=5, seed=0, workers=1):
     """
     build and train, word2vec model
     """
-    model = Word2Vec()
+    model = gensim.models.Word2Vec()
     model.vector_size = vector_size
     model.min_count = min_count
     model.window = window
