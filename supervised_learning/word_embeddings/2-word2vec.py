@@ -6,21 +6,32 @@ by Ced
 import gensim
 
 
-def word2vec_model(sentences, vector_size=100, min_count=5, window=5, negative=5, cbow=True, epochs=5, seed=0, workers=1):
+def word2vec_model(sent, vector_size=100,
+                   min_count=5, window=5,
+                   negative=5, cbow=True,
+                   epochs=5, seed=0, workers=1):
     """
     build and train, word2vec model
     """
-    model = gensim.models.Word2Vec()
-    model.vector_size = vector_size
-    model.min_count = min_count
-    model.window = window
-    model.negative = negative
-    model.sg =  0 if cbow else 1
-    model.epochs = epochs
-    model.seed = seed
-    model.workers = workers
-    model.build_vocab(sentences)
-    model.corpus_count = len(sentences)
-    model.train(sentences, total_examples=model.corpus_count, epochs=model.epochs)
 
+    cbow = not cbow
+    print("cbow: ", cbow)
+    # Initialize the model with additional parameters
+
+    model = gensim.models.Word2Vec(
+        vector_size=vector_size,
+        window=window,
+        min_count=min_count,
+        workers=workers,
+        sg=cbow,
+        negative=negative,
+        seed=seed
+    )
+
+    # common_texts = gensim.test.utils.common_texts
+    # Build the vocabulary
+    model.build_vocab(sent)
+
+    # Train the model for many epochs
+    model.train(sent, total_examples=model.corpus_count, epochs=epochs)
     return model
