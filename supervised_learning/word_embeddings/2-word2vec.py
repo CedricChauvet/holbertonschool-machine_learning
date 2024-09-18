@@ -19,6 +19,7 @@ def word2vec_model(sent, vector_size=100,
     # Initialize the model with additional parameters
 
     model = gensim.models.Word2Vec(
+        sentences=sent,
         vector_size=vector_size,
         window=window,
         min_count=min_count,
