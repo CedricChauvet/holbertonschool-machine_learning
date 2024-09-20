@@ -24,7 +24,7 @@ def uni_bleu(references, sentence):
         count += min(sentence.count(word), max(refs))
 
     P1 = count/len(sentence)  
-    print('P1', P1) 
+    # print('P1', P1) 
     
     r = find_closest(references, sentence)
     ref_closest = len(references[r])
