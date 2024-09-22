@@ -15,7 +15,7 @@ df["Timestamp"] = pd.to_datetime(df["Timestamp"], unit='s').dt.strftime('%Y/%m/%
 df.set_index("Timestamp", inplace=True)
 print(df.dtypes)
 
-# prendre la fin du document avec un intervalle de 5 minutes
+# prendre la fin du document avec un intervalle de 60 minutes
 df = df[-100000::60]
 print ("taille de la donnée", len(df))
-df.to_csv('output_btc1.csv', index=False)
+df.to_csv('article_output_1.csv', index=False)
