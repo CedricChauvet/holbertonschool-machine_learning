@@ -5,7 +5,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-
+import math
+from sklearn.metrics import mean_squared_error
 df = pd.read_csv('article_output_1.csv')
 df = df.dropna()  # Supprimer les valeurs manquantes
 dataset = df.values
@@ -65,6 +66,10 @@ history = model.fit(
     validation_data=val_dataset
 )
 
+trainScore = math.sqrt(mean_squared_error(y_train, model.predict(X_train)))
+print('Train Score: %.2f RMSE' % (trainScore))
+testScore = math.sqrt(mean_squared_error(y_val, model.predict(X_val)))
+print('Test Score: %.2f RMSE' % (testScore))
 
 pred_train = model.predict(X_train)
 #train_predictions = train_predictions.reshape(-1, 1)
