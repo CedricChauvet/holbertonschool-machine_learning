@@ -46,7 +46,8 @@ def ngram_bleu(references, sentence, n):
                       for ngram, count in candidate_counts.items()}
     count_clip = sum(clipped_counts.values())
     precision = count_clip / count
-
+    print("cliped_counts", clipped_counts)
+    print("count_clip", count_clip)
     r = find_closest(references, sentence)
     ref_closest = len(references[r])
 
