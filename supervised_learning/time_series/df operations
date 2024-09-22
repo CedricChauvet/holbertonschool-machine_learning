@@ -1,7 +1,0 @@
-df = pd.read_csv('bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv')
-df["Timestamp"] = pd.to_datetime(df["Timestamp"], unit='s').dt.strftime('%Y/%m/%d - %H:%M')
-df.set_index("Timestamp", inplace=True)
-print("first", df.index[0])
-print("last", df.index[-1])
-result = df.loc['2017-01':'2020-01']
-print(result.shape)
