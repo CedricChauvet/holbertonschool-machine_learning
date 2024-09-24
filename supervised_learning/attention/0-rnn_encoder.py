@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Regularization project
+Attention project
 by Ced
 """
 import tensorflow as tf
