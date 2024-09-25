@@ -3,7 +3,6 @@
 Attention project
 By Ced
 """
-import numpy as np
 import tensorflow as tf
 
 
