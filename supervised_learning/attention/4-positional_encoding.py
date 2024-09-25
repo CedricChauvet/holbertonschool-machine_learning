@@ -16,7 +16,7 @@ def positional_encoding(max_seq_len, dm):
     """
 
     PE = np.zeros((max_seq_len, dm))
-    
+
     # Calcul de chaque position et dimension
     for pos in range(max_seq_len):
         for i in range(0, dm, 2):
@@ -25,5 +25,5 @@ def positional_encoding(max_seq_len, dm):
             PE[pos, i] = np.sin(angle)
             if i + 1 < dm:
                 PE[pos, i + 1] = np.cos(angle)
-    
+
     return PE
