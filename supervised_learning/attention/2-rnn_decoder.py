@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import tensorflow as tf
 SelfAttention = __import__('1-self_attention').SelfAttention
 
@@ -40,5 +41,4 @@ class RNNDecoder(tf.keras.layers.Layer):
         x = tf.reshape(x, (-1, x.shape[2]))
         y = self.F(x)
 
-        
         return y, s
