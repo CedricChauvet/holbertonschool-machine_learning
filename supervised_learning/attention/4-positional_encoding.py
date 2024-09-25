@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Attention project
 By Ced
