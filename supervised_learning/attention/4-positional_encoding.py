@@ -14,7 +14,8 @@ def positional_encoding(max_seq_len, dm):
     Returns: a numpy.ndarray of shape (max_seq_len, dm) containing
     the positional encoding vectors
     """
-    PE = np.zeros((max_seq_len, dm))
+
+    PE = np.zeros((max_seq_len, dm), dtype=np.float64)
     for i in range(max_seq_len):
         for j in range(0, dm, 2):
             PE[i, j] = np.sin(i / (10000 ** ((2 * j) / dm)))
