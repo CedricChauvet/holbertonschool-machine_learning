@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Attentin project
+By Ced
+"""
 import tensorflow as tf
 SelfAttention = __import__('1-self_attention').SelfAttention
 
