@@ -14,7 +14,7 @@ class RNNDecoder(tf.keras.layers.Layer):
                                 return_sequences=True,
                                 return_state=True)
         self.F = tf.keras.layers.Dense(vocab)
-    
+        self.attention = SelfAttention(units)
 
     def call(self, x, s_prev, hidden_states):
         """
@@ -28,13 +28,13 @@ class RNNDecoder(tf.keras.layers.Layer):
         x = self.embedding(x)
         
         # Apply attention
-        context_vector, _ = SelfAttention(s_prev, hidden_states)
+        context_vector, _ = self.attention(s_prev, hidden_states)
         
         # Concatenate attention context vector and embedded input
         x = tf.concat([tf.expand_dims(context_vector, 1), x], axis=-1)
         
         # Pass through GRU
-        x, s = self.gru(x, initial_state=s_prev)
+        x, s = self.gru(x)
         
         # Reshape output and pass through final dense layer
         x = tf.reshape(x, (-1, x.shape[2]))
