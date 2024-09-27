@@ -23,6 +23,10 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         self.linear = tf.keras.layers.Dense(dm)
 
     def reshape_tensor(self, x, heads, flag):
+        """
+        reshapes the output of the attention block
+        in order to calculate the output of the multi-head attention
+        """
         if flag:
             # Tensor shape after reshaping and transposing:
             # (batch_size, heads, seq_length, -1)
