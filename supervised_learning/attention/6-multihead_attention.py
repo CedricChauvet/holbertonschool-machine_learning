@@ -40,7 +40,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
             x = tf.reshape(x, shape=(tf.shape(x)[0], tf.shape(x)[1], self.dm))
         return x
 
-    def ___call___(self, Q, K, V, mask=None):
+    def call(self, Q, K, V, mask=None):
         """
         Call method, return 2 values
         """
@@ -60,4 +60,4 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         # Apply one final linear projection to the output to generate
         # the multi-head attention
         # Resulting tensor shape: (batch_size, input_seq_length, d_model)
-        return self.linear(output), attention_weights
+        return self.linear(output), attention_W
