@@ -8,6 +8,9 @@ MultiHeadAttention = __import__('6-multihead_attention').MultiHeadAttention
 
 
 class DecoderBlock(tf.keras.layers.Layer):
+    """
+    This class do the decoder part of the transformer
+    """
     def __init__(self, dm, h, hidden, drop_rate=0.1):
         super(DecoderBlock, self).__init__()
         self.mha1 = MultiHeadAttention(dm, h)
@@ -27,16 +30,16 @@ class DecoderBlock(tf.keras.layers.Layer):
     def call(self, x, encoder_output, training, look_ahead_mask, padding_mask):
         """
         call function,
-        returns: tensor of shape (batch, target_seq_len, dm)   
+        returns: tensor of shape (batch, target_seq_len, dm)
         """
-
 
         out1, _ = self.mha1(x, x, x, padding_mask)
         drop1 = self.dropout1(out1, training=training)
         norm1 = self.layernorm1(x + drop1)
-    
+
         # decoder output into MHA_2
-        out3, _ = self.mha2(norm1, encoder_output, encoder_output, look_ahead_mask)
+        out3, _ = self.mha2(norm1, encoder_output,
+                            encoder_output, look_ahead_mask)
         out3 = self.dropout2(out3, training=training)
         norm2 = self.layernorm2(out3 + norm1)
 
@@ -46,5 +49,5 @@ class DecoderBlock(tf.keras.layers.Layer):
         feed_drop = self.dropout3(feed_output, training=training)
 
         decoder_output = self.layernorm3(norm2 + feed_drop)
-      
+
         return decoder_output
