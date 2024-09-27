@@ -40,7 +40,10 @@ class MultiHeadAttention(tf.keras.layers.Layer):
             x = tf.reshape(x, shape=(tf.shape(x)[0], tf.shape(x)[1], self.dm))
         return x
 
-    def call(self, Q, K, V, mask=None):
+    def ___call___(self, Q, K, V, mask=None):
+        """
+        Call method, return 2 values
+        """
         # Rearrange the queries to be able to compute all heads in parallel
         q_reshaped = self.reshape_tensor(self.Wq(Q), self.h, True)
         k_reshaped = self.reshape_tensor(self.Wk(K), self.h, True)
