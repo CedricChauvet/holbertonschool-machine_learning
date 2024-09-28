@@ -19,7 +19,8 @@ class Encoder (tf.keras.layers.Layer):
         self.dm = dm  # dimensionality of the model
         self.embedding = tf.keras.layers.Embedding(input_vocab, dm)
         self.positional_encoding = positional_encoding(max_seq_len, dm)
-        self.blocks = [EncoderBlock(dm, h, hidden, drop_rate) for _ in range(N)]
+        self.blocks = [EncoderBlock(dm, h, hidden, drop_rate)
+                       for _ in range(N)]
         self.dropout = tf.keras.layers.Dropout(drop_rate)
 
     def call(self, x, training, mask):
@@ -29,22 +30,22 @@ class Encoder (tf.keras.layers.Layer):
         containing the encoder output
         """
         seq_len = tf.shape(x)[1]
-        
+
         # Word Embedding
         embedding = self.embedding(x)  # (batch, input_seq_len, dm)
-        
+
         # Scale embedding
         embedding *= tf.math.sqrt(tf.cast(self.dm, tf.float32))
-        
+
         # Add positional encoding
         pos_encoding = self.positional_encoding[:seq_len, :]
         encoder_input = embedding + pos_encoding
-        
+
         # Apply dropout
         x = self.dropout(encoder_input, training=training)
-        
+
         # Pass through each encoder block
         for block in self.blocks:
             x = block(x, training=training, mask=mask)
-        
+
         return x
