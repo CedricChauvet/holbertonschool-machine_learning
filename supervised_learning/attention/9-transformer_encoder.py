@@ -28,6 +28,21 @@ class Encoder (tf.keras.layers.Layer):
         shape (batch, input_seq_len, dm)
         containing the encoder output
         """
+        seq_len = tf.shape(x)[1]
         
-        return None
+        # Word Embedding
+        embedding = self.embedding(x)  # (batch, input_seq_len, dm)
+        
+        # Scale embedding
+        #embedding *= tf.math.sqrt(tf.cast(self.dm, tf.float32))
+        
+        # Add positional encoding
+        pos_encoding = self.positional_encoding[:seq_len, :]
+        encoder_input_1 = embedding + pos_encoding
+        encoder_input_i = self.dropout(encoder_input_1, training=training)
+        
+        for i in range(self.N):
+            encoder_input_i = self.blocks(encoder_input_i, training, mask)
+        
+        return encoder_input_i
 
