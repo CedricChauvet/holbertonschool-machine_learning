@@ -3,7 +3,6 @@
 Transformer Applications project
 By Ced
 """
-import tensorflow as tf
 import tensorflow_datasets as tfds
 import transformers
 
