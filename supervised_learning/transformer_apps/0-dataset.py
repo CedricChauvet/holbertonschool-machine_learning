@@ -4,13 +4,15 @@ Transformer Applications project
 By Ced
 """
 import tensorflow_datasets as tfds
-import transformers as tf
+import transformers
 
-
-class Dataset:
+class Dataset():
     def __init__(self):
-        self.data_train = tf.data.Dataset.load('ted_hrlr_translate/pt_to_en', split='train', as_supervised=True)
-        self.data_valid = tf.data.Dataset.load('ted_hrlr_translate/pt_to_en', split='validation', as_supervised=True)
+        """
+        Class constructor
+        """
+        self.data_train, _ = tfds.load('ted_hrlr_translate/pt_to_en', split='train', with_info=True, as_supervised=True)
+        self.data_valid, _ = tfds.load('ted_hrlr_translate/pt_to_en', split='validation', with_info=True, as_supervised=True)
         self.tokenizer_pt, self.tokenizer_en = self.tokenize_dataset(self.data_train)
         
     def tokenize_dataset(self, data):
