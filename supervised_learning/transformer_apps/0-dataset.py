@@ -24,8 +24,8 @@ class Dataset():
                                        split='validation',
                                        with_info=True, as_supervised=True)
 
-        self.tokenizer_pt = self.tokenize_dataset(self.data_train)[0]
-        self.tokenizer_en = self.tokenize_dataset(self.data_train)[1]
+        self.tokenizer_pt = self.tokenize_dataset(self.data_train)[1]
+        self.tokenizer_en = self.tokenize_dataset(self.data_train)[0]
 
     def tokenize_dataset(self, data):
         """
@@ -35,6 +35,7 @@ class Dataset():
         tokenizer_pt = transformers.\
             AutoTokenizer.from_pretrained(
                 'neuralmind/bert-base-portuguese-cased')
+
         tokenizer_en = transformers.\
             AutoTokenizer.from_pretrained('bert-base-uncased')
 
