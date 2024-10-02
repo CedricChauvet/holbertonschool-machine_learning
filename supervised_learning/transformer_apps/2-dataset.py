@@ -21,6 +21,7 @@ class Dataset():
         self.tokenizer_pt, self.tokenizer_en = (
             self.tokenize_dataset(self.data_train)
         )
+
         #  map est une fonction tres utile dans TensorFlow qui permet
         #  d'appliquer une transformation à chaque élément d'un dataset
         # a la maniere de map python
@@ -31,7 +32,6 @@ class Dataset():
         """
         Instance method
         """
-
         tokenizer_pt = transformers.AutoTokenizer.from_pretrained(
             'neuralmind/bert-base-portuguese-cased')
         tokenizer_en = transformers.AutoTokenizer.from_pretrained(
@@ -82,11 +82,21 @@ class Dataset():
         return pt_tokens, en_tokens
 
     def tf_encode(self, pt, en):
+        """
+        associé avec la fonction map de TensorFlow
+        permet de tokeniser le data_train et data_valid
+        """
+        
         encoder = tf.py_function(func=self.encode, inp=[pt, en],
                                  Tout=[tf.int64, tf.int64])
+
+        # attention, tf.py_function ne renvoie pas un tensor mais un tuple
+        # print("encoder type", type(encoder))
+
 
         # [None] indique "un vecteur 1D de longueur variable"
         pt_tensor = tf.ensure_shape(encoder[0], [None])
         en_tensor = tf.ensure_shape(encoder[1], [None])
-
+        # ebsure_shape reconstruit le tensor avec la shape donnée
+        print("pt_tensor type", type(pt_tensor))
         return pt_tensor, en_tensor
