@@ -35,29 +35,38 @@ class Dataset():
         self.data_train = self.data_train.map(self.tf_encode)
         self.data_valid = self.data_valid.map(self.tf_encode)
 
-
         def mask_maxlen(pt, en):
             """
             filter out examples that have more than max_len tokens
+            idk why its working
             """
             return tf.logical_and(
                 tf.size(pt) <= self.max_len,
                 tf.size(en) <= self.max_len
             )
-        
+
         self.data_train = self.data_train.filter(mask_maxlen)
+
+        # Caches the elements in this dataset.
+        # The first time the dataset is iterated over, its elements
+        # will be cached either in the specified file or in memory.
+        # Subsequent iterations will use the cached data.
+
         self.data_train = self.data_train.cache()
         self.data_train = self.data_train.shuffle(buffer_size=20000)
+
+        # padded batch est une variante de batch qui permet de
+        # de definir une taille fixe pour les sequences
         self.data_train = self.data_train.padded_batch(self.bacth_size)
         # AUTOTUNE ajuste automatiquement la taille du buffer
-        # prefetch permet de précharger les données pour accélérer le traitement
-        self.data_train = self.data_train.prefetch(tf.data.experimental.AUTOTUNE)
-        
+        # prefetch: précharge les données pour accélérer le traitement
+        self.data_train = self.data_train.prefetch(
+            tf.data.experimental.AUTOTUNE)
 
         # moins d'operations pour le data_valid
         self.data_valid = self.data_valid.filter(mask_maxlen)
         self.data_valid = self.data_valid.padded_batch(self.bacth_size)
-    
+
     def tokenize_dataset(self, data):
         """
         Instance method
@@ -126,6 +135,6 @@ class Dataset():
         # [None] indique "un vecteur 1D de longueur variable"
         pt_tensor = tf.ensure_shape(encoder[0], [None])
         en_tensor = tf.ensure_shape(encoder[1], [None])
-        # ebsure_shape reconstruit le tensor avec la shape donnée
-        print("pt_tensor type", type(pt_tensor))
+        # ensure_shape reconstruit le tensor avec la shape donnée
+        # print("pt_tensor type", type(pt_tensor))
         return pt_tensor, en_tensor
