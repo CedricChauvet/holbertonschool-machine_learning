@@ -9,6 +9,10 @@ import tensorflow as tf
 
 
 class Dataset():
+    """
+    Class Dataset that loads and preps a dataset for machine translation
+    then tokenizes the data for the transformer model
+    """
     def __init__(self):
         """
         Class constructor
@@ -86,13 +90,12 @@ class Dataset():
         associé avec la fonction map de TensorFlow
         permet de tokeniser le data_train et data_valid
         """
-        
+
         encoder = tf.py_function(func=self.encode, inp=[pt, en],
                                  Tout=[tf.int64, tf.int64])
 
         # attention, tf.py_function ne renvoie pas un tensor mais un tuple
         # print("encoder type", type(encoder))
-
 
         # [None] indique "un vecteur 1D de longueur variable"
         pt_tensor = tf.ensure_shape(encoder[0], [None])
