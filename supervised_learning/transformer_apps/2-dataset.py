@@ -21,8 +21,9 @@ class Dataset():
         self.tokenizer_pt, self.tokenizer_en = (
             self.tokenize_dataset(self.data_train)
         )
-        #  map est une fonction très importante dans TensorFlow qui permet
+        #  map est une fonction tres utile dans TensorFlow qui permet
         #  d'appliquer une transformation à chaque élément d'un dataset
+        # a la maniere de map python
         self.data_train = self.data_train.map(self.tf_encode)
         self.data_valid = self.data_valid.map(self.tf_encode)
 
