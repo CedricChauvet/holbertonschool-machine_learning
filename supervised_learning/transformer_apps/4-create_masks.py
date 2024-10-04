@@ -42,10 +42,10 @@ def create_masks(inputs, target):
                   -   tf.linalg.band_part(tf.ones((batch_size, 1, seq_len_in, seq_len_in)), 0, 0))
     # mask_lower_bool = tf.cast(mask_lower, tf.bool)
 
-    print("shape(mask_lower)", mask_lower.shape)
-    print("shape(encoder_mask)", encoder_mask.shape)
+    # print("shape(mask_lower)", mask_lower.shape)
+    # print("shape(encoder_mask)", encoder_mask.shape)
     combined_mask = tf.maximum(encoder_mask, mask_lower)
-    print("shape(combined_mask)", combined_mask.shape)
+    # print("shape(combined_mask)", combined_mask.shape)
     # mask_lower = mask_lower[batch_size, None, :, :]
     
     # combined_mask = None
