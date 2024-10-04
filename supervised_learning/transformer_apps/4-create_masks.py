@@ -18,11 +18,38 @@ def create_masks(inputs, target):
     # in each innermost matrix to zero.
     
     # encoder mask
-    tf_ones = tf.zeros((batch_size, 1, 1,seq_len_in))
-    encoder_mask = tf.linalg.band_part(tf_ones, 0, -1)
+    
+    # tf.math.equal(inputs, 0) :
+    # Cette partie compare chaque élément du tenseur inputs
+    # à zéro1. Elle renvoie un tenseur booléen de même forme
+    # que inputs, où chaque élément est True si la valeur
+    # correspondante dans inputs est égale à zéro, et False sinon.
 
-    combined_mask = None
+
+    # tf.cast(..., tf.float32) :
+    # Cette fonction convertit le tenseur booléen résultant en un
+    # tenseur de nombres flottants1. Les valeurs True deviennent
+    # 1.0 et les valeurs False deviennent 0.0.
+    # Créer le masque
+    
+    encoder_mask = tf.cast(tf.math.equal(inputs, 0), tf.float32)
+    encoder_mask = encoder_mask[:, None, None, :]
+    # encoder_mask = tf.expand_dims(tf.expand_dims(encoder_mask, 1), 1)
+    # encoder_mask_bool = tf.cast(encoder_mask, tf.bool)
+
+
+    mask_lower = (tf.linalg.band_part(tf.ones((batch_size, 1 ,seq_len_in, seq_len_in)), 0, -1)
+                  -   tf.linalg.band_part(tf.ones((batch_size, 1, seq_len_in, seq_len_in)), 0, 0))
+    # mask_lower_bool = tf.cast(mask_lower, tf.bool)
+
+    print("shape(mask_lower)", mask_lower.shape)
+    print("shape(encoder_mask)", encoder_mask.shape)
+    combined_mask = tf.maximum(encoder_mask, mask_lower)
+    print("shape(combined_mask)", combined_mask.shape)
+    # mask_lower = mask_lower[batch_size, None, :, :]
+    
+    # combined_mask = None
     decoder_mask = None 
 
     
-    return encoder_mask, combined_mask, decoder_mask
+    return encoder_mask, combined_mask, encoder_mask
