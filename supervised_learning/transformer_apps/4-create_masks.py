@@ -34,15 +34,18 @@ def create_masks(inputs, target):
     # in each innermost matrix to zero.
 
     mask_lower = (tf.linalg.band_part(tf.ones((batch_size, 1,
-                                               seq_len_in, seq_len_in)), 0, -1)
+                                               seq_len_out, seq_len_out)), 0, -1)
                   - tf.linalg.band_part(tf.ones((batch_size, 1,
-                                                 seq_len_in, seq_len_in)),
-                                        0, 0))
+                                                 seq_len_out, seq_len_out)),
+                                            0, 0))
+    encoder_target = tf.cast(tf.math.equal(target, 0), tf.float32)
+    encoder_target = encoder_target[:, None, None, :]
+
     # mask_lower_bool = tf.cast(mask_lower, tf.bool)
 
     # print("shape(mask_lower)", mask_lower.shape)
     # print("shape(encoder_mask)", encoder_mask.shape)
-    combined_mask = tf.maximum(encoder_mask, mask_lower)
+    combined_mask = tf.maximum(encoder_target, mask_lower)
     # print("shape(combined_mask)", combined_mask.shape)
     # mask_lower = mask_lower[batch_size, None, :, :]
 
