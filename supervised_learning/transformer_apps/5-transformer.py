@@ -308,6 +308,19 @@ class Transformer(tf.keras.Model):
         build the transformer model as described in the paper
         on calling, it should return the model of the transformer
         """
+
+        # essais pour claude
+        # Déstructurer les inputs si c'est un dictionnaire
+        if isinstance(inputs, dict):
+            inp = inputs['inputs']
+            target = inputs['target']
+            encoder_mask = inputs['encoder_mask']
+            look_ahead_mask = inputs['look_ahead_mask']
+            decoder_mask = inputs['decoder_mask']
+        else:
+            raise ValueError("Inputs should be a dictionary with keys: 'inputs', 'target', 'encoder_mask', 'look_ahead_mask', 'decoder_mask'")
+ 
+
         encoder_output = self.encoder(inputs, training, encoder_mask)
         decoder_output = self.decoder(target, encoder_output,
                                       training, look_ahead_mask,
