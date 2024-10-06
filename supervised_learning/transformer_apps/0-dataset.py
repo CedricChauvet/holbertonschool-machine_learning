@@ -58,4 +58,5 @@ class Dataset():
         """
         Instance method
         """
+        print("encode", pt, en)
         return None
