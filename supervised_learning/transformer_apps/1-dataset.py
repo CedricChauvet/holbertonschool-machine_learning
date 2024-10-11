@@ -62,7 +62,11 @@ class Dataset():
         nouveau_sep_id = 8193
 
         # Exemple de tokenization manuelle avec vos propres IDs
-        pt_tokens = [nouveau_cls_id] + self.tokenizer_pt.encode(pt.numpy().decode('utf-8'), add_special_tokens=False) + [nouveau_sep_id]
-        en_tokens = [nouveau_cls_id] + self.tokenizer_en.encode(en.numpy().decode('utf-8'), add_special_tokens=False) + [nouveau_sep_id]
-        #print("encode en", self.tokenizer_en.encode(en))
+        pt_tokens = ([nouveau_cls_id] +
+                     self.tokenizer_pt.encode(pt.numpy().
+                     decode('utf-8'), add_special_tokens=False)
+                     + [nouveau_sep_id])
+        en_tokens = ([nouveau_cls_id] + self.tokenizer_en.encode(en.numpy().
+                     decode('utf-8'), add_special_tokens=False)
+                     + [nouveau_sep_id])
         return pt_tokens, en_tokens
