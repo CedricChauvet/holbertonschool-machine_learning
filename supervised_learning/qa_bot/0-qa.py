@@ -67,11 +67,9 @@ def question_answer(question, reference):
     print("Type:", type(result[1]))
     print("Shape:", result[1].shape)
 
-    
-    start_scores = result[0].numpy()
-    end_scores = result[1].numpy()
-        # Trouver les meilleurs indices de début et de fin
-    start_index = int(np.argmax(start_scores))
-    end_index = int(np.argmax(end_scores))
-    print("strat_index:", start_index, "end_index:", end_index)
-    return None
+    # Find the tokens with the highest start and end scores
+    start_index = int(np.argmax(result[0][0][1:]))
+    end_index = int(np.argmax(result[1][0][1:]))
+    answer_tokens = input_ids[0][start_index+1 : end_index+2]
+    answer = tokenizer.decode(answer_tokens)
+    return answer
