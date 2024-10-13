@@ -26,9 +26,9 @@ def semantic_search(corpus, question):
                 filenames.append(filename)
 
     # Encoder la question et les documents
-    question_embedding = model.encode([question])
+  
     doc_embeddings = model.encode(documents)
-
+    question_embedding = model.encode([question])
     # Calculer les similarités
     similarities = cosine_similarity(question_embedding, doc_embeddings)[0]
 
