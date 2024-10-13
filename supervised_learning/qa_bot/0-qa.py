@@ -20,7 +20,7 @@ def question_answer(question, reference):
     # max length of the input
     max_len = 512
     # Load the tokenizer from BertTokenizer
-    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+    tokenizer = BertTokenizer.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad')
     # Load the model from tensorflow hub
     model = hub.load("https://tfhub.dev/see--/bert-uncased-tf2-qa/1")
 
