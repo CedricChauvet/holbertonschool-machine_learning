@@ -23,5 +23,3 @@ def epsilon_greedy(Q, state, epsilon):
         """
         action = np.random.randint(0, len(Q))
     return action
-
-
