@@ -5,6 +5,7 @@ using unbuntu 20.04
 by Ced
 """
 
+# this script quit when saying bye or exit
 bye = False
 while not bye:
     question = input("Q: ")
