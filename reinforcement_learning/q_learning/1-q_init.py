@@ -9,6 +9,7 @@ import numpy as np
 def q_init(env):
     """
     Initializes the Q-table with np.zeros
+    par exemple:
     4 actions in the Q-table up-down-left-right
     16 states in the Q-table lors de table 4*4
     """
