@@ -6,7 +6,7 @@ by Ced
 import gymnasium as gym
 
 
-def load_frozen_lake(desc=None, map_name=None, is_slippery=False):
+def load_frozen_lake(desc=None, map_name=None, is_slippery=False, render_mode="ansi"):
     """
     this function loads the FrozenLakeEnv environment from OpenAI’s gym
     """
