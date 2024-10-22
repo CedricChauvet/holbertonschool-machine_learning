@@ -29,6 +29,7 @@ def play(env, Q, max_steps=100):
             if reward == 0:
                 # print("fall")
                 break
-
+    graph = env.render()
+    render.append(graph)        
     env.close()
     return reward, render
