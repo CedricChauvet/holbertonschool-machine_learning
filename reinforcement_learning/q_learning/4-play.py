@@ -20,9 +20,11 @@ def play(env, Q, max_steps=100):
         state = new_state
         if done:
             if reward == 1:
-                print(reward)
+                print("win")
                 break
             if reward == 0:
-                print(fall)
+                print("fall")
                 break
-    return reward
+        graph = env.render()
+    env.close()
+    return reward, graph
