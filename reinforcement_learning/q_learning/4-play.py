@@ -12,19 +12,23 @@ def play(env, Q, max_steps=100):
     """
     state = env.reset()
     state = state[0]
+    render = []
 
     for step in range(max_steps):
+        graph = env.render()
+        render.append(graph)
+        # print(graph)
         action = np.argmax(Q[state])
-        print (action)        
+        #print (action)        
         new_state, reward, done, _, _ = env.step(action)
         state = new_state
         if done:
             if reward == 1:
-                print("win")
+                # print("win")
                 break
             if reward == 0:
-                print("fall")
+                # print("fall")
                 break
-        graph = env.render()
+
     env.close()
-    return reward, graph
+    return reward, render
