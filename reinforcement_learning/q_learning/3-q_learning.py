@@ -19,9 +19,6 @@ def train(env, Q, episodes=5000, max_steps=100, alpha=0.1,
 
     for episode in range(episodes):
 
-        # Did i chose the right epsilon decay formula?
-        epsilon = (min_epsilon + (epsilon - min_epsilon)
-                   * np.exp(-epsilon_decay*episode))
         # Reset the environment
         state = env.reset()
         state = state[0]
@@ -48,9 +45,14 @@ def train(env, Q, episodes=5000, max_steps=100, alpha=0.1,
 
             # Our state is the new state
             state = new_state
+
             # then break if done
             if done:
                 break
 
+        # Did i chose the right epsilon decay formula?
+        epsilon = (min_epsilon + (epsilon - min_epsilon)
+                   * np.exp(-epsilon_decay*episode))
         total_reward.append(reward)
+
     return Q, total_reward
