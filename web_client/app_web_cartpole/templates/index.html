@@ -1,0 +1,43 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CartPole DQN Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            text-align: center;
+        }
+        .simulation {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CartPole DQN en action</h1>
+        <div class="simulation">
+            <img src="{{ url_for('video_feed') }}" width="600" height="400">
+        </div>
+        <div class="info">
+            <p>Le modèle tente de maintenir le pendule en équilibre</p>
+            <p>Rendu en temps réel depuis Gymnasium</p>
+        </div>
+    </div>
+</body>
+</html>
