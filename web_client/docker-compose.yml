@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  webclient:
+    image: webclient
+    build:
+      context: .
+      dockerfile: ./Dockerfile

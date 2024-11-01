@@ -54,4 +54,5 @@ def video_feed():
                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Changement ici : on écoute sur toutes les interfaces
+    app.run(host='0.0.0.0', port=8080, debug=True)

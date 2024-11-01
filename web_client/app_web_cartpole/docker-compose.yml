@@ -1,0 +1,18 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  cartpole:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./cartpole_dqn_model:/app/cartpole_dqn_model
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
