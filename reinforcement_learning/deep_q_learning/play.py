@@ -15,34 +15,31 @@ class BreakoutProcessor:
         processed = processed.mean(axis=-1)
         return processed.astype(np.float32) / 255.0  # Normalise
 
-    def process_state_batch(self, batch):
-        """Traite un lot d'états (non utilisé ici, mais requis par keras-rl)."""
-        return batch
-
 class BreakoutWrapper(gym.Wrapper):
     """Wrapper pour adapter l'environnement Breakout à notre agent."""
     
     def __init__(self, env):
         super().__init__(env)
-        self.processor = BreakoutProcessor()
 
     def reset(self, **kwargs):
         """Réinitialise l'environnement et prétraite l'observation initiale."""
         observation, info = self.env.reset(**kwargs)
+        processed = np.squeeze(observation) # On supprime les dimensions inutiles
+        processed = processed.mean(axis=-1)
+        processed = processed.astype(np.float32) / 255.0  # Normalise
+        return processed , info
+
         return self.processor.process_observation(observation), info
 
     def step(self, action):
         """Effectue une action dans l'environnement et prétraite la nouvelle observation."""
         observation, reward, terminated, truncated, info = self.env.step(action)
-        processed_observation = self.processor.process_observation(observation)
+        processed = np.squeeze(observation)
+        processed = processed.mean(axis=-1)
+        processed = processed.astype(np.float32) / 255.0  # Normalise
         done = terminated or truncated
-        return processed_observation, reward, done, info
+        return processed, reward, done, info
 
-def create_dqn_agent(model, nb_actions):
-    """Crée et configure l'agent DQN."""
-    memory = SequentialMemory(limit=1000000, window_length=4)
-    policy = GreedyQPolicy()  # Utilise une politique gloutonne pour l'évaluation
-    return DQNAgent(model=model, nb_actions=nb_actions, memory=memory, policy=policy)
 
 def play_breakout(episodes=5, render=True):
     """Joue plusieurs épisodes de Breakout avec le modèle chargé."""
@@ -54,7 +51,10 @@ def play_breakout(episodes=5, render=True):
 
     # Chargement du modèle et création de l'agent
     model = load_model('policy.h5')
-    dqn = create_dqn_agent(model, nb_actions)
+    memory = SequentialMemory(limit=1000000, window_length=4)
+    policy = GreedyQPolicy()  # Utilise une politique gloutonne pour l'évaluation
+
+    dqn = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, policy=policy)
     dqn.compile(optimizer=Adam(lr=1e-3))  # Compilation de l'agent (nécessaire même sans entraînement)
 
     scores = []
