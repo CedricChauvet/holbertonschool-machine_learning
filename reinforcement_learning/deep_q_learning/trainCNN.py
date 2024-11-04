@@ -1,8 +1,11 @@
 # Forcer l'import de Keras depuis TensorFlow
 import numpy as np
 import tensorflow as tf
+import keras.backend as K
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, Dense, Flatten, Input, Lambda, Dropout
 from tensorflow.keras.optimizers.legacy import Adam
 from rl.agents.dqn import DQNAgent
 from rl.policy import EpsGreedyQPolicy
@@ -39,18 +42,27 @@ env = gym.make('ALE/Breakout-v5', render_mode='human',
 nb_actions = env.action_space.n
 env = BreakoutWrapper(env)
 
-# Configuration des dimensions
-input_shape = (4, 210, 160)
-print(f"Input shape: {input_shape}")
-print(f"Nombre d'actions: {nb_actions}")
-# Construction du modèle
 model = Sequential([
-    Flatten(input_shape=input_shape),
-    Dense(512, activation='elu'),
-    Dense(256, activation='elu'),
-    Dense(128, activation='elu'),
-    Dense(nb_actions, activation='softmax')
-])
+        # Couche d'entrée
+        Input(shape=(4, 210, 160)),
+        
+        # Première couche convolutionnelle avec restructuration des données
+        Conv2D(32, (8, 8), strides=(4, 4), activation='elu', data_format='channels_first'),
+        
+        # Autres couches convolutionnelles
+        Conv2D(64, (4, 4), strides=(2, 2), activation='elu'),
+        Conv2D(64, (3, 3), strides=(1, 1), activation='elu'),
+        Flatten(),
+
+        Dense(512, activation='relu'),
+        Dropout(0.2),
+        Dense(nb_actions, activation='linear')
+    ])
+model.compile(optimizer=Adam(learning_rate=0.00025), loss='mse')
+
+# Création du modèle
+
+
 
 # Configuration de la mémoire et de la politique
 memory = SequentialMemory(limit=200000, window_length=4)
