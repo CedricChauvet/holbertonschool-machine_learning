@@ -5,7 +5,7 @@ import keras.backend as K
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, Dense, Flatten, Input, Lambda, Dropout
+from tensorflow.keras.layers import Conv2D, Dense, Flatten, Input, Dropout
 from tensorflow.keras.optimizers.legacy import Adam
 from rl.agents.dqn import DQNAgent
 from rl.policy import EpsGreedyQPolicy
@@ -43,12 +43,13 @@ nb_actions = env.action_space.n
 env = BreakoutWrapper(env)
 
 model = Sequential([
-        # Couche d'entrée
+        # Couche d'entrée 4frames, 210x160
         Input(shape=(4, 210, 160)),
-        
+
         # Première couche convolutionnelle avec restructuration des données
-        Conv2D(32, (8, 8), strides=(4, 4), activation='elu', data_format='channels_first'),
-        
+        Conv2D(32, (8, 8), strides=(4, 4), activation='elu',
+               data_format='channels_first'),
+
         # Autres couches convolutionnelles
         Conv2D(64, (4, 4), strides=(2, 2), activation='elu'),
         Conv2D(64, (3, 3), strides=(1, 1), activation='elu'),
@@ -59,10 +60,6 @@ model = Sequential([
         Dense(nb_actions, activation='linear')
     ])
 model.compile(optimizer=Adam(learning_rate=0.00025), loss='mse')
-
-# Création du modèle
-
-
 
 # Configuration de la mémoire et de la politique
 memory = SequentialMemory(limit=200000, window_length=4)
@@ -82,11 +79,10 @@ dqn = DQNAgent(
 )
 
 optimizer = Adam(lr=1e-3)
-# loss_fn = tf.keras.losses.mean_squared_error
 # Compilation de l'agent
 dqn.compile(
     optimizer=optimizer,
-    metrics=['mae']
+    metrics=['mse']
 )
 
 
@@ -113,7 +109,7 @@ reward_logger = RewardLogger(log_interval=500)
 # Ajoutez-le à la liste des callbacks existants ou créez une nouvelle liste
 callbacks = [reward_logger]  # Ajoutez
 
-dqn.fit(env, nb_steps=5000,callbacks=callbacks, visualize=False, verbose=0,)
+dqn.fit(env, nb_steps=5000, callbacks=callbacks, visualize=False, verbose=0)
 
 env.close()
 print("\nEntraînement terminé")

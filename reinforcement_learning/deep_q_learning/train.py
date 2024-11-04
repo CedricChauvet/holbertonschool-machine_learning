@@ -101,7 +101,7 @@ reward_logger = RewardLogger(log_interval=500)
 # Ajoutez-le à la liste des callbacks existants ou créez une nouvelle liste
 callbacks = [reward_logger]  # Ajoutez
 
-dqn.fit(env, nb_steps=5000,callbacks=callbacks, visualize=False, verbose=0,)
+dqn.fit(env, nb_steps=5000, callbacks=callbacks, visualize=False, verbose=0)
 
 env.close()
 print("\nEntraînement terminé")
