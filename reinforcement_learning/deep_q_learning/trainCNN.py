@@ -1,8 +1,6 @@
 # Forcer l'import de Keras depuis TensorFlow
 import numpy as np
 import tensorflow as tf
-import keras.backend as K
-from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, Dense, Flatten, Input, Dropout
@@ -25,19 +23,17 @@ class BreakoutWrapper(gym.Wrapper):
     def reset(self, **kwargs):
         obs, _ = self.env.reset(**kwargs)
         # Normalisation des observations (0-255 -> 0-1)
-        # return obs
         return np.array(obs, dtype=np.float32) / 255.0
 
     def step(self, action):
         obs, reward, terminated, truncated, info = self.env.step(action)
         done = terminated or truncated
         # Normalisation des observations (0-255 -> 0-1)
-        # return obs, reward, done, info
         return np.array(obs, dtype=np.float32) / 255.0, reward, done, info
 
 
 # Création de l'environnement avec le wrapper
-env = gym.make('ALE/Breakout-v5', render_mode='human',
+env = gym.make('ALE/Breakout-v5',
                obs_type='grayscale', frameskip=4)
 nb_actions = env.action_space.n
 env = BreakoutWrapper(env)
@@ -47,23 +43,23 @@ model = Sequential([
         Input(shape=(4, 210, 160)),
 
         # Première couche convolutionnelle avec restructuration des données
-        Conv2D(32, (8, 8), strides=(4, 4), activation='elu',
+        Conv2D(32, (8, 8), strides=(4, 4), activation='relu',
                data_format='channels_first'),
 
         # Autres couches convolutionnelles
-        Conv2D(64, (4, 4), strides=(2, 2), activation='elu'),
-        Conv2D(64, (3, 3), strides=(1, 1), activation='elu'),
+        Conv2D(64, (4, 4), strides=(2, 2), activation='relu'),
+        Conv2D(64, (3, 3), strides=(1, 1), activation='relu'),
         Flatten(),
 
         Dense(512, activation='relu'),
         Dropout(0.2),
-        Dense(nb_actions, activation='linear')
+        Dense(nb_actions, activation='softmax')
     ])
 model.compile(optimizer=Adam(learning_rate=0.00025), loss='mse')
 
 # Configuration de la mémoire et de la politique
-memory = SequentialMemory(limit=200000, window_length=4)
-policy = EpsGreedyQPolicy(eps=0.2)
+memory = SequentialMemory(limit=500000, window_length=4)
+policy = EpsGreedyQPolicy(eps=0.1)
 
 # Configuration de l'agent DQN
 dqn = DQNAgent(
@@ -109,8 +105,10 @@ reward_logger = RewardLogger(log_interval=500)
 # Ajoutez-le à la liste des callbacks existants ou créez une nouvelle liste
 callbacks = [reward_logger]  # Ajoutez
 
-dqn.fit(env, nb_steps=500, callbacks=callbacks, visualize=False, verbose=0)
+dqn.fit(env, nb_steps=70000, callbacks=callbacks, visualize=False, verbose=0)
 
 env.close()
 print("\nEntraînement terminé")
-dqn.model.save('policy.h5')
+# dqn.model.save('policy2.h5')
+dqn.save_weights('policy.h5')
+
