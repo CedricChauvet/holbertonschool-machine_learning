@@ -58,7 +58,7 @@ model = Sequential([
 model.compile(optimizer=Adam(learning_rate=0.00025), loss='mse')
 
 # Configuration de la mémoire et de la politique
-memory = SequentialMemory(limit=500000, window_length=4)
+memory = SequentialMemory(limit=1000000, window_length=4)
 policy = EpsGreedyQPolicy(eps=0.1)
 
 # Configuration de l'agent DQN
@@ -105,7 +105,7 @@ reward_logger = RewardLogger(log_interval=500)
 # Ajoutez-le à la liste des callbacks existants ou créez une nouvelle liste
 callbacks = [reward_logger]  # Ajoutez
 
-dqn.fit(env, nb_steps=70000, callbacks=callbacks, visualize=False, verbose=0)
+dqn.fit(env, nb_steps=1000000, callbacks=callbacks, visualize=False, verbose=0)
 
 env.close()
 print("\nEntraînement terminé")
