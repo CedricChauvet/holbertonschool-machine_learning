@@ -28,11 +28,22 @@ def monte_carlo(env, V, policy, episodes=5,
 
             if done or truncated:
                 break
-
+        return episode_list
         """
         Mise a jour de la valeur de l'etat pour chaque etat visite
         """
         Gt = 0
+
+        def calculate_returns(episode, gamma):
+            returns = []
+            G = 0
+            for _, _, reward in reversed(episode):
+                G = reward + gamma * G
+                print("reward G", G)
+                returns.insert(0, G)
+            return returns        
+        calculate_returns(episode_list, gamma)
+
 
         for k in range(len(episode_list), 0, -1):
             observation, action, reward = episode_list[k-1]
