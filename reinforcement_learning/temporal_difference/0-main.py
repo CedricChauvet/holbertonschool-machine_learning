@@ -3,7 +3,7 @@
 import gymnasium as gym
 import numpy as np
 import random
-monte_carlo = __import__('0-monte_carlobis').monte_carlo
+monte_carlo = __import__('0-monte_carlo').monte_carlo
 
 
 def set_seed(env, seed=0):
