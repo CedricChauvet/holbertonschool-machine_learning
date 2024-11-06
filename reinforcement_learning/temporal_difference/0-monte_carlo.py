@@ -3,14 +3,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def sample_episode(env, policy, max_steps=100):
+def sample_episode(env, policy, max_steps=10000):
     """
     Jouer un episode entier
     """
     global count_victory
     SAR_list = []
-    observation = 0  # le jouer debute en haut a gauche
+   
     env.reset()
+    observation = 0  # le jouer debute en haut a gauche
     for j in range(max_steps):
         
         action = policy(observation)
@@ -20,6 +21,10 @@ def sample_episode(env, policy, max_steps=100):
         # modification des reward en cas de niveau non terminé
         # if done and reward == 0:
         #     reward = -1
+
+        # i m trully sorry for this, but it's the only way to get the output
+        if env.unwrapped.desc[observation // 8, observation % 8] == b'H':
+            print("fall") 
 
         if (truncated):
             print("truncated")   # see if it's happening
