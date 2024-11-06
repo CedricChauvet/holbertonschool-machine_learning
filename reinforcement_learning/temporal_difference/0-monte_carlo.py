@@ -10,17 +10,16 @@ def sample_episode(env, policy, max_steps=100):
     global count_victory
     SAR_list = []
     observation = 0  # le jouer debute en haut a gauche
+    env.reset()
     for j in range(max_steps):
-
+        
         action = policy(observation)
 
-        # on ajoute l'etat initial, OK?
-        SAR_list.append((observation, action, 0))
         observation, reward, done, truncated, _ = env.step(action)
 
         # modification des reward en cas de niveau non terminé
-        if done and reward == 0:
-            reward = -1
+        # if done and reward == 0:
+        #     reward = -1
 
         if (truncated):
             print("truncated")   # see if it's happening
@@ -31,25 +30,28 @@ def sample_episode(env, policy, max_steps=100):
         if reward == 1:
             count_victory += 1
         # si le niveau est terminé ou tronqué, on s'arrête
-        if done:
+        if done or truncated:
             break
-
+    env.close()
     return SAR_list
 
 
-def calculate_returns(episode, gamma):
+def calculate_returns(list_one_episode, gamma):
     """
     retroaction des scores
     apres avoir joué un episode, on calcule les retours
     """
-    returns = []
+    Gt = []
     G = 0
-    for _, _, reward in reversed(episode):
+
+    for _, _, reward in reversed(list_one_episode):
         G = reward + gamma * G
-        returns.insert(0, G)
-    # print("returns", returns)
-    returns[0] = 0
-    return returns
+        G = round(G,3) # rounded for esthetic reasons
+        Gt.append(G)    
+     
+    if Gt[0] == 1:
+        print("victoire",(Gt[::-1]),"\n\n")
+    return Gt[::-1]
 
 
 def monte_carlo(env, V, policy, episodes=5000,
@@ -64,7 +66,7 @@ def monte_carlo(env, V, policy, episodes=5000,
     print("Frozen lake 8x8", V.reshape((8, 8)))
 
     for i in range(episodes):
-        env.reset()
+      
 
         SAR_list = sample_episode(env, policy, max_steps)
         Gt = calculate_returns(SAR_list, gamma)
@@ -83,6 +85,6 @@ def monte_carlo(env, V, policy, episodes=5000,
         V_mean = np.mean(list(V))
         if i % 100 == 0:
             print(f"Épisode {i}: Valeur moyenne des états = {V_mean:.3f}")
-    # s, a, v = list(zip(*SAR_list, V))
+
     print(count_victory, "Vicories over", episodes, "episodes")
     return V
