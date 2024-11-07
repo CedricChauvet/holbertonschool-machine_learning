@@ -21,8 +21,7 @@ def sample_episode(env, policy, max_steps=100):
         # trully useful for debugging
         # print(env.unwrapped.desc[observation // 8 , observation % 8])
         if env.unwrapped.desc[observation // 8 , observation % 8] == b'H':
-            pass
-            # print ("falling in hole")
+            print ("falling in hole")
         
         # modification des reward en cas de niveau non terminé
         # if done and reward == 0:
