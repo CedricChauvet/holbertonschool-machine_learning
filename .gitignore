@@ -9,3 +9,15 @@ supervised_learning/QA.py
 supervised_learning/qa_bot/essai0.py
 supervised_learning/qa_bot/ZendeskArticles/.DS_Store
 supervised_learning/qa_bot/torch.py
+reinforcement_learning/deep_q_learning/policy.h5
+reinforcement_learning/deep_q_learning/policy2.h5
+reinforcement_learning/deep_q_learning/breakout_1/fingerprint.pb
+reinforcement_learning/deep_q_learning/breakout_1/keras_metadata.pb
+reinforcement_learning/deep_q_learning/breakout_1/saved_model.pb
+reinforcement_learning/deep_q_learning/breakout_1/variables/variables.data-00000-of-00001
+reinforcement_learning/deep_q_learning/breakout_1/variables/variables.index
+reinforcement_learning/deep_q_learning/breakout_model_5000/fingerprint.pb
+reinforcement_learning/deep_q_learning/breakout_model_5000/keras_metadata.pb
+reinforcement_learning/deep_q_learning/breakout_model_5000/variables/variables.data-00000-of-00001
+reinforcement_learning/deep_q_learning/breakout_model_5000/saved_model.pb
+reinforcement_learning/deep_q_learning/breakout_model_5000/variables/variables.index
