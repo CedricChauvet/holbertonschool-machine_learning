@@ -10,17 +10,19 @@ def sample_episode(env, policy, max_steps=100):
     global count_victory
     SAR_list = []
     observation = 0  # le jouer debute en haut a gauche
+    
+    # on ajoute l'etat initial, OK?
+    SAR_list.append((observation, action, 0))
+
     for j in range(max_steps):
 
         action = policy(observation)
 
-        # on ajoute l'etat initial, OK?
-        SAR_list.append((observation, action, 0))
         observation, reward, done, truncated, _ = env.step(action)
 
         # modification des reward en cas de niveau non terminé
-        if done and reward == 0:
-            reward = -1
+        # if done and reward == 0:
+        #     reward = -1
 
         if (truncated):
             print("truncated")   # see if it's happening
