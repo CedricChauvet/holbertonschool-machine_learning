@@ -21,7 +21,8 @@ def sample_episode(env, policy, max_steps=100):
         # trully useful for debugging
         # print(env.unwrapped.desc[observation // 8 , observation % 8])
         if env.unwrapped.desc[observation // 8 , observation % 8] == b'H':
-            print ("falling in hole")
+            pass
+            # print ("falling in hole")
         
         # modification des reward en cas de niveau non terminé
         # if done and reward == 0:
@@ -29,6 +30,7 @@ def sample_episode(env, policy, max_steps=100):
 
         if (truncated):
             print("truncated")   # see if it's happening
+
         # State Action Reward
         SAR = (observation, action, reward)
         SAR_list.append(SAR)
@@ -51,9 +53,10 @@ def calculate_returns(episode, gamma):
     G = 0
     for _, _, reward in reversed(episode):
         G = reward + gamma * G
+        G = round(G, 3)
         returns.insert(0, G)
-    # print("returns", returns)
-    returns[0] = 0
+    if returns[-1] == 1:
+        print("returns", returns)
     return returns
 
 
