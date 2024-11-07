@@ -19,7 +19,8 @@ def sample_episode(env, policy, max_steps=100):
         observation, reward, done, truncated, _ = env.step(action)
         
         # trully useful for debugging
-        if env.unwrapped.desc[observation // 8 , observation % 8] != b'H':
+        # print(env.unwrapped.desc[observation // 8 , observation % 8])
+        if env.unwrapped.desc[observation // 8 , observation % 8] == b'H':
             print ("falling in hole")
         
         # modification des reward en cas de niveau non terminé
