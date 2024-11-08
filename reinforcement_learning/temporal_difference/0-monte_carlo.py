@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""
+This is the Temporal difference Project
+it use the FrozenLake8x8-v1 environment
+beware, do not slide on the hole
+By Ced
+"""
 import numpy as np
 
 
@@ -27,12 +33,12 @@ def sample_episode(env, policy, max_steps=100):
 def monte_carlo(env, V, policy, episodes=5000,
                 max_steps=100, alpha=0.1, gamma=0.99):
     """
-    Utilise  Monte carlo pour jouer a frozen lake
+    Utilise  Monte carlo, pour estimer la fonction de valeur
     """
 
-    # show the initial state of the game
+    
     for episode in range(episodes):
-
+        #reset the environment sample one episode
         SAR_list = sample_episode(env, policy, max_steps)
         SAR_list = np.array(SAR_list, dtype=int)
 
@@ -41,7 +47,7 @@ def monte_carlo(env, V, policy, episodes=5000,
             # return apres la fin de l'episode
             G = reward + gamma * G
 
-            # if this is a novel state
+            # important, si l'etat est nouveau
             if state not in SAR_list[:episode, 0]:
                 # Update the value function V(s)
                 V[state] = V[state] + alpha * (G - V[state])
