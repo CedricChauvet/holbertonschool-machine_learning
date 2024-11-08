@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""
+This is the Temporal difference Project
+it use the FrozenLake8x8-v1 environment
+beware, do not slide on the hole
+By Ced
+"""
 import numpy as np
 
 
@@ -41,7 +47,7 @@ def monte_carlo(env, V, policy, episodes=5000,
             # return apres la fin de l'episode
             G = reward + gamma * G
 
-            # important, si l'etat est nouveau
+            # attention, si l'etat est nouveau ?!
             if state not in SAR_list[:episode, 0]:
                 # Update the value function V(s)
                 V[state] = V[state] + alpha * (G - V[state])
