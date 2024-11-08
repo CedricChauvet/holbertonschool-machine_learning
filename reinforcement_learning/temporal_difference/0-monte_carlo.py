@@ -1,10 +1,10 @@
+#!/usr/bin/env python3
 """
 This is the Temporal difference Project
 it use the FrozenLake8x8-v1 environment
 beware, do not slide on the hole
 By Ced
 """
-#!/usr/bin/env python3
 import numpy as np
 
 
