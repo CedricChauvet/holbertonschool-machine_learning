@@ -9,7 +9,7 @@ def sample_episode(env, policy, max_steps=100):
 
     SAR_list = []
     observation = 0  # le jouer debute en haut a gauche
-
+    env.reset()
     for j in range(max_steps):
 
         action = policy(observation)
@@ -45,5 +45,5 @@ def monte_carlo(env, V, policy, episodes=5000,
             if state not in SAR_list[:episode, 0]:
                 # Update the value function V(s)
                 V[state] = V[state] + alpha * (G - V[state])
-
+    env.close()
     return V
