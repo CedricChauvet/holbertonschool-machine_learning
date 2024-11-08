@@ -1,62 +1,27 @@
 #!/usr/bin/env python3
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 def sample_episode(env, policy, max_steps=100):
     """
     Jouer un episode entier
     """
-    global count_victory
+
     SAR_list = []
     observation = 0  # le jouer debute en haut a gauche
-    env.reset()
-    
+
     for j in range(max_steps):
 
         action = policy(observation)
 
-        observation, reward, done, truncated, _ = env.step(action)
-        
-        # trully useful for debugging
-        # print(env.unwrapped.desc[observation // 8 , observation % 8])
-        if env.unwrapped.desc[observation // 8 , observation % 8] == b'H':
-            print ("falling in hole")
-        
-        # modification des reward en cas de niveau non terminé
-        # if done and reward == 0:
-        #     reward = -1
+        new_obs, reward, done, truncated, _ = env.step(action)
+        SAR_list.append((observation, reward))
 
-        if (truncated):
-            print("truncated")   # see if it's happening
-
-        # State Action Reward
-        SAR = (observation, action, reward)
-        SAR_list.append(SAR)
-
-        if reward == 1:
-            count_victory += 1
-        # si le niveau est terminé ou tronqué, on s'arrête
-        if done:
+        if done or truncated:
             break
 
+        observation = new_obs
     return SAR_list
-
-
-def calculate_returns(episode, gamma):
-    """
-    retroaction des scores
-    apres avoir joué un episode, on calcule les retours
-    """
-    returns = []
-    G = 0
-    for _, _, reward in reversed(episode):
-        G = reward + gamma * G
-        G = round(G, 3)
-        returns.insert(0, G)
-    if returns[-1] == 1:
-        print("returns", returns)
-    return returns
 
 
 def monte_carlo(env, V, policy, episodes=5000,
@@ -64,32 +29,21 @@ def monte_carlo(env, V, policy, episodes=5000,
     """
     Utilise  Monte carlo pour jouer a frozen lake
     """
-    global count_victory
-    count_victory= 0
-    
-    # show the initial state of the game
-    print("Frozen lake 8x8", V.reshape((8, 8)))
 
-    for i in range(episodes):
-        env.reset()
+    # show the initial state of the game
+    for episode in range(episodes):
 
         SAR_list = sample_episode(env, policy, max_steps)
-        Gt = calculate_returns(SAR_list, gamma)
+        SAR_list = np.array(SAR_list, dtype=int)
 
-        len_list = len(SAR_list)
-        len_Gt = len(Gt)
+        G = 0
+        for state, reward in reversed(SAR_list):
+            # return apres la fin de l'episode
+            G = reward + gamma * G
 
-        if len_list != len_Gt:
-            raise ValueError("SAR_list and Gt must have the same length")
+            # if this is a novel state
+            if state not in SAR_list[:episode, 0]:
+                # Update the value function V(s)
+                V[state] = V[state] + alpha * (G - V[state])
 
-        for k in range(len_Gt):
-            s = SAR_list[k][0]
-            # print("k", k, "s", s, "Gt", Gt[k])
-            V[s] = V[s] + alpha * (Gt[k] - V[s])
-
-        V_mean = np.mean(list(V))
-        if i % 100 == 0:
-            print(f"Épisode {i}: Valeur moyenne des états = {V_mean:.3f}")
-    # s, a, v = list(zip(*SAR_list, V))
-    print(count_victory, "Vicories over", episodes, "episodes")
     return V
