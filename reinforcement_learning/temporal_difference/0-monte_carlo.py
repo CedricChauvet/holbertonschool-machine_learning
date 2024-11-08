@@ -36,9 +36,8 @@ def monte_carlo(env, V, policy, episodes=5000,
     Utilise  Monte carlo, pour estimer la fonction de valeur
     """
 
-    
     for episode in range(episodes):
-        #reset the environment sample one episode
+        # reset the environment and sample one episode
         SAR_list = sample_episode(env, policy, max_steps)
         SAR_list = np.array(SAR_list, dtype=int)
 
