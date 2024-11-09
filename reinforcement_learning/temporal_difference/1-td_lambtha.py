@@ -14,11 +14,12 @@ def td_lambtha(env, V, policy, lambtha, episodes=5000,
     """
     for episode in range(episodes):
         # reset the environment and sample one episode
-        state = 0  # le jouer debute en haut a gauche
-        env.reset()
+        # le jouer debute en haut a gauche
+        state = env.reset()[0]
         z = np.zeros(env.observation_space.n)
         done = False
         truncated = False
+
         while not (done or truncated):
             action = policy(state)
             next_state, reward, done, truncated, _ = env.step(action)
