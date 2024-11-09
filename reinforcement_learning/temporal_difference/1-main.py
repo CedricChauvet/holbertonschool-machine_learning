@@ -4,7 +4,7 @@ import gymnasium as gym
 import numpy as np
 import random
 
-td_lambtha = __import__('1-td_lambtha').td_lambtha
+td_lambtha = __import__('1-td_lambthabis').td_lambtha
 
 def set_seed(env, seed=0):
     env.reset(seed=seed)
