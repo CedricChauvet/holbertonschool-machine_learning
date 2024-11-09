@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
-import numpy as np
+"""
+Exercise with the TD(λ) algorithm and the FrozenLakeEnv environment
+By Ced
+"""
 
+import numpy as np
 
 
 def td_lambtha(env, V, policy, lambtha, episodes=5000,
@@ -11,20 +15,15 @@ def td_lambtha(env, V, policy, lambtha, episodes=5000,
         env.reset()
         z = np.zeros(env.observation_space.n)
         done = False
-        while  not done:
+        truncated = False
+        while not (done or truncated):
             action = policy(state)
             next_state, reward, done, truncated, _ = env.step(action)
 
-            # Calcul de la valeur courante
-            current_value = V[state]
-            
-            # Calcul de la valeur suivante (0 si épisode terminé)
-            next_value =  V[next_state]
-            
             # Calcul de l'erreur TD
-            td_error = reward + gamma * next_value - current_value
-            
-                   # Update eligibility trace for the current state
+            td_error = reward + gamma * V[next_state] - V[state]
+
+            # Update eligibility trace for the current state
             z[state] += 1
 
             # Update each state's value and eligibility trace
@@ -32,11 +31,7 @@ def td_lambtha(env, V, policy, lambtha, episodes=5000,
 
             # Apply lambtha decay to eligibility traces
             z *= gamma * lambtha
-            
-            state = next_state
-            if done:
-                break
-         
-    return V
 
-                
+            state = next_state
+
+    return V
