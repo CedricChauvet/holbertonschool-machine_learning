@@ -9,6 +9,9 @@ import numpy as np
 
 def td_lambtha(env, V, policy, lambtha, episodes=5000,
                max_steps=100, alpha=0.1, gamma=0.99):
+    """
+    run 5000 episodes of TD(λ) algorithm
+    """
     for episode in range(episodes):
         # reset the environment and sample one episode
         state = 0  # le jouer debute en haut a gauche
