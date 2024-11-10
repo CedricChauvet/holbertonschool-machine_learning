@@ -42,10 +42,12 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
 
             # Update eligibility trace for the current state
             # and Q values
-            E[state, action] += 1  
-            Q[state, action] += alpha * delta * E[state, action]      
-            E *= gamma * lambtha
+             
+         
             
+            E *= gamma * lambtha
+            E[state, action] += 1  # Update eligibility trace for the current state
+            Q += alpha * delta * E  # update Qvalue    
             
             state, action = next_state, next_action
 
