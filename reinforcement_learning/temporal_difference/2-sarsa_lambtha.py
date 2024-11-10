@@ -21,12 +21,13 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         player start upperleft
         Q is given
         """
-        state = env.reset()[0]
+
         E.fill(0)  # Reset eligibility traces
         done = False
         truncated = False
 
-        # first action selection, epsilon greedy
+        # initialize state action
+        state = env.reset()[0]
         action = get_action(state, Q, epsilon)
 
         while not done:
@@ -42,8 +43,15 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             # Update eligibility trace for the current state
             # and Q values
             E[state, action] += 1  # Update eligibility
+            for s in range(n_states):
+                for a in range(n_actions):
+                    Q[s, a] += alpha * delta * E[s, a]
+                    E[s, a] *= gamma * lambtha
+            """
+            or?
             E *= gamma * lambtha
             Q += alpha * delta * E  # update Qvalue
+            """
 
             state, action = next_state, next_action
 
