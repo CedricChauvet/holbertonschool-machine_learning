@@ -40,12 +40,12 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             delta = target - actual
             
             E *= gamma * lambtha
-            E[state, action] += 1
+           
             
 
             Q += alpha * delta * E
             
-            
+            E[state, action] += 1
             state, action = next_state, next_action
 
             
