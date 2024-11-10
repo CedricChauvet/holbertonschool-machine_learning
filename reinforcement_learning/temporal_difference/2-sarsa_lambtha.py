@@ -15,9 +15,8 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         # reset the environment and sample one episode
         # le jouer debute en haut a gauche
         state = env.reset()[0]
-        
+        # action = get_action(state, Q, epsilon) 
         n_states, n_actions = Q.shape
-        action =  get_action(state, Q, epsilon)
 
         # Initialize Q-table and eligibility traces
         E = np.zeros((n_states, n_actions))
@@ -25,28 +24,23 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         done = False
         truncated = False
 
-        while not (done or truncated):
+        # state = env.reset()
+        action = get_action(state, Q, epsilon)
+        E.fill(0)  # Reset eligibility traces
+    
+        while not done:
             next_state, reward, done, truncated, _ = env.step(action)
-            
-            # Choose next action according to epsilon-greedy policy
-
             next_action = get_action(next_state, Q, epsilon)
-
-            # Calculate TD error
-            td_error = (reward + gamma * Q[next_state, next_action] - Q[state, action])
             
-            # Update eligibility trace for current state-action pair
+            # SARSA update
+            delta = reward + gamma * Q[next_state, next_action] - Q[state, action]
             E[state, action] += 1
             
-            # Update Q-values for all state-action pairs
-            Q += alpha * td_error * E
-            
-            # Decay eligibility traces
+            Q += alpha * delta * E
             E *= gamma * lambtha
+            
+            state, action = next_state, next_action
 
-            # Move to next state-action pair
-            state = next_state
-            action = next_action
             
         # Decay epsilon après chaque épisode
         epsilon = max(min_epsilon, epsilon * (1 - epsilon_decay))
