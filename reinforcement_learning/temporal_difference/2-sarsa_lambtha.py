@@ -49,20 +49,20 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
                 state = next_state
                 action = next_action
 
-            else:
-                # Handle terminal state
+            # else:
+            #     # Handle terminal state
                
-                # Calculate TD error
-                td_error = (reward + gamma * Q[next_state, next_action] - Q[state, action])
+            #     # Calculate TD error
+            #     td_error = (reward + gamma * Q[next_state, next_action] - Q[state, action])
                 
-                # Update eligibility trace for current state-action pair
-                E[state, action] += 1
+            #     # Update eligibility trace for current state-action pair
+            #     E[state, action] += 1
                 
-                # Update Q-values for all state-action pairs
-                Q += alpha * td_error * E
+            #     # Update Q-values for all state-action pairs
+            #     Q += alpha * td_error * E
                 
-                # Decay eligibility traces
-                E *= gamma * lambtha
+            #     # Decay eligibility traces
+            #     E *= gamma * lambtha
             
         # Decay epsilon après chaque épisode
         epsilon = max(min_epsilon, epsilon * (1 - epsilon_decay))
