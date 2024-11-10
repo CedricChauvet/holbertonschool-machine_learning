@@ -47,8 +47,8 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             action = next_action
             
         # Decay epsilon après chaque épisode
+        # current_epsilon = max(min_epsilon, current_epsilon * (1 - epsilon_decay))
         current_epsilon = max(min_epsilon, current_epsilon * (1 - epsilon_decay))
-
     return Q
 
 def get_action(state, Q, epsilon):
