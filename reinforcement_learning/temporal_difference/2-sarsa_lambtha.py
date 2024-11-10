@@ -11,41 +11,43 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     """
     run 5000 episodes of TD(λ) algorithm
     """
+    # Initialize eligibility traces, Q is given
+    n_states, n_actions = Q.shape
+    E = np.zeros((n_states, n_actions))
+
     for episode in range(episodes):
-        # reset the environment and sample one episode
-        # le jouer debute en haut a gauche
+        """
+        reset the environment and sample one episode
+        player start upperleft
+        Q is given
+        """        
         state = env.reset()[0]
-        # action = get_action(state, Q, epsilon) 
-        n_states, n_actions = Q.shape
-
-        # Initialize Q-table and eligibility traces
-        E = np.zeros((n_states, n_actions))
-
+        E.fill(0)  # Reset eligibility traces
         done = False
         truncated = False
 
-        # state = env.reset()
+        # first action selection, epsilon greedy
         action = get_action(state, Q, epsilon)
-        E.fill(0)  # Reset eligibility traces
     
         while not done:
+            # compute next state and next action
             next_state, reward, done, truncated, _ = env.step(action)
             next_action = get_action(next_state, Q, epsilon)
             
             # SARSA update
-            delta = reward + gamma * Q[next_state, next_action] - Q[state, action]
-
+            target = reward + gamma * Q[next_state, next_action]    
+            actual = Q[state, action]
+            delta = target - actual
+            
             E[state, action] += 1
             
-            for s in range(n_states):
-                for a in range(n_actions):
-                    Q[s, a] += alpha * delta * E[s, a]
-                    E[s, a] *= gamma * lambtha
-                    
+            Q += alpha * delta * E
+            E *= gamma * lambtha
+            
             state, action = next_state, next_action
 
             
-        # Decay epsilon après chaque épisode
+        # Decay epsilon after each episode
         epsilon = max(min_epsilon, epsilon * (1 - epsilon_decay))
 
     return Q
