@@ -34,11 +34,14 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             
             # SARSA update
             delta = reward + gamma * Q[next_state, next_action] - Q[state, action]
+
             E[state, action] += 1
             
-            Q += alpha * delta * E
-            E *= gamma * lambtha
-            
+            for s in range(n_states):
+                for a in range(n_actions):
+                    Q[s, a] += alpha * delta * E[s, a]
+                    E[s, a] *= gamma * lambtha
+                    
             state, action = next_state, next_action
 
             
