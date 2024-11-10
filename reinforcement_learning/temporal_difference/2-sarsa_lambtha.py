@@ -31,7 +31,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         action = get_action(state, Q, epsilon)
 
         while not done:
-            # compute next state and next action
+            # observing next state and next action
             next_state, reward, done, truncated, _ = env.step(action)
             next_action = get_action(next_state, Q, epsilon)
 
