@@ -63,6 +63,9 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
                 
                 # Decay eligibility traces
                 E *= gamma * lambtha
+            
+        # Decay epsilon après chaque épisode
+        epsilon = max(min_epsilon, epsilon * (1 - epsilon_decay))
     
 
     return Q
