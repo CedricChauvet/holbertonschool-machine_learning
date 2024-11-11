@@ -46,7 +46,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             Q += alpha * delta * E  # update Qvalue
             E *= gamma * lambtha
 
-            # or??
+            # or?? but slower!
             # for s in range(n_states):
             #     for a in range(n_actions):
             #         Q[s, a] += alpha * delta * E[s, a]
@@ -56,7 +56,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
 
         # Decay epsilon after each episode
         epsilon = max(min_epsilon, epsilon * (1 - epsilon_decay))
-
+    
     return Q
 
 
