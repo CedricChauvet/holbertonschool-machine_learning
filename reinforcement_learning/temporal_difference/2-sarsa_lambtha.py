@@ -30,13 +30,23 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         state = env.reset()[0]
         action = get_action(state, Q, epsilon)
 
-        while not done:
+        while not (done or truncated):
             # observing next state and next action
+            
             next_state, reward, done, truncated, _ = env.step(action)
-            next_action = get_action(next_state, Q, epsilon)
+            
+            if done or truncated:
+                next_action = None
+            else:
+                next_action = get_action(next_state, Q, epsilon)
 
             # SARSA update
-            target = reward + gamma * Q[next_state, next_action]
+            if next_action is not None:
+                target = reward + gamma * Q[next_state, next_action]
+            else:
+                # terminating reward = O if fall, 1 if win
+                target = reward
+
             actual = Q[state, action]
             delta = target - actual
 
