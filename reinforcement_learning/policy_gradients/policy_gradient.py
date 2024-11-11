@@ -8,7 +8,10 @@ import numpy as np
 
 def policy(matrix, weight):
     """
-    Function that computes to policy with a weight of a matrix
+    Function that computes policy with a weight of a matrix
+    weight: matrix of random weight, my policy
+    matrix: state or observation of the environment
+    returns softamx policy
     """
     z = np.dot(matrix, weight)
     exp = np.exp(z)
