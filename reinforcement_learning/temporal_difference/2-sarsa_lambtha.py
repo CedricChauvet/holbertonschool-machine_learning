@@ -27,7 +27,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         truncated = False
 
         # initialize state action
-        state = env.reset()[0]
+        state = env.reset()[0] # this gives  0
         action = get_action(state, Q, epsilon)
 
         while not (done or truncated):
@@ -65,7 +65,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             state, action = next_state, next_action
 
         # Decay epsilon after each episode
-        epsilon = max(min_epsilon, epsilon * (1 - epsilon_decay))
+        epsilon = max(min_epsilon, epsilon * np.exp(-epsilon_decay * episode))
     
     return Q
 
@@ -76,5 +76,5 @@ def get_action(state, Q, epsilon):
     """
     n_actions = Q.shape[1]
     if np.random.random() < epsilon:
-        return np.random.randint(n_actions)
+        return np.random.choice(n_actions)
     return np.argmax(Q[state])
