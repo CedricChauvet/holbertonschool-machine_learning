@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
 import gymnasium as gym
-import matplotlib.pyplot as plt
 import numpy as np
 import random
-train = __import__('train').train
+policy_gradient = __import__('policy_gradient').policy_gradient
 
 def set_seed(env, seed=0):
     env.reset(seed=seed)
@@ -14,8 +13,13 @@ def set_seed(env, seed=0):
 env = gym.make('CartPole-v1')
 set_seed(env, 0)
 
-scores = train(env, 10000)
+weight = np.random.rand(4, 2)
+state , _ = env.reset()
+print(weight)
+print(state)
 
-plt.plot(np.arange(len(scores)), scores)
-plt.show()
+action, grad = policy_gradient(state, weight)
+print(action)
+print(grad)
+
 env.close()
