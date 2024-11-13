@@ -29,6 +29,7 @@ def policy_gradient(state, weight):
     gradient = np.zeros((n_states, n_actions))
 
     policy_value = policy(state, weight)
+    #print("policy_value: ", policy_value[0])
     # stochastic policy based on previous task
     if np.random.random() > policy_value[0]:
         action = 1
