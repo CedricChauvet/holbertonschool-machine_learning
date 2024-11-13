@@ -28,14 +28,19 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
             action, grad = policy_gradient(state, weights)
             # print("action", action)
             
-            next_state, reward, done, _, _ = env.step(action)
+            next_state, reward, done, truncated, _ = env.step(action)
+
             gradients.append(grad)
             rewards.append(reward)
             
             state = next_state
             weights += alpha * sum([grad * (gamma ** t) * reward for t, (grad, reward) in enumerate(zip(gradients, rewards))])
+
+            if truncated:
+                break
         # weights += alpha * sum([grad * (gamma ** t)   for t, (grad) in enumerate(grads)])
         
         scores.append(sum(rewards))
+        
         print("EP: " + str(i) + " Score: " + str(sum(rewards)))
     return scores
