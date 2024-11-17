@@ -29,12 +29,15 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         # initialize state action
         state = env.reset()[0] # this gives  0
         action = get_action(state, Q, epsilon)
-
+        i = 0 # steps
         while not (done or truncated):
             # observing next state and next action
-            
+        
             next_state, reward, done, truncated, _ = env.step(action)
-            
+
+            if i == max_steps :
+                truncated = True
+    
             if done or truncated:
                 next_action = None
             else:
@@ -54,9 +57,9 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             # and Q values
     
             E[state, action] += 1  # Update eligibility
+            Q += alpha * delta * E  # update Qvalue
             E *= gamma * lambtha
 
-            Q += alpha * delta * E  # update Qvalue
 
             # or?? but slower!
             # for s in range(n_states):
@@ -65,10 +68,15 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             #         E[s, a] *= gamma * lambtha
 
             state, action = next_state, next_action
+            if done or truncated:   
+                break
+            i += 1
 
         # Decay epsilon after each episode
-        epsilon = max(min_epsilon, epsilon * np.exp(-epsilon_decay * episode))
-    
+        max_epsilon = 1
+        
+        exp = np.exp(-epsilon_decay * episode)
+        epsilon = min_epsilon + (max_epsilon - min_epsilon) * exp    
     return Q
 
 
