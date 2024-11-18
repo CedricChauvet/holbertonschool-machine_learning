@@ -12,9 +12,9 @@ def policy(matrix, weight):
     weight: matrix of random weight, my policy
     matrix: state or observation of the environment
     returns softamx policy
-    """
+    """                       
     z = np.dot(matrix, weight)
-    exp = np.exp(z)
+    exp = np.exp(z - np.max(z))
     return exp / np.sum(exp)
 
 
