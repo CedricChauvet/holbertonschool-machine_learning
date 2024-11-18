@@ -1,83 +1,95 @@
 import numpy as np
 import tensorflow as tf
+import tensorflow.keras.backend as K
 
-class PolicyNetwork:
-    def __init__(self):
-        self.model = tf.keras.Sequential([
-            tf.keras.layers.Dense(64, activation='relu', input_shape=(4,), trainable=True),
-            tf.keras.layers.Dense(2, activation='softmax', trainable=True)
-        ])
-        self.optimizer = tf.keras.optimizers.Adam(learning_rate=0.0001)
-
-    def __call__(self, state):
-        return self.model(state)
-    
-def policy_gradient(state, policy_network):
-    """
-    Calculate policy gradient using current policy network
-    """
-    state = np.array([state])  # Add batch dimension
-    policy_network.trainable = True
-
-    with tf.GradientTape() as tape:
-        state_tensor = tf.convert_to_tensor(state, dtype=tf.float32)
-        policy_probs = policy_network.model(state_tensor)
-        numpy_policy =policy_probs.numpy()[0]
-        # Sample action from policy
-        if np.random.random() > numpy_policy[0]:
-            action = 1
-        else:
-            action = 0
-    
-        # Calculate log probability of the taken action
-        # action_mask = tf.one_hot(action, depth=2)
-        # log_prob = tf.math.log(tf.reduce_sum(policy_probs * action_mask))
-    
-        # Get gradients of log probability
-        gradients = tape.gradient(numpy_policy, policy_network.model.trainable_variables)
-    # Convertir les gradients en numpy
-        gradient_numpy = [g.numpy() for g in gradients if g is not None]
-        print("gradient_numpy: ", gradient_numpy[0].shape)
-    return int(action), gradient_numpy[0]
-
-
-def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
-    """
-    θ(t+1) = θ(t) + α ∑(γ^t ∇θ log π(at|st; θ) Rt)
-    """
-    scores = []
-    policy_network = PolicyNetwork()
-    n_states, n_actions = env.observation_space.shape[0], env.action_space.n
-    
-    weights = np.random.rand(n_states, 64, n_actions)
-    # grad = np.zeros(weights.shape)
-
-
-    for i in range(nb_episodes):
-        state, _ = env.reset()
-        done = False
-        # print("state: ", state)
-        rewards = []
-        gradients = []
-        while not done:
-            action, grad = policy_gradient(state, policy_network)
-            print("action", action)
-            print("grad: ", grad.shape)
-            
-            next_state, reward, done, _, _ = env.step(action)
-            gradients.append(grad)
-            rewards.append(reward)
-            
-            state = next_state
-            
-            weights += alpha * sum([grad * (gamma ** t) * reward for t, (grad, reward) in enumerate(zip(gradients, rewards))])
-            
-            print("weights: ", weights.shape)
-            policy_network.optimizer.apply_gradients(zip(weights, policy_network.model.trainable_variables))
-        # weights += alpha * sum([grad * (gamma ** t)   for t, (grad) in enumerate(grads)])
+class agent():
+    def __init__(self, ALPHA, GAMMA=0.99, n_actions=2, layer1_size=16,
+                 layer2_size=16, input_dims=4, filename='reinforce.h5'):
+        self.gamma = GAMMA
+        self.lr = ALPHA
+        self.input_dims = input_dims
+        self.fc1_dims = layer1_size
+        self.fc2_dims = layer2_size
+        self.n_actions = n_actions
         
-        scores.append(sum(rewards))
-        print("EP: " + str(i) + " Score: " + str(sum(rewards)))
-    return scores
+        self.state_memory = []
+        self.action_memory = []
+        self.reward_memory = []
+        
+        self.optimizer = tf.keras.optimizers.Adam(learning_rate=self.lr)
+        self.policy_network = self.build_network()
+        self.action_space = [i for i in range(n_actions)]
+        self.model_file = filename
 
+    def build_network(self):
+        model = tf.keras.Sequential([
+            tf.keras.layers.Dense(self.fc1_dims, activation='relu', 
+                                   input_shape=(self.input_dims,)),
+            tf.keras.layers.Dense(self.fc2_dims, activation='relu'),
+            tf.keras.layers.Dense(self.n_actions, activation='softmax')
+        ])
+        return model
 
+    def choose_action(self, observation):
+        state = observation[np.newaxis, :]
+        probabilities = self.policy_network.predict(state, verbose=0)[0]
+        action = np.random.choice(self.action_space, p=probabilities)
+        return action
+
+    def store_transition(self, observation, action, reward):
+        self.state_memory.append(observation)
+        self.action_memory.append(action)
+        self.reward_memory.append(reward)
+
+    @tf.function
+    def compute_loss(self, states, actions, advantages):
+        # Compute policy network probabilities
+        probs = self.policy_network(states)
+        
+        # Convert actions to one-hot encoding
+        actions_one_hot = tf.one_hot(actions, self.n_actions)
+        
+        # Compute log probabilities of taken actions
+        log_probs = tf.math.log(tf.reduce_sum(actions_one_hot * probs, axis=1))
+        
+        # Compute policy loss
+        loss = -tf.reduce_mean(log_probs * advantages)
+        
+        return loss
+
+    def learn(self):
+        state_memory = np.array(self.state_memory)
+        action_memory = np.array(self.action_memory)
+        reward_memory = np.array(self.reward_memory)
+
+        # Compute discounted rewards (returns)
+        G = np.zeros_like(reward_memory, dtype=float)
+        for t in range(len(reward_memory)):
+            G_sum = 0
+            discount = 1
+            for k in range(t, len(reward_memory)):
+                G_sum += reward_memory[k] * discount
+                discount *= self.gamma
+            G[t] = G_sum
+
+        # Normalize advantages
+        advantages = (G - np.mean(G)) / (np.std(G) + 1e-8)
+
+        # Use GradientTape for explicit gradient computation
+        with tf.GradientTape() as tape:
+            loss = self.compute_loss(
+                tf.convert_to_tensor(state_memory, dtype=tf.float32),
+                tf.convert_to_tensor(action_memory, dtype=tf.int32),
+                tf.convert_to_tensor(advantages, dtype=tf.float32)
+            )
+
+        # Compute gradients and apply them
+        gradients = tape.gradient(loss, self.policy_network.trainable_variables)
+        self.optimizer.apply_gradients(zip(gradients, self.policy_network.trainable_variables))
+
+        # Clear memory
+        self.state_memory = []
+        self.action_memory = []
+        self.reward_memory = []
+
+        return loss.numpy()

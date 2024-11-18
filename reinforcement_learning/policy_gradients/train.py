@@ -53,7 +53,7 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98, show_result=False):
                                     zip(gradients, rewards))])
 
             # quit after 500 steps
-            if truncated:
+            if done:
                 break
 
         # close each episode, close the window
