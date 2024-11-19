@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-import tensorflow.keras.backend as K
+
 
 class agent():
     def __init__(self, ALPHA, GAMMA=0.99, n_actions=2, layer1_size=16,
@@ -41,7 +41,6 @@ class agent():
         self.action_memory.append(action)
         self.reward_memory.append(reward)
 
-    @tf.function
     def compute_loss(self, states, actions, advantages):
         # Compute policy network probabilities
         probs = self.policy_network(states)
@@ -58,6 +57,10 @@ class agent():
         return loss
 
     def learn(self):
+        # Vérifier si la mémoire est vide
+        if not self.state_memory:
+            return 0.0
+
         state_memory = np.array(self.state_memory)
         action_memory = np.array(self.action_memory)
         reward_memory = np.array(self.reward_memory)
@@ -93,3 +96,6 @@ class agent():
         self.reward_memory = []
 
         return loss.numpy()
+
+    def save_model(self):
+        self.policy_network.save(self.model_file)

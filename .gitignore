@@ -21,3 +21,5 @@ reinforcement_learning/deep_q_learning/breakout_model_5000/keras_metadata.pb
 reinforcement_learning/deep_q_learning/breakout_model_5000/variables/variables.data-00000-of-00001
 reinforcement_learning/deep_q_learning/breakout_model_5000/saved_model.pb
 reinforcement_learning/deep_q_learning/breakout_model_5000/variables/variables.index
+reinforcement_learning/policy_gradients/cartpole_score_200.h5
+reinforcement_learning/policy_gradients/cartpole_score_400.h5
