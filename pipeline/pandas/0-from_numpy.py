@@ -13,7 +13,7 @@ def from_numpy(array):
     return df
     """
     df = pd.DataFrame()
-    for i in range(array.shape[0]):
-        df[chr(65+i)] = array[i, :]
+    for i in range(array.shape[1]):
+        df[chr(65+i)] = array[:, i]
 
     return df
