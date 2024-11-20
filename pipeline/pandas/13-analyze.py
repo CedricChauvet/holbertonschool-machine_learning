@@ -3,7 +3,6 @@
 Pandas project
 By Ced
 """
-import pandas as pd
 
 
 def analyze(df):
