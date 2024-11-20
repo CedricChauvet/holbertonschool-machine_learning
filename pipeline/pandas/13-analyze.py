@@ -6,6 +6,9 @@ By Ced
 
 
 def analyze(df):
+    """
+    use describe to analyze the data
+    """
     df = df[['Open', 'High', 'Low',  'Close', 'Volume_(BTC)',
              'Volume_(Currency)', 'Weighted_Price']]
 
