@@ -5,7 +5,6 @@ By Ced
 """
 import pandas as pd
 index = __import__('10-index').index
-concat = __import__('11-concat').concat
 
 
 def hierarchy(df1, df2):
