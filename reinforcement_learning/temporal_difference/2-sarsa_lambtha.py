@@ -11,6 +11,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     """
     run 5000 episodes of sarsa(λ) algorithm
     """
+
     # Initialize eligibility traces, Q is given
     n_states, n_actions = Q.shape
     E = np.zeros((n_states, n_actions))
@@ -32,10 +33,8 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         i = 0 # steps
         while not (done or truncated):
             # observing next state and next action
-        
             next_state, reward, done, truncated, _ = env.step(action)
-
-            if i == max_steps :
+            if i == max_steps:
                 truncated = True
     
             if done or truncated:
@@ -50,8 +49,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
                 # terminating reward = O if fall, 1 if win
                 target = reward
 
-            actual = Q[state, action]
-            delta = target - actual
+            delta = target - Q[state, action]
 
             # Update eligibility trace for the current state
             # and Q values
@@ -60,16 +58,13 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             Q += alpha * delta * E  # update Qvalue
             E *= gamma * lambtha
 
-
-            # or?? but slower!
-            # for s in range(n_states):
-            #     for a in range(n_actions):
-            #         Q[s, a] += alpha * delta * E[s, a]
-            #         E[s, a] *= gamma * lambtha
-
+            # update state and action
             state, action = next_state, next_action
+
             if done or truncated:   
                 break
+            
+            # increment steps counter
             i += 1
 
         # Decay epsilon after each episode
