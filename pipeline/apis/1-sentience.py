@@ -7,6 +7,9 @@ import requests
 
 
 def sentientPlanets():
+    """
+    List of homeworld planets of sentient species
+    """
     listPlanets = []
     for i in range(70):
         r = requests.get('https://swapi-api.hbtn.io/api/species/' + str(i))
