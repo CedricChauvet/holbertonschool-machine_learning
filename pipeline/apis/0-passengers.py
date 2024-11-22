@@ -11,30 +11,26 @@ def availableShips(passengerCount):
     get available ships with capacity
     return list of ships
     """
-    
+
     # initialize ships list and set flag
     ships = []
     set_true = False
 
     for i in range(70):
-        r = requests.get('https://swapi-api.hbtn.io/api/starships/'+ str(i))
+        r = requests.get('https://swapi-api.hbtn.io/api/starships/' + str(i))
         passenger = r.json().get('passengers')
-        
-        if passenger is not None: 
+
+        if passenger is not None:
             passenger = passenger.replace(",", "")
-        
-        
             if passenger.isnumeric():
-                
-            
+
                 if int(passenger) >= passengerCount:
-                    set_true= True
-                    # print(r.json().get('name'))
+                    set_true = True
                     ships.append(r.json().get('name'))
-    
+
     # return [] if no ships found
-    if set_true == False:
+    if set_true is False:
         return []
-    
-    else: 
+
+    else:
         return ships
