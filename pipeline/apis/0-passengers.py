@@ -19,7 +19,7 @@ def availableShips(passengerCount):
     # print(rg2)
 
     set_true = False
-    for i in range(4*36):
+    for i in range(70):
         r = requests.get('https://swapi-api.hbtn.io/api/starships/'+ str(i))
         passenger = r.json().get('passengers')
         if passenger is not None and passenger.isnumeric():
