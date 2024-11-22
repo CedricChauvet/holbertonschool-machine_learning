@@ -7,6 +7,10 @@ import requests
 
 
 def availableShips(passengerCount):
+    """
+    get available ships with capacity
+    return list of ships
+    """
     ships = []
     # rg1 = requests.get('https://swapi-api.hbtn.io/api/starships/'
     #                     ).json()
