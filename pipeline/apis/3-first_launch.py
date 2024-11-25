@@ -20,6 +20,7 @@ def main():
 
             rocket_id = launches[i].get('rocket')
             launcher_id = launches[i].get('launchpad')
+
     r2 = requests.get('https://api.spacexdata.com/v4/rockets/')
     rockets = r2.json()
     for i in range(len(rockets)):
