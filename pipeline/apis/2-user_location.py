@@ -22,10 +22,10 @@ def user_location(argument):
         X = r.headers.get("X-RateLimit-Reset")
         print(f"Reset in {X} min")
     # if error 404, wrong url
-    if r.status_code == 404:
+    elif r.status_code == 404:
         print(f"Not found")
 
-    if r.status_code == 200:
+    elif r.status_code == 200:
         loc = r.json().get("location")
         print(loc)
     else:
