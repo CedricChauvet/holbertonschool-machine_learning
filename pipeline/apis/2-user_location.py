@@ -38,3 +38,7 @@ if __name__ == "__main__":
     
     else:
         user_location(sys.argv[1])  # Le premier argument est `sys.argv[1]`
+
+"""
+test
+"""
