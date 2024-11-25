@@ -21,8 +21,9 @@ def user_location(argument):
     # if error 403
     if r.status_code == 403:
         X = r.headers.get("X-RateLimit-Reset")
-        wait = int(X) - int(time.time())  
-        print(f"Reset in {wait} min")
+        wait = int(X) - int(time.time())
+        wait_minute = wait // 60  
+        print(f"Reset in {wait_minute} min")
     # if error 404, wrong url
     elif r.status_code == 404:
         print(f"Not found")
