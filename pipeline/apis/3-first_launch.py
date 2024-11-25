@@ -5,6 +5,7 @@ By Ced
 """
 import requests
 
+
 def main():
     """
     main function
@@ -12,12 +13,11 @@ def main():
     r = requests.get('https://api.spacexdata.com/v5/launches/')
     launches = r.json()
     for i in range(len(launches)):
-        
+
         if launches[i].get('name') == "Galaxy 33 (15R) & 34 (12R)":
             launch_name = launches[i].get('name')
             date = launches[i].get('date_local')
-            
-            
+
             rocket_id = launches[i].get('rocket')
             launcher_id = launches[i].get('launchpad')
     r2 = requests.get('https://api.spacexdata.com/v4/rockets/')
@@ -33,7 +33,10 @@ def main():
             launchpad_name = launchpads[i].get('name')
             launchpad_loc = launchpads[i].get('locality')
 
-    print(f"{launch_name} ({date}) {rocket_name} - {launchpad_name} ({launchpad_loc})")
+    print(f"{launch_name} ({date}) {rocket_name} "
+          f"- {launchpad_name} ({launchpad_loc})")
+
+
 if __name__ == "__main__":
 
     main()
