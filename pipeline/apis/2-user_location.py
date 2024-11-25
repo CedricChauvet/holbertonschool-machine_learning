@@ -4,6 +4,7 @@ APIs project
 By Ced
 """
 import sys
+import time
 import requests
 
 
@@ -20,7 +21,8 @@ def user_location(argument):
     # if error 403
     if r.status_code == 403:
         X = r.headers.get("X-RateLimit-Reset")
-        print(f"Reset in {X} min")
+        wait = int(time.time()) - X
+        print(f"Reset in {wait} min")
     # if error 404, wrong url
     elif r.status_code == 404:
         print(f"Not found")
@@ -28,9 +30,7 @@ def user_location(argument):
     elif r.status_code == 200:
         loc = r.json().get("location")
         print(loc)
-    else:
-        print("pb")
-
+   
 
 if __name__ == "__main__":
 
