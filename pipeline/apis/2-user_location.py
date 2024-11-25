@@ -31,14 +31,11 @@ def user_location(argument):
     else:
         print("pb")
 
+
 if __name__ == "__main__":
 
     if len(sys.argv) < 2 or len(sys.argv) > 2:
         print("Erreur : Un argument est requis.")
-    
+
     else:
         user_location(sys.argv[1])  # Le premier argument est `sys.argv[1]`
-
-"""
-test
-"""
