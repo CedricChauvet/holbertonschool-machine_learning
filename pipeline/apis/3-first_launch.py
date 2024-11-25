@@ -11,9 +11,6 @@ def main():
     """
     r = requests.get('https://api.spacexdata.com/v5/launches/')
     launches = r.json()
-    #print(f"Nombre de lancements : {len(launches)}")
-    # print(launches[0].get('name'))
-
     for i in range(len(launches)):
         
         if launches[i].get('name') == "Galaxy 33 (15R) & 34 (12R)":
@@ -36,7 +33,7 @@ def main():
             launchpad_name = launchpads[i].get('name')
             launchpad_loc = launchpads[i].get('locality')
 
-    print(f"{launch_name} ({date}) {rocket_name} {launchpad_name} ({launchpad_loc})")
+    print(f"{launch_name} ({date}) {rocket_name} - {launchpad_name} ({launchpad_loc})")
 if __name__ == "__main__":
 
     main()
