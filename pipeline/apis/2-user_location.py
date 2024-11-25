@@ -17,9 +17,6 @@ def user_location(argument):
     r = requests.get(argument)
     # print(f"Voici le code de retour : {r.status_code}")
 
-    loc = r.json().get("location")
-    # print("location", loc)
-
     # if error 403
     if r.status_code == 403:
         X = r.headers.get("X-RateLimit-Reset")
@@ -27,6 +24,11 @@ def user_location(argument):
     # if error 404, wrong url
     if r.status_code == 404:
         print(f"Not found")
+
+    if r.status_code == 200:
+        loc = r.json().get("location")
+        print(loc)
+    return
 
 if __name__ == "__main__":
 
