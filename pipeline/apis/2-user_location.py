@@ -24,6 +24,7 @@ def user_location(argument):
         wait = int(X) - int(time.time())
         wait_minute = wait // 60
         print(f"Reset in {wait_minute} min")
+
     # if error 404, wrong url
     elif r.status_code == 404:
         print(f"Not found")
@@ -35,8 +36,8 @@ def user_location(argument):
 
 if __name__ == "__main__":
 
-    if len(sys.argv) < 2 or len(sys.argv) > 2:
-        print("Erreur : Un argument est requis.")
+    if len(sys.argv) != 2:
+        print("Erreur : Un unique argument est requis.")
 
     else:
         user_location(sys.argv[1])  # Le premier argument est `sys.argv[1]`
