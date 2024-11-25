@@ -8,6 +8,11 @@ import requests
 
 
 def user_location(argument):
+    """
+    This is a function that takes in a string argument
+    and returns the location of the user
+    no main.py is this exercice
+    """
     # print(f"Voici l'argument passé : {argument}")
     r = requests.get(argument)
     # print(f"Voici le code de retour : {r.status_code}")
