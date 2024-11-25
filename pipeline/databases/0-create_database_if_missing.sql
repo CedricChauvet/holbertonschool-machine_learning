@@ -1,1 +1,1 @@
-CREATE TABLE db_0
+CREATE TABLE db_0();
