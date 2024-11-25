@@ -28,7 +28,7 @@ def user_location(argument):
     if r.status_code == 200:
         loc = r.json().get("location")
         print(loc)
-    return
+    return loc
 
 if __name__ == "__main__":
 
