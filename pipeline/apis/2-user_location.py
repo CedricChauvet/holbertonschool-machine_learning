@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+"""
+APIs project
+By Ced
+"""
+import sys
+import requests
+
+
+def user_location(argument):
+    # print(f"Voici l'argument passé : {argument}")
+    r = requests.get(argument)
+    # print(f"Voici le code de retour : {r.status_code}")
+
+    loc = r.json().get("location")
+    # print("location", loc)
+
+    # if error 403
+    if r.status_code == 403:
+        X = r.headers.get("X-RateLimit-Reset")
+        print(f"Reset in  {X} minutes")
+    # if error 404, wrong url
+    if r.status_code == 404:
+        print(f"Not found")
+
+if __name__ == "__main__":
+
+    if len(sys.argv) < 2 or len(sys.argv) > 2:
+        print("Erreur : Un argument est requis.")
+    
+    else:
+        user_location(sys.argv[1])  # Le premier argument est `sys.argv[1]`
