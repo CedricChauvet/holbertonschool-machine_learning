@@ -23,7 +23,7 @@ def user_location(argument):
     # if error 403
     if r.status_code == 403:
         X = r.headers.get("X-RateLimit-Reset")
-        print(f"Reset in  {X} minutes")
+        print(f"Reset in {X} min")
     # if error 404, wrong url
     if r.status_code == 404:
         print(f"Not found")
