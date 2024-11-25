@@ -22,7 +22,7 @@ def user_location(argument):
     if r.status_code == 403:
         X = r.headers.get("X-RateLimit-Reset")
         wait = int(X) - int(time.time())
-        wait_minute = wait // 60  
+        wait_minute = wait // 60
         print(f"Reset in {wait_minute} min")
     # if error 404, wrong url
     elif r.status_code == 404:
@@ -31,7 +31,7 @@ def user_location(argument):
     elif r.status_code == 200:
         loc = r.json().get("location")
         print(loc)
-   
+
 
 if __name__ == "__main__":
 
