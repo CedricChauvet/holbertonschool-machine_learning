@@ -5,4 +5,4 @@ SELECT
   MAX(value) AS max_temp
 FROM temperatures  
 GROUP BY state
-ORDER BY state DESC;
+ORDER BY state ASC;
