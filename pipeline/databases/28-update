@@ -4,6 +4,6 @@
 //    The database name will be passed as option of mongo command
 
 db.school.update(
-  {name: "Holberton school"}, // Filter to match all documents
+  {}, // Filter to match all documents
   { $set: { address: "972 Mission street" } } // Update operator to add a new field
 )
