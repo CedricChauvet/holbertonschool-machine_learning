@@ -1,3 +1,3 @@
 // Write a script that lists all documents in the collection school:
 
-db.books.find()
+db.books.find().limit(100)
