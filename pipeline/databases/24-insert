@@ -3,6 +3,7 @@
 //    The document must have one attribute name with value “Holberton school”
 //    The database name will be passed as option of mongo command
 
-db.books.drop()
-use(db.getName() || db);
-db.school.insertOne({ name: "Holberton school" });
+db.school.insertOne({ name: "Holberton school" })
+// db.school.insert({
+//    name: "Holberton school"
+//    })
