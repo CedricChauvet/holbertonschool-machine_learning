@@ -11,7 +11,7 @@ def update_topics(mongo_collection, name, topics):
     using the following method: def update_topics(mongo_collection, name, topics):
     with pymango
     """
-    myquery = { name: name }
-    newvalues = { "$set": { topics: topics } }
+    myquery = { "name": name }
+    newvalues = { "$set": { "topics": topics } }
 
     mongo_collection.update_one(myquery, newvalues)
