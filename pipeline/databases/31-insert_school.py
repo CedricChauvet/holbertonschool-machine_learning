@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+task31 using mangodb, insert  a new document in a collection based on kwargs
+"""
 import pymongo
 import pprint
 
