@@ -13,4 +13,4 @@ def schools_by_topic(mongo_collection, topic):
     """
     extract topic from school collection
     """
-    return list(mongo_collection.find({"topics": topic}))
+    return list()

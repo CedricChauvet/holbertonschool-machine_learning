@@ -21,7 +21,6 @@ from pprint import pprint
 
 
 if __name__ == "__main__":
-    print("hello world")
     client = MongoClient('mongodb://127.0.0.1:27017')
     db = client["logs"]
     collection = db["nginx"]
@@ -29,9 +28,8 @@ if __name__ == "__main__":
     total_logs = collection.count_documents({})
     print(f"{total_logs} logs")
     print("Methods:")
-    print("method GET:", len(list(collection.find({"method": "GET"}))))
-    print("method POST:", len(list(collection.find({"method": "POST"}))))
-    print("method PUT:", len(list(collection.find({"method": "PUT"}))))
-    print("method PATCH:", len(list(collection.find({"method": "PATCH"}))))
-    print("method DELETE:", len(list(collection.find({"method": "DELETE"}))))
+    print("\tmethod GET:", len(list(collection.find({"method": "GET"}))))
+    print("\tmethod POST:", len(list(collection.find({"method": "POST"}))))
+    print("\tmethod PUT:", len(list(collection.find({"method": "PUT"}))))
+    print("\tmethod PATCH:", len(list(collection.find({"method": "PATCH"}))))
 
