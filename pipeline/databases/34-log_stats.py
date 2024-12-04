@@ -17,9 +17,7 @@ path=/status
 import pymongo
 from pymongo import MongoClient
 from pprint import pprint
-
-
-
+ 
 if __name__ == "__main__":
     print("hello world")
     client = MongoClient('mongodb://127.0.0.1:27017')
