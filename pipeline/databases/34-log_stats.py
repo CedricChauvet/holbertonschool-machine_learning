@@ -24,10 +24,16 @@ if __name__ == "__main__":
     collection = db["nginx"]
 
     total_logs = collection.count_documents({})
+
+    print(list(collection.find({"path": "/status"}).limit(1)))
+
+
     print(f"{total_logs} logs")
     print("Methods:")
     print("\tmethod GET:", len(list(collection.find({"method": "GET"}))))
     print("\tmethod POST:", len(list(collection.find({"method": "POST"}))))
     print("\tmethod PUT:", len(list(collection.find({"method": "PUT"}))))
     print("\tmethod PATCH:", len(list(collection.find({"method": "PATCH"}))))
+    print("\tmethod DELETE:", len(list(collection.find({"method": "DELETE"})))) 
 
+    print (f"{len(list(collection.find({'method': 'GET', 'path': '/status'})))} status check")
