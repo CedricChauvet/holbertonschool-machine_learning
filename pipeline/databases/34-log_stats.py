@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     total_logs = collection.count_documents({})
 
-    print(list(collection.find({"path": "/status"}).limit(1)))
+    #print(list(collection.find({"path": "/status"}).limit(1)))
 
 
     print(f"{total_logs} logs")
