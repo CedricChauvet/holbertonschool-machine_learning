@@ -1,18 +1,17 @@
 # Forcer l'import de Keras depuis TensorFlow
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.layers import Dense, Flatten
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, Dense, Flatten, Input, Dropout
-from tensorflow.keras.models import model_from_json, Sequential, Model
-from tensorflow.keras.optimizers.legacy import Adam
-from rl.agents.dqn import DQNAgent
-from rl.policy import EpsGreedyQPolicy
-from rl.memory import SequentialMemory
 import gymnasium as gym
-import time
+
+from tensorflow.keras.layers import Dense, Flatten
+from tensorflow.keras.layers import Conv2D, Input, Dropout, Rescaling
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.optimizers.legacy import Adam
+
+from rl.agents.dqn import DQNAgent
+from rl.policy import EpsGreedyQPolicy, LinearAnnealedPolicy
+from rl.memory import SequentialMemory
 from rl.callbacks import Callback
-from gymnasium import Wrapper
 
 
 class BreakoutWrapper(gym.Wrapper):
@@ -23,38 +22,46 @@ class BreakoutWrapper(gym.Wrapper):
 
     def reset(self, **kwargs):
         obs, _ = self.env.reset(**kwargs)
-        
-        # Transposer et normaliser l'observation
-        #obs = obs.transpose(1, 0)  # Passer de (1, 210, 160) à (210, 160, 1)
-        print("obs shape", obs.shape)   
-        #obs = np.expand_dims(obs, axis=-1)  # Assurer la dimension du canal
-        
-        # Normalisation des observations (0-255 -> 0-1)
-        return obs.astype(np.float32) / 255.0
-        # Normalisation des observations (0-255 -> 0-1)
-        return np.array(obs, dtype=np.float32) / 255.0
+
+        # print("obs type", type(obs.dtype))   # <class 'numpy.uint8'>
+        return obs
 
     def step(self, action):
         obs, reward, terminated, truncated, info = self.env.step(action)
         done = terminated or truncated
 
-        # Normalisation des observations (0-255 -> 0-1)
-        return np.array(obs, dtype=np.float32) / 255.0, reward, done, info
+        return obs, reward, done, info
 
 
 # Création de l'environnement avec le wrapper
 env = gym.make('ALE/Breakout-v5',
-               obs_type='grayscale')
+               obs_type='grayscale', frameskip=4)
+
 nb_actions = env.action_space.n
+
+# Wrapper to fit with fit method
 env = BreakoutWrapper(env)
 
 model = Sequential([
-        # Couche d'entrée 4frames, 210x160
+        # Couche d'entrée 4frames, 210x160 from the environment
         Input(shape=(4, 210, 160)),
+
+        # permuting the dimensions of the input tensor
         tf.keras.layers.Permute((2, 3, 1)),
 
+        # resizing the input tensor to 84x84 in order to reduce the computation costs
+        tf.keras.layers.Resizing(
+            height=84,
+            width=84,
+            interpolation='bilinear'
+        ),
+
+        # Couche de rescaling
+        Rescaling(1./255.0),
+
         # Première couche convolutionnelle avec restructuration des données
-        Conv2D(32, (8, 8), strides=(4, 4), activation='relu', padding='same', input_shape=( 210, 160, 4)),
+        Conv2D(32, (8, 8), strides=(4, 4), activation='relu',
+               padding='same', input_shape=(84, 84, 4)),
 
         # Autres couches convolutionnelles
         Conv2D(64, (4, 4), strides=(2, 2), activation='relu', padding='same'),
@@ -69,8 +76,10 @@ model.compile(optimizer=Adam(learning_rate=0.00025), loss='mse')
 
 # Configuration de la mémoire et de la politique
 memory = SequentialMemory(limit=1000000, window_length=4)
-policy = EpsGreedyQPolicy(eps=0.1)
 
+#policy =  EpsGreedyQPolicy(eps=0.1)
+policy = LinearAnnealedPolicy(EpsGreedyQPolicy(), attr='eps', value_max=1., value_min=.1, value_test=.05,
+                              nb_steps=1000000)
 # Configuration de l'agent DQN
 dqn = DQNAgent(
     model=model,
@@ -105,7 +114,7 @@ class RewardLogger(Callback):
 
         if self.step_count % self.log_interval == 0:
             Average_Reward = self.total_reward / self.log_interval
-            print(f"Step {self.step_count}: Average_Reward: {Average_Reward}")
+            print(f"Step {self.step_count}: Reward: {self.total_reward}")
             self.total_reward = 0  # Réinitialiser pour la prochaine période
 
 
@@ -120,4 +129,4 @@ dqn.fit(env, nb_steps=1000000, callbacks=callbacks, visualize=False, verbose=0)
 env.close()
 print("\nEntraînement terminé")
 # dqn.model.save('policy2.h5')
-dqn.save_weights('policy.h5')
+# dqn.save_weights('policy.h5')
