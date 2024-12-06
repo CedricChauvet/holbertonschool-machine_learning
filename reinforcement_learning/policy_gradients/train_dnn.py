@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+"""
+Monte Carlo Policy Gradient with DNN policy approximator
+"""
+
+
 import numpy as np
 import tensorflow as tf
 
@@ -5,12 +11,12 @@ import tensorflow as tf
 class agent():
     def __init__(self, ALPHA, GAMMA=0.99, n_actions=2, layer1_size=16,
                  layer2_size=16, input_dims=4, filename='reinforce.h5'):
-        self.gamma = GAMMA
-        self.lr = ALPHA
-        self.input_dims = input_dims
-        self.fc1_dims = layer1_size
-        self.fc2_dims = layer2_size
-        self.n_actions = n_actions
+        self.gamma = GAMMA  # Discount factor
+        self.lr = ALPHA  # Learning rate
+        self.input_dims = input_dims # Input dimensions
+        self.fc1_dims = layer1_size # Number of neurons in first layer
+        self.fc2_dims = layer2_size # Number of neurons in second layer
+        self.n_actions = n_actions # Number of actions
         
         self.state_memory = []
         self.action_memory = []
