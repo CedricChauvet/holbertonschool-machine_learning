@@ -8,7 +8,7 @@ import tensorflow as tf
 
 def crop_image(image, size):
     """
-    still using tf.image, this time to crop the image    
+    still using tf.image, this time to crop the image
     """
     height, width, channel = size
 
