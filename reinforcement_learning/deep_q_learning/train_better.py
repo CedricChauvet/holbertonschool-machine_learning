@@ -75,7 +75,12 @@ input_shape = (4, 210, 160)
 nb_actions = env.action_space.n
 
 model = build_model(input_shape, nb_actions)
-memory = SequentialMemory(limit=1000000, window_length=4)  # Augmenté la taille de mémoire
+
+"""
+trop de mémoire utilisée peut entraîner un crash du programme
+Pour Breakout spécifiquement, 250 000 est un minimum acceptable
+"""
+memory = SequentialMemory(limit=250000, window_length=4)  # Augmenté la taille de mémoire
 
 policy = LinearAnnealedPolicy(
     EpsGreedyQPolicy(),
@@ -132,3 +137,11 @@ class EnhancedRewardLogger(Callback):
             self.total_reward = 0
 
 callbacks = [EnhancedRewardLogger(log_interval=1000)]
+
+
+dqn.fit(env, nb_steps=1000000, callbacks=callbacks, visualize=False, verbose=0)
+dqn.save_weights('policyGPU.h5', overwrite=True)
+
+env.close()
+print("\nEntraînement terminé")
+# dqn.model.save('policy2.h5')
