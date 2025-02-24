@@ -67,7 +67,7 @@ def build_model(input_shape, nb_actions):
     return model
 
 # Création et configuration de l'environnement
-env = gym.make('ALE/Breakout-v5', obs_type='grayscale', frameskip=1)
+env = gym.make('ALE/Breakout-v5', obs_type='grayscale', frameskip=4)
 env = BreakoutWrapper(env)
 
 # Configuration du modèle et de l'agent
@@ -88,7 +88,7 @@ policy = LinearAnnealedPolicy(
     value_max=1.0,
     value_min=0.1,
     value_test=0.05,
-    nb_steps=1000000
+    nb_steps=10000000
 )
 
 dqn = DQNAgent(
@@ -139,8 +139,8 @@ class EnhancedRewardLogger(Callback):
 callbacks = [EnhancedRewardLogger(log_interval=1000)]
 
 
-dqn.fit(env, nb_steps=1000000, callbacks=callbacks, visualize=False, verbose=0)
-dqn.save_weights('policyGPU.h5', overwrite=True)
+dqn.fit(env, nb_steps=10000000, callbacks=callbacks, visualize=False, verbose=0)
+dqn.save_weights('policyGPU_better.h5', overwrite=True)
 
 env.close()
 print("\nEntraînement terminé")
