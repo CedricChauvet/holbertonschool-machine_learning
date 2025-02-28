@@ -59,7 +59,7 @@ def update_frame_buffer(buffer, new_frame):
     buffer[-1] = new_frame
     return buffer
 
-model.load_weights('policyGPU_better.h5')
+model.load_weights('policy.h5')
 observation, info = env.reset()
 # Pour stocker les 4 dernières frames
 frame_buffer = np.zeros((4, 210, 160), dtype=np.uint8)
