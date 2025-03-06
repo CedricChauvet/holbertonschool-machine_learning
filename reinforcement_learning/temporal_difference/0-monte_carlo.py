@@ -45,7 +45,8 @@ def monte_carlo(env, V, policy, episodes=5000,
         for state, reward in reversed(SAR_list):
             # return apres la fin de l'episode
             G = reward + gamma * G
-
+            #print("G", G)
+            print("V", V[state])
             # attention, si l'etat est nouveau ?!
             if state not in SAR_list[:episode, 0]:
                 # Update the value function V(s)
