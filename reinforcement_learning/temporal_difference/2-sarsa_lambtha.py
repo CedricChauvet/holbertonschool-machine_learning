@@ -67,10 +67,10 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         # Decay epsilon after each episode
     
         # Exploration rate decay
-        epsilon = (min_epsilon + (initial_epsilon - min_epsilon) *
-                   np.exp(-epsilon_decay * i))    
-        i += 1
-
+            epsilon = (min_epsilon + (initial_epsilon - min_epsilon) *
+                    np.exp(-epsilon_decay * episode))    
+            i += 1
+            
     return Q
 
 
