@@ -7,7 +7,7 @@ import numpy as np
 
 
 def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
-                  gamma=0.99, epsilon=1, min_epsilon=0.1, epsilon_decay=0.05):
+                  gamma=0.99, initial_epsilon=1, min_epsilon=0.1, epsilon_decay=0.05):
     """
     run 5000 episodes of sarsa(λ) algorithm
     """
@@ -15,14 +15,14 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     # Initialize eligibility traces, Q is given
     n_states, n_actions = Q.shape
     E = np.zeros((n_states, n_actions))
-
+    epsilon = initial_epsilon
     for episode in range(episodes):
         """
         reset the environment and sample one episode
         player start upperleft
         Q is given
         """
-
+        E.fill(0)  # Reset eligibility traces
         done = truncated =False
 
         # initialize state action
@@ -66,10 +66,10 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             i += 1
 
         # Decay epsilon after each episode
-        max_epsilon = 1
-        
-        exp = np.exp(-epsilon_decay * episode)
-        epsilon = min_epsilon + (max_epsilon - min_epsilon) * exp    
+    
+        # Exploration rate decay
+        epsilon = (min_epsilon + (initial_epsilon - min_epsilon) *
+                   np.exp(-epsilon_decay * i))    
     return Q
 
 
