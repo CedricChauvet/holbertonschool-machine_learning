@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 new version of sarsa
 """
@@ -68,7 +69,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     # Exploration rate decay
             epsilon = (min_epsilon + (initial_epsilon - min_epsilon) *
                     np.exp(-epsilon_decay * episode))    
-            i += 1
+            
             
         
     return Q
