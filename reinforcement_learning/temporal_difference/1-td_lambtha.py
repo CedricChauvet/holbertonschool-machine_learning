@@ -19,8 +19,9 @@ def td_lambtha(env, V, policy, lambtha, episodes=5000,
         z = np.zeros(env.observation_space.n)
         done = False
         truncated = False
-
-        while not (done or truncated):
+        steps=0
+        while not (done or truncated) and steps < max_steps:
+            steps += 1
             action = policy(state)
             next_state, reward, done, truncated, _ = env.step(action)
 
