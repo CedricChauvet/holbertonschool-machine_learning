@@ -44,12 +44,11 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
                 
             # Calculer la cible pour la mise à jour Q
             if next_action is not None:
-                target = reward + gamma * Q[next_state, next_action]
+                delta = reward + gamma * Q[next_state, next_action] - Q[state, action]
             else:
-                target = reward
+                delta = reward - Q[state, action]
                 
-            # Calculer l'erreur TD
-            delta = target - Q[state, action]
+    
             
             # Mettre à jour la trace d'éligibilité pour l'état-action actuel
             E[state, action] += 1
