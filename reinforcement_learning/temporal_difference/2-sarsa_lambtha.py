@@ -76,6 +76,6 @@ def get_action(state, Q, epsilon):
     Choose action using epsilon-greedy policy
     """
     n_actions = Q.shape[1]  
-    if np.random.random() < epsilon:
+    if np.random.uniform(0, 1) < epsilon:
         return np.random.choice(n_actions)
     return np.argmax(Q[state,:])
