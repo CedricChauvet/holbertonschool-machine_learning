@@ -14,8 +14,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     epsilon = initial_epsilon
     
     for episode in range(episodes):
-        # Réinitialiser les traces d'éligibilité au début de chaque épisode
-        E = np.zeros((n_states, n_actions))
+        
         
         # Initialiser l'état et l'action
         state = env.reset()[0]
