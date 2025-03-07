@@ -53,12 +53,13 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             
             # Mettre à jour la trace d'éligibilité pour l'état-action actuel
             E[state, action] += 1
-            
+                 # Décroissance des traces d'éligibilité
+            E *= gamma * lambtha
+
             # Mise à jour de toutes les valeurs Q selon les traces d'éligibilité
             Q += alpha * delta * E
             
-            # Décroissance des traces d'éligibilité
-            E *= gamma * lambtha
+       
             
             # Transition vers le nouvel état et la nouvelle action
             if not (done or truncated):
