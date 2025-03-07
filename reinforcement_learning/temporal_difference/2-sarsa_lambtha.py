@@ -3,7 +3,6 @@
 new version of sarsa
 """
 import numpy as np
-
 def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
                   gamma=0.99, initial_epsilon=1, min_epsilon=0.1, epsilon_decay=0.05):
     """
@@ -66,12 +65,10 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
                 state, action = next_state, next_action
             else:
                 break
-    # Exploration rate decay
-            epsilon = (min_epsilon + (initial_epsilon - min_epsilon) *
-                    np.exp(-epsilon_decay * episode))    
-            
-            
         
+        # Décroissance d'epsilon après chaque épisode - CORRECTEMENT INDENTÉE
+        epsilon = min_epsilon + (initial_epsilon - min_epsilon) * np.exp(-epsilon_decay * episode)
+            
     return Q
 
 def get_action(state, Q, epsilon):
