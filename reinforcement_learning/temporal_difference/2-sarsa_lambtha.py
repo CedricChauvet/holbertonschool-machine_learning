@@ -12,7 +12,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     # Initialisation
     n_states, n_actions = Q.shape
     epsilon = initial_epsilon
-    
+    E = np.zeros((n_states, n_actions))
     for episode in range(episodes):
         
         
