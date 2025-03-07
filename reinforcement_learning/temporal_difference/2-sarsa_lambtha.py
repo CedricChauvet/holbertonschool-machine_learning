@@ -6,8 +6,7 @@ import numpy as np
 
 
 def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
-                  gamma=0.99, initial_epsilon=1.0, min_epsilon=0.1,
-                  epsilon_decay=0.05):
+                  gamma=0.99, epsilon=1, min_epsilon=0.1, epsilon_decay=0.05):
     """
     Performs SARSA(λ) reinforcement learning algorithm.
     """
@@ -16,7 +15,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         raise ValueError("lambtha must be between 0 and 1")
 
     n_states, n_actions = Q.shape
-    epsilon = initial_epsilon
+    initial_epsilon = epsilon
     E = np.zeros((n_states, n_actions))
 
     for episode in range(episodes):
