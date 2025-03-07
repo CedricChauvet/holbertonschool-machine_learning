@@ -39,7 +39,7 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             else :
                 delta = reward - Q[state, action]
 
-            # met a jour l'egibility trace et la table des Q
+            # update egibility trace and Q table
             E[state, action] += 1
             Q += alpha * delta * E
             E *= gamma * lambtha
@@ -49,9 +49,10 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
             else:
                 break
         
-        # Décroissance linéaire corrigée
-        epsilon = max(min_epsilon, initial_epsilon - (initial_epsilon - min_epsilon) * (episode / episodes))
-    
+        # Décroissance linéaire de epsilon
+        # epsilon = max(min_epsilon, initial_epsilon - (initial_epsilon - min_epsilon) * (episode / episodes))
+        # decroissance exponentielle de epsilon
+        epsilon = min_epsilon + (initial_epsilon - min_epsilon) * np.exp(-epsilon_decay * episode)
     return Q
 
 def get_action(state, Q, epsilon):
