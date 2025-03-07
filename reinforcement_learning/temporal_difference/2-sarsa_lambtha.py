@@ -78,5 +78,5 @@ def get_action(state, Q, epsilon):
     """
     n_actions = Q.shape[1]  
     if np.random.uniform(0, 1) < epsilon:
-        return np.random.choice(n_actions)
+        return np.random.randint(0, n_actions)
     return np.argmax(Q[state,:])
