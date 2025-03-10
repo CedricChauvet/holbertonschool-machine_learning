@@ -25,16 +25,15 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
         steps = 0
         done = truncated = False
 
-        while not (done or truncated):
+        while not (done or truncated) and steps <= max_steps :
             steps += 1
 
             next_state, reward, done, truncated, _ = env.step(action)
 
             # compute next action if game is over, no moves possible
             next_action = get_action(next_state, Q, epsilon)  \
-                if (not (done or truncated) and steps <= max_steps) else None
-            delta = reward + (gamma * Q[next_state, next_action]) \
-                - Q[state, action]
+    
+            delta = reward + (gamma * Q[next_state, next_action]) - Q[state, action]
 
             # update egibility trace and Q table
             E[state, action] += 1
