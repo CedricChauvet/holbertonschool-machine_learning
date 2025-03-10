@@ -35,28 +35,27 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
                 if (not (done or truncated) and steps <= max_steps) else None
 
             # Calcul optimisé
-            if not (done or truncated) and steps <= max_steps:
-                delta = reward + (gamma * Q[next_state, next_action]) \
-                    - Q[state, action]
-            else:
-                delta = reward - Q[state, action]
+            ##if not (done or truncated) and steps <= max_steps:
+            delta = reward + (gamma * Q[next_state, next_action]) \
+                - Q[state, action]
+            # else:
+            #    delta = reward - Q[state, action]
 
             # update egibility trace and Q table
             E[state, action] += 1
             E[state, action] *= gamma * lambtha
             Q += alpha * delta * E
 
-            if not (done or truncated) and steps <= max_steps:
-                state, action = next_state, next_action
-            else:
-                break
+            #if not (done or truncated) and steps <= max_steps:
+            state, action = next_state, next_action
+            #else:
+            #    break
 
         # Décroissance linéaire de epsilon
-        epsilon = max(min_epsilon, initial_epsilon -
-                      (initial_epsilon - min_epsilon) * (episode / episodes))
+        # epsilon = max(min_epsilon, initial_epsilon -
+        #              (initial_epsilon - min_epsilon) * (episode / episodes))
         # decroissance exponentielle de epsilon
-        # epsilon = min_epsilon + (initial_epsilon - min_epsilon) \
-        #     * np.exp(-epsilon_decay * episode)
+        epsilon = min_epsilon + (initial_epsilon - min_epsilon) * np.exp(-epsilon_decay * episode)
     return Q
 
 
